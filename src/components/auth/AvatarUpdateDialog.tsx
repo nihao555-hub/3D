@@ -113,18 +113,16 @@ export const AvatarUpdateDialog = () => {
       uploadAvatar(file, {
         onSuccess: () => {
           toast({
-            title: 'Profile picture updated',
-            description: 'Your profile picture has been successfully updated.',
+            title: '头像已更新',
+            description: '你的头像已成功更新。',
           });
         },
         onError: (error) => {
           console.error('Error uploading avatar:', error);
           toast({
-            title: 'Upload failed',
+            title: '上传失败',
             description:
-              error instanceof Error
-                ? error.message
-                : 'Failed to upload profile picture. Please try again.',
+              error instanceof Error ? error.message : '头像上传失败，请重试。',
             variant: 'destructive',
           });
         },
@@ -138,8 +136,8 @@ export const AvatarUpdateDialog = () => {
     } catch (e) {
       console.error(e);
       toast({
-        title: 'Crop failed',
-        description: 'Unable to crop image. Please try another image.',
+        title: '裁剪失败',
+        description: '无法裁剪该图片，请换一张图片重试。',
         variant: 'destructive',
       });
     }
@@ -177,9 +175,7 @@ export const AvatarUpdateDialog = () => {
       >
         <DialogContent className="border-adam-neutral-800 sm:max-w-[480px] sm:rounded-3xl">
           <DialogHeader>
-            <DialogTitle className="text-adam-neutral-50">
-              Crop profile picture
-            </DialogTitle>
+            <DialogTitle className="text-adam-neutral-50">裁剪头像</DialogTitle>
           </DialogHeader>
           <div className="relative h-72 w-full overflow-hidden rounded-md bg-black/20">
             {selectedImageUrl && (
@@ -197,7 +193,7 @@ export const AvatarUpdateDialog = () => {
             )}
           </div>
           <div className="mt-4">
-            <div className="mb-2 text-xs text-adam-neutral-200">Zoom</div>
+            <div className="mb-2 text-xs text-adam-neutral-200">缩放</div>
             <Slider
               value={[zoom]}
               min={1}
@@ -212,7 +208,7 @@ export const AvatarUpdateDialog = () => {
               onClick={handleCropCancel}
               className="w-full rounded-full font-light"
             >
-              Cancel
+              取消
             </Button>
             <Button
               onClick={handleCropSave}
@@ -223,10 +219,10 @@ export const AvatarUpdateDialog = () => {
               {isUploadingAvatar ? (
                 <div className="flex items-center gap-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
+                  保存中…
                 </div>
               ) : (
-                'Save'
+                '保存'
               )}
             </Button>
           </DialogFooter>

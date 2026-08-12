@@ -63,9 +63,8 @@ export const DeleteAccountDialog = ({
     onError: (error) => {
       Sentry.captureException(error);
       toast({
-        title: 'Delete failed',
-        description:
-          'We could not delete your account. Please try again or contact support.',
+        title: '删除失败',
+        description: '账号删除失败，请重试或联系客服支持。',
         variant: 'destructive',
       });
     },
@@ -79,11 +78,11 @@ export const DeleteAccountDialog = ({
           <div className="flex flex-col gap-16">
             <AlertDialogHeader className="text-center sm:text-center">
               <AlertDialogTitle className="w-full">
-                We're sad to see you go :(
+                很遗憾看到你离开 :(
               </AlertDialogTitle>
             </AlertDialogHeader>
             <div className="flex flex-col gap-6">
-              <div className="text-sm">What made you cancel your plan?</div>
+              <div className="text-sm">是什么原因让你决定取消？</div>
               <RadioGroup
                 value={selectedReason}
                 className="flex flex-col gap-6"
@@ -93,35 +92,35 @@ export const DeleteAccountDialog = ({
                     onClick={() => setSelectedReason('too_expensive')}
                     value="too_expensive"
                   />
-                  Too Expensive
+                  价格太贵
                 </label>
                 <label className="flex items-center gap-3 text-sm">
                   <RadioGroupItem
                     onClick={() => setSelectedReason('missing_features')}
                     value="missing_features"
                   />
-                  Missing features
+                  缺少需要的功能
                 </label>
                 <label className="flex items-center gap-3 text-sm">
                   <RadioGroupItem
                     onClick={() => setSelectedReason('low_quality')}
                     value="low_quality"
                   />
-                  Low quality or bugs
+                  质量不佳或存在缺陷
                 </label>
                 <label className="flex items-center gap-3 text-sm">
                   <RadioGroupItem
                     onClick={() => setSelectedReason('unused')}
                     value="unused"
                   />
-                  I don't need it anymore
+                  不再需要了
                 </label>
                 <label className="flex items-center gap-3 text-sm">
                   <RadioGroupItem
                     onClick={() => setSelectedReason('switched_service')}
                     value="switched_service"
                   />
-                  I've found another tool
+                  已找到其他工具
                 </label>
               </RadioGroup>
             </div>
@@ -136,7 +135,7 @@ export const DeleteAccountDialog = ({
                   setStep(1);
                 }}
               >
-                Cancel
+                取消
               </Button>
               <Button
                 variant="black"
@@ -144,7 +143,7 @@ export const DeleteAccountDialog = ({
                 onClick={() => setStep(2)}
                 disabled={!selectedReason}
               >
-                Next
+                下一步
               </Button>
             </div>
           </div>
@@ -152,28 +151,26 @@ export const DeleteAccountDialog = ({
           <div className="flex flex-col gap-16">
             <AlertDialogHeader className="text-center sm:text-center">
               <AlertDialogTitle className="w-full">
-                Are you sure?
+                确定要删除吗？
               </AlertDialogTitle>
             </AlertDialogHeader>
             <div className="space-y-4">
-              <p>Deleting your account means:</p>
+              <p>删除账号意味着：</p>
               <div className="rounded-lg bg-adam-neutral-950 p-4 text-adam-neutral-100">
                 <ul className="list-disc space-y-2 pl-5 text-sm">
+                  <li>删除账号为永久操作，无法撤销或恢复。</li>
                   <li>
-                    Deleting your account is permanent and cannot be undone.
-                  </li>
-                  <li>
-                    Your data will be deleted within 30 days, except we may
-                    retain a limited set of data for longer where required or
-                    permitted by law.
+                    你的数据将在 30
+                    天内删除；在法律要求或允许的情况下，我们可能在更长期限内保留少量必要数据。
                   </li>
                 </ul>
               </div>
             </div>
             <div className="space-y-2">
               <p>
-                Type <span className="font-semibold text-red-500">DELETE</span>{' '}
-                to confirm
+                请输入{' '}
+                <span className="font-semibold text-red-500">DELETE</span>{' '}
+                以确认删除
               </p>
               <Input
                 className="rounded-none border-x-0 border-b border-t-0 border-adam-neutral-200 shadow-none ring-0 focus:border-adam-neutral-200 focus:ring-0"
@@ -193,7 +190,7 @@ export const DeleteAccountDialog = ({
                   setStep(1);
                 }}
               >
-                Cancel
+                取消
               </Button>
               <Button
                 variant="destructive"
@@ -201,7 +198,7 @@ export const DeleteAccountDialog = ({
                 disabled={confirmText !== 'DELETE' || isDeleting}
                 onClick={() => deleteUser()}
               >
-                DELETE
+                删除账号
               </Button>
             </div>
           </div>

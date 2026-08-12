@@ -39,7 +39,7 @@ export function FreePlanTrialPill() {
   return (
     <>
       <div className="duration-[350ms] inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm shadow-[0_1px_3px_rgba(0,0,0,0.04)] ease-out animate-in fade-in slide-in-from-bottom-1">
-        <span className="text-adam-text-secondary">Free plan</span>
+        <span className="text-adam-text-secondary">免费版</span>
         <span className="h-4 w-px bg-white/10" aria-hidden="true" />
         <button
           type="button"
@@ -49,7 +49,7 @@ export function FreePlanTrialPill() {
           }}
           className="font-medium text-adam-blue transition-colors hover:text-adam-blue/80"
         >
-          Start free trial
+          开始免费试用
         </button>
       </div>
       {dialogMounted && (

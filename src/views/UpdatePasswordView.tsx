@@ -20,15 +20,15 @@ export function UpdatePasswordView() {
       mutationFn: updatePassword,
       onSuccess: () => {
         toast({
-          title: 'Success',
-          description: 'Password updated successfully',
+          title: '更新成功',
+          description: '密码已更新',
         });
         navigate({ to: '/' });
       },
       onError: () => {
         toast({
-          title: 'Error',
-          description: 'Failed to update password',
+          title: '错误',
+          description: '密码更新失败，请稍后重试',
           variant: 'destructive',
         });
       },
@@ -38,8 +38,8 @@ export function UpdatePasswordView() {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast({
-        title: 'Error',
-        description: 'Passwords do not match',
+        title: '错误',
+        description: '两次输入的密码不一致',
         variant: 'destructive',
       });
       return;
@@ -52,24 +52,20 @@ export function UpdatePasswordView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <img
-              src={`${import.meta.env.BASE_URL}/cadam-logo.svg`}
-              alt="CADAM Logo"
-              className="h-8 w-auto"
-            />
-            <h1 className="text-2xl font-semibold text-white">
-              Update Password
-            </h1>
+            <span className="text-2xl font-semibold tracking-tight text-white">
+              智造3D
+            </span>
+            <h1 className="text-2xl font-semibold text-white">更新密码</h1>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="password" className="text-white">
-                New Password
+                新密码
               </Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter your new password"
+                placeholder="请输入新密码"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -79,12 +75,12 @@ export function UpdatePasswordView() {
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-white">
-                Confirm Password
+                确认密码
               </Label>
               <Input
                 id="confirmPassword"
                 type="password"
-                placeholder="Confirm your new password"
+                placeholder="请再次输入新密码"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -100,10 +96,10 @@ export function UpdatePasswordView() {
               {isUpdatingPassword ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Updating password...
+                  更新中…
                 </>
               ) : (
-                'Update Password'
+                '更新密码'
               )}
             </Button>
           </form>

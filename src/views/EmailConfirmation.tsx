@@ -30,8 +30,8 @@ function EmailConfirmation() {
 
     if (!emailToResend) {
       toast({
-        title: 'Whoopsies',
-        description: 'Enter your email address to resend verification.',
+        title: '出错了',
+        description: '请先输入邮箱地址，再重新发送验证邮件。',
         variant: 'destructive',
       });
       return;
@@ -47,17 +47,15 @@ function EmailConfirmation() {
       if (error) throw error;
 
       toast({
-        title: 'Email Sent!',
-        description: "We've sent another verification email to your inbox.",
+        title: '邮件已发送',
+        description: '我们已重新发送一封验证邮件，请查收。',
       });
     } catch (error) {
       console.error('Error resending verification email:', error);
       toast({
-        title: 'Whoopsies',
+        title: '出错了',
         description:
-          error instanceof Error
-            ? error.message
-            : 'Failed to resend verification email',
+          error instanceof Error ? error.message : '验证邮件发送失败',
         variant: 'destructive',
       });
     } finally {
@@ -75,15 +73,15 @@ function EmailConfirmation() {
               <Mail className="h-6 w-6 text-white" />
             </div>
             <h1 className="mb-4 text-2xl font-semibold text-white">
-              Check Your Email
+              请查收邮件
             </h1>
             <p className="text-gray-400">
-              We've sent a verification link to{' '}
-              <span className="text-white">{email || 'your email'}</span>. Click
-              the link to verify your account.
+              我们已将验证链接发送至{' '}
+              <span className="text-white">{email || '你的邮箱'}</span>
+              ，点击链接即可完成账号验证。
             </p>
             <p className="mt-2 text-center text-gray-400">
-              (Make sure to check your spam folder)
+              （如未收到，请检查垃圾邮件文件夹）
             </p>
           </div>
 
@@ -92,14 +90,14 @@ function EmailConfirmation() {
             {showEmailInput && (
               <div className="space-y-2">
                 <Label htmlFor="resend-email" className="text-white">
-                  Email
+                  邮箱
                 </Label>
                 <Input
                   id="resend-email"
                   type="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="Enter your email"
+                  placeholder="请输入邮箱"
                   className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
                 />
               </div>
@@ -108,12 +106,12 @@ function EmailConfirmation() {
             {/* Alert for spam warning and sign in link */}
             <Alert className="border-adam-neutral-700 bg-adam-neutral-800">
               <AlertDescription className="text-center text-gray-400">
-                Already verified your email?{' '}
+                已完成邮箱验证？{' '}
                 <Link
                   to="/signin"
                   className="font-medium text-adam-text-primary transition-colors duration-200 hover:text-adam-text-primary/80"
                 >
-                  Sign in here
+                  点此登录
                 </Link>
               </AlertDescription>
             </Alert>
@@ -125,7 +123,7 @@ function EmailConfirmation() {
               onClick={handleResend}
               disabled={isResending}
             >
-              {isResending ? 'Sending...' : 'Resend Verification Email'}
+              {isResending ? '发送中…' : '重新发送验证邮件'}
             </Button>
           </div>
         </div>

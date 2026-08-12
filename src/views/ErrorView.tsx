@@ -15,14 +15,14 @@ export function ErrorView({ error }: { error?: unknown }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-adam-bg-secondary-dark">
       <h1 className="text-2xl font-bold text-adam-text-primary">
-        Oops! Something went wrong.
+        哎呀，出错了
       </h1>
       <p className="text-center text-adam-text-secondary">
-        We're sorry, but an error occurred while loading this page.
+        很抱歉，加载此页面时发生了错误。
         <br />
-        Please feel free to reach out to us so that we can resolve this issue.
+        请稍后重试，或联系我们协助解决。
       </p>
-      <Button onClick={() => navigate({ to: '/' })}>Go to Home</Button>
+      <Button onClick={() => navigate({ to: '/' })}>返回首页</Button>
     </div>
   );
 }

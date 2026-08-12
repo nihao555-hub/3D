@@ -32,22 +32,22 @@ function LowTokensWarningContent({
   const level = getLevel(billing);
   const hasTrialed = billing?.user.hasTrialed ?? false;
 
-  const tokensText = `You have ${tokensRemaining} token${tokensRemaining === 1 ? '' : 's'} remaining`;
+  const tokensText = `你还剩 ${tokensRemaining} 积分`;
 
   // Free tier with trial already used
   if (level === 'free' && hasTrialed) {
     return (
       <span>
-        {tokensText}.{' '}
+        {tokensText}。
         <a
           href={BILLING_UPGRADE_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="text-adam-blue hover:underline"
         >
-          Upgrade
-        </a>{' '}
-        for more tokens.
+          升级套餐
+        </a>
+        获取更多积分。
       </span>
     );
   }
@@ -61,10 +61,10 @@ function LowTokensWarningContent({
           layout === 'stacked' ? 'flex-col gap-1' : 'flex-wrap gap-1',
         )}
       >
-        <span>{tokensText}.</span>
+        <span>{tokensText}。</span>
         <TrialDialog>
           <span className="cursor-pointer text-adam-blue hover:underline">
-            Start a free trial of Pro
+            免费试用专业版
           </span>
         </TrialDialog>
       </div>
@@ -74,20 +74,20 @@ function LowTokensWarningContent({
   // Paid tier
   return (
     <span>
-      {tokensText}.{' '}
+      {tokensText}。
       <Link to="/settings" className="text-adam-blue hover:underline">
-        Buy more tokens
-      </Link>{' '}
-      or{' '}
+        购买更多积分
+      </Link>
+      或
       <a
         href={BILLING_UPGRADE_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="text-adam-blue hover:underline"
       >
-        upgrade
+        升级套餐
       </a>
-      .
+      。
     </span>
   );
 }

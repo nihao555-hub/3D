@@ -95,11 +95,11 @@ export function PromptView() {
   const getTimeBasedGreeting = useMemo(() => {
     const hour = new Date().getHours();
     if (hour < 12) {
-      return 'Good morning';
+      return '早上好';
     } else if (hour < 18) {
-      return 'Good afternoon';
+      return '下午好';
     } else {
-      return 'Good evening';
+      return '晚上好';
     }
   }, []); // Empty dependency array means it only calculates once per page load
 
@@ -111,9 +111,9 @@ export function PromptView() {
     mutationFn: () => signInWithSsoProvider('/'),
     onError: (error) => {
       toast({
-        title: 'Whoopsies',
+        title: '出错了',
         description:
-          error instanceof Error ? error.message : 'Something went wrong',
+          error instanceof Error ? error.message : '发生了一些问题，请稍后重试',
         variant: 'destructive',
       });
     },
@@ -151,7 +151,7 @@ export function PromptView() {
           {
             id: conversationId,
             user_id: user.id,
-            title: 'New Conversation',
+            title: '新对话',
             type: type,
             settings: {
               model: model,
@@ -230,9 +230,9 @@ export function PromptView() {
       setDraftConversationId(crypto.randomUUID());
       Sentry.captureException(error);
       toast({
-        title: 'Error',
+        title: '错误',
         description:
-          error instanceof Error ? error.message : 'Failed to process prompt',
+          error instanceof Error ? error.message : '处理请求失败，请稍后重试',
         variant: 'destructive',
       });
     },
@@ -263,7 +263,7 @@ export function PromptView() {
               }
               className="w-auto"
             >
-              Sign Up
+              注册
             </Button>
             <Button
               onClick={() =>
@@ -272,7 +272,7 @@ export function PromptView() {
               className="w-auto"
             >
               <LogIn className="mr-2 h-4 w-4" />
-              Sign In
+              登录
             </Button>
           </div>
         )}
@@ -319,7 +319,7 @@ export function PromptView() {
                       return;
                     }
                   }}
-                  placeholder="Start building with Adam..."
+                  placeholder="描述你想创建的 3D 模型…"
                   type={type}
                   disabled={limitReached || isGenerating}
                   model={model}
@@ -358,9 +358,9 @@ export function PromptView() {
                     }}
                     className="!text-adam-blue hover:!text-adam-blue/80"
                   >
-                    Sign in
+                    登录
                   </Link>{' '}
-                  or{' '}
+                  或{' '}
                   <Link
                     to="/signup"
                     onClick={(e) => {
@@ -371,9 +371,9 @@ export function PromptView() {
                     }}
                     className="!text-adam-blue hover:!text-adam-blue/80"
                   >
-                    create an account
+                    注册账号
                   </Link>{' '}
-                  to start generating
+                  后即可开始生成
                 </p>
               )}
             </div>

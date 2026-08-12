@@ -55,20 +55,20 @@ function LimitReachedSpan({ onTrialClick }: { onTrialClick?: () => void }) {
   if (level === 'free' && hasTrialed) {
     return (
       <span>
-        You've used all your tokens.{' '}
+        你的积分已用完。
         <a
           href={BILLING_UPGRADE_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="text-adam-blue hover:underline"
         >
-          Upgrade
-        </a>{' '}
-        for more tokens, or{' '}
+          升级套餐
+        </a>
+        获取更多积分，或
         <Link to="/settings" className="text-adam-blue hover:underline">
-          buy a token pack
+          购买积分包
         </Link>
-        .
+        。
       </span>
     );
   }
@@ -77,14 +77,14 @@ function LimitReachedSpan({ onTrialClick }: { onTrialClick?: () => void }) {
   if (level === 'free' && !hasTrialed) {
     return (
       <span>
-        You've used all your tokens.{' '}
+        你的积分已用完。
         <span
           className="cursor-pointer text-adam-blue hover:underline"
           onClick={onTrialClick}
         >
-          Start a free trial
-        </span>{' '}
-        to experience all Pro features for 7 days, completely free.
+          开始免费试用
+        </span>
+        ，免费体验 7 天全部专业版功能。
       </span>
     );
   }
@@ -92,20 +92,20 @@ function LimitReachedSpan({ onTrialClick }: { onTrialClick?: () => void }) {
   // Standard or Pro tier
   return (
     <span>
-      You've used all your tokens for this period.{' '}
+      本周期的积分已用完。
       <Link to="/settings" className="text-adam-blue hover:underline">
-        Buy more tokens
-      </Link>{' '}
-      or{' '}
+        购买更多积分
+      </Link>
+      或
       <a
         href={BILLING_UPGRADE_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="text-adam-blue hover:underline"
       >
-        upgrade your plan
+        升级套餐
       </a>
-      .
+      。
     </span>
   );
 }

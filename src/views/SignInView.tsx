@@ -84,9 +84,11 @@ export function SignInView() {
       },
       onError: (error) => {
         toast({
-          title: 'Whoopsies',
+          title: '出错了',
           description:
-            error instanceof Error ? error.message : 'Something went wrong',
+            error instanceof Error
+              ? error.message
+              : '发生了一些问题，请稍后重试',
           variant: 'destructive',
         });
       },
@@ -105,11 +107,11 @@ export function SignInView() {
       const error = err as AuthError;
       const message =
         error.message === 'Invalid login credentials'
-          ? 'Invalid email or password'
-          : 'An error occurred while signing in';
+          ? '邮箱或密码不正确'
+          : '登录时发生错误，请稍后重试';
       setError(message);
       toast({
-        title: 'Whoopsies',
+        title: '出错了',
         description: message,
         variant: 'destructive',
       });
@@ -130,7 +132,7 @@ export function SignInView() {
       const error = err as AuthError;
       setError(error.message);
       toast({
-        title: 'Whoopsies',
+        title: '出错了',
         description: error.message,
         variant: 'destructive',
       });
@@ -153,7 +155,7 @@ export function SignInView() {
       const error = err as AuthError;
       setError(error.message);
       toast({
-        title: 'Whoopsies',
+        title: '出错了',
         description: error.message,
         variant: 'destructive',
       });
@@ -177,18 +179,16 @@ export function SignInView() {
               className="flex items-center gap-1 text-sm text-gray-400 transition-colors hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back
+              返回
             </button>
 
             <div className="flex flex-col items-center gap-2 py-2">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-adam-blue/20">
                 <Mail className="h-6 w-6 text-adam-blue" />
               </div>
-              <h3 className="text-lg font-semibold text-white">
-                Check your email
-              </h3>
+              <h3 className="text-lg font-semibold text-white">请查收邮件</h3>
               <p className="text-center text-sm text-gray-400">
-                We sent a magic link to{' '}
+                我们已将登录链接发送至{' '}
                 <span className="font-medium text-white">{email}</span>
               </p>
             </div>
@@ -201,9 +201,7 @@ export function SignInView() {
 
             <div className="relative flex items-center gap-3 py-2">
               <div className="h-px flex-1 bg-gray-700" />
-              <span className="text-xs text-gray-500">
-                or enter code manually
-              </span>
+              <span className="text-xs text-gray-500">或手动输入验证码</span>
               <div className="h-px flex-1 bg-gray-700" />
             </div>
 
@@ -263,10 +261,10 @@ export function SignInView() {
                 {isVerifying ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Verifying...
+                    验证中…
                   </>
                 ) : (
-                  'Verify Code'
+                  '验证'
                 )}
               </Button>
             </form>
@@ -282,11 +280,9 @@ export function SignInView() {
         <div className="flex flex-col gap-4 rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center">
             <div>
-              <img
-                src={`${import.meta.env.BASE_URL}/cadam-logo.svg`}
-                alt="CADAM Logo"
-                className="w-32"
-              />
+              <span className="text-2xl font-semibold tracking-tight text-white">
+                智造3D
+              </span>
             </div>
           </div>
           <div className="w-full">
@@ -296,7 +292,7 @@ export function SignInView() {
               disabled={isSigningInWithGoogle}
             >
               <GoogleIcon className="w-4" />
-              <span>Continue with Google</span>
+              <span>使用 Google 账号继续</span>
             </Button>
           </div>
 
@@ -312,12 +308,12 @@ export function SignInView() {
 
             <div className="space-y-2">
               <Label htmlFor="email" className="text-white">
-                Email
+                邮箱
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="请输入邮箱"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -329,19 +325,19 @@ export function SignInView() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password" className="text-white">
-                    Password
+                    密码
                   </Label>
                   <Link
                     to="/reset-password"
                     className="text-sm text-adam-blue hover:text-adam-blue/80"
                   >
-                    Forgot password?
+                    忘记密码？
                   </Link>
                 </div>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="请输入密码"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -359,9 +355,7 @@ export function SignInView() {
                   setError(null);
                 }}
               >
-                {mode === 'password'
-                  ? 'Sign in with magic link instead'
-                  : 'Sign in with password instead'}
+                {mode === 'password' ? '改用邮箱链接免密登录' : '改用密码登录'}
               </button>
             </div>
 
@@ -369,22 +363,22 @@ export function SignInView() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {mode === 'password' ? 'Signing in...' : 'Sending...'}
+                  {mode === 'password' ? '登录中…' : '发送中…'}
                 </>
               ) : mode === 'password' ? (
-                'Sign In'
+                '登录'
               ) : (
-                'Send Magic Link'
+                '发送登录链接'
               )}
             </Button>
 
             <div className="text-center text-sm text-white">
-              Don't have an account?{' '}
+              还没有账号？{' '}
               <Link
                 to="/signup"
                 className="text-adam-blue hover:text-adam-blue/80"
               >
-                Sign up
+                注册
               </Link>
             </div>
           </form>

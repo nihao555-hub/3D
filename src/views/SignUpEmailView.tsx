@@ -58,9 +58,11 @@ export function SignUpEmailView() {
       },
       onError: (error) => {
         toast({
-          title: 'Whoopsies',
+          title: '出错了',
           description:
-            error instanceof Error ? error.message : 'Something went wrong',
+            error instanceof Error
+              ? error.message
+              : '发生了一些问题，请稍后重试',
           variant: 'destructive',
         });
       },
@@ -71,8 +73,8 @@ export function SignUpEmailView() {
 
     if (!name.trim()) {
       toast({
-        title: 'Whoopsies',
-        description: 'Please enter your name',
+        title: '出错了',
+        description: '请输入姓名',
         variant: 'destructive',
       });
       return;
@@ -80,8 +82,8 @@ export function SignUpEmailView() {
 
     if (password !== confirmPassword) {
       toast({
-        title: 'Whoopsies',
-        description: 'Passwords do not match',
+        title: '出错了',
+        description: '两次输入的密码不一致',
         variant: 'destructive',
       });
       return;
@@ -92,9 +94,8 @@ export function SignUpEmailView() {
       await signUp(email, password, name);
 
       toast({
-        title: 'Verify your email',
-        description:
-          'Please check your email to verify your account before signing in.',
+        title: '请验证邮箱',
+        description: '请先前往邮箱完成账号验证，再进行登录。',
       });
       sessionStorage.setItem('pendingSignupEmail', email);
       navigate({
@@ -103,9 +104,9 @@ export function SignUpEmailView() {
     } catch (error) {
       console.error(error);
       toast({
-        title: 'Whoopsies',
+        title: '出错了',
         description:
-          error instanceof Error ? error.message : 'Something went wrong',
+          error instanceof Error ? error.message : '发生了一些问题，请稍后重试',
         variant: 'destructive',
       });
     } finally {
@@ -118,14 +119,10 @@ export function SignUpEmailView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <img
-              src={`${import.meta.env.BASE_URL}/cadam-logo.svg`}
-              alt="CADAM Logo"
-              className="h-8 w-auto"
-            />
-            <h1 className="text-2xl font-semibold text-white">
-              Create Account
-            </h1>
+            <span className="text-2xl font-semibold tracking-tight text-white">
+              智造3D
+            </span>
+            <h1 className="text-2xl font-semibold text-white">创建账号</h1>
           </div>
           <div className="w-full py-2">
             <Button
@@ -134,19 +131,19 @@ export function SignUpEmailView() {
               disabled={isSigningInWithGoogle}
             >
               <GoogleIcon className="w-4" />
-              <span>Continue with Google</span>
+              <span>使用 Google 账号继续</span>
             </Button>
           </div>
 
           <form onSubmit={handleSignUp} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-white">
-                Full Name
+                姓名
               </Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="请输入姓名"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -156,12 +153,12 @@ export function SignUpEmailView() {
 
             <div className="space-y-2">
               <Label htmlFor="email" className="text-white">
-                Email
+                邮箱
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="请输入邮箱"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -171,12 +168,12 @@ export function SignUpEmailView() {
 
             <div className="space-y-2">
               <Label htmlFor="password" className="text-white">
-                Password
+                密码
               </Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="请输入密码（至少 6 位）"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -187,12 +184,12 @@ export function SignUpEmailView() {
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-white">
-                Confirm Password
+                确认密码
               </Label>
               <Input
                 id="confirmPassword"
                 type="password"
-                placeholder="Confirm your password"
+                placeholder="请再次输入密码"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -205,20 +202,20 @@ export function SignUpEmailView() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating account...
+                  创建账号中…
                 </>
               ) : (
-                'Create Account'
+                '创建账号'
               )}
             </Button>
 
             <div className="text-center text-sm text-white">
-              Already have an account?{' '}
+              已有账号？{' '}
               <Link
                 to="/signin"
                 className="text-adam-blue hover:text-adam-blue/80"
               >
-                Sign in
+                登录
               </Link>
             </div>
           </form>

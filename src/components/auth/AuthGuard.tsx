@@ -38,9 +38,11 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
         signInWithSsoProvider(currentPath).catch((error) => {
           toast({
-            title: 'Whoopsies',
+            title: '出错了',
             description:
-              error instanceof Error ? error.message : 'Something went wrong',
+              error instanceof Error
+                ? error.message
+                : '发生了一些问题，请稍后重试',
             variant: 'destructive',
           });
           // The redirect failed — fall back to root, whose signed-out state

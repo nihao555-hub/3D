@@ -22,14 +22,14 @@ export function ResetPasswordView() {
       await resetPassword(email);
       setIsSuccess(true);
       toast({
-        title: 'Success',
-        description: 'Password reset instructions have been sent to your email',
+        title: '发送成功',
+        description: '密码重置邮件已发送至你的邮箱',
       });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to send reset instructions',
+        title: '错误',
+        description: '重置邮件发送失败，请稍后重试',
         variant: 'destructive',
       });
     } finally {
@@ -42,25 +42,21 @@ export function ResetPasswordView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <img
-              src={`${import.meta.env.BASE_URL}/cadam-logo.svg`}
-              alt="CADAM Logo"
-              className="h-8 w-auto"
-            />
-            <h1 className="text-2xl font-semibold text-white">
-              Reset Password
-            </h1>
+            <span className="text-2xl font-semibold tracking-tight text-white">
+              智造3D
+            </span>
+            <h1 className="text-2xl font-semibold text-white">重置密码</h1>
           </div>
           {!isSuccess ? (
             <form onSubmit={handleResetPassword} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-white">
-                  Email
+                  邮箱
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="请输入邮箱"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -72,10 +68,10 @@ export function ResetPasswordView() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending instructions...
+                    发送中…
                   </>
                 ) : (
-                  'Send Reset Instructions'
+                  '发送重置邮件'
                 )}
               </Button>
 
@@ -84,20 +80,20 @@ export function ResetPasswordView() {
                 className="flex w-full items-center justify-center text-adam-blue hover:text-adam-blue/80"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                <p className="text-sm">Back to Sign In</p>
+                <p className="text-sm">返回登录</p>
               </Link>
             </form>
           ) : (
             <div className="space-y-4 text-center">
               <p className="text-green-400">
-                Check your email for password reset instructions.
+                请查收邮件，并按邮件中的说明重置密码。
               </p>
               <Link
                 to="/signin"
                 className="flex w-full items-center justify-center text-adam-blue hover:text-adam-blue/80"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                <p className="text-sm">Back to Sign In</p>
+                <p className="text-sm">返回登录</p>
               </Link>
             </div>
           )}

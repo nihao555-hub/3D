@@ -50,9 +50,11 @@ export function SignUpView() {
       },
       onError: (error) => {
         toast({
-          title: 'Whoopsies',
+          title: '出错了',
           description:
-            error instanceof Error ? error.message : 'Something went wrong',
+            error instanceof Error
+              ? error.message
+              : '发生了一些问题，请稍后重试',
           variant: 'destructive',
         });
       },
@@ -63,11 +65,9 @@ export function SignUpView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <img
-              src={`${import.meta.env.BASE_URL}/cadam-logo.svg`}
-              alt="CADAM Logo"
-              className="h-8 w-auto"
-            />
+            <span className="text-2xl font-semibold tracking-tight text-white">
+              智造3D
+            </span>
           </div>
           <div className="w-full py-2">
             <Button
@@ -76,7 +76,7 @@ export function SignUpView() {
               disabled={isSigningInWithGoogle}
             >
               <GoogleIcon className="w-4" />
-              <span>Continue with Google</span>
+              <span>使用 Google 账号继续</span>
             </Button>
           </div>
           <div className="pt-4 text-center text-sm text-adam-text-secondary">
@@ -84,11 +84,11 @@ export function SignUpView() {
               to="/signup-email"
               className="text-adam-text-primary hover:underline"
             >
-              Sign up with email
+              使用邮箱注册
             </Link>
-            {' or '}
+            {' 或 '}
             <Link to="/signin" className="text-adam-blue hover:underline">
-              Sign in
+              登录
             </Link>
           </div>
         </div>

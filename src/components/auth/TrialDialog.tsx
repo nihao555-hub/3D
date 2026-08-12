@@ -64,16 +64,16 @@ export function TrialDialog({
       >
         <DialogHeader className="w-full">
           <DialogTitle className="text-center text-xl text-adam-text-primary md:text-2xl">
-            Here's 7 days of <span className="text-adam-blue">Adam Pro</span>
+            送你 7 天<span className="text-adam-blue">智造3D 专业版</span>
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="w-full text-sm text-adam-neutral-100">
-          Experience all Pro features for 7 days, completely free.
+          免费体验 7 天全部专业版功能。
         </DialogDescription>
 
         <div className="my-6 flex w-full justify-center">
           <FreeTrialButton
-            text="Start your Free Trial"
+            text="开始免费试用"
             onClick={handleSubscribe}
             isPending={isPending}
             disabled={isPending || !proMonthly}
@@ -85,29 +85,25 @@ export function TrialDialog({
             <Check className="h-4 w-4 text-adam-neutral-100" />
             <span className="text-adam-neutral-100">
               {proCredits !== undefined
-                ? `${proCredits.toLocaleString()} credits per month`
-                : 'Monthly Pro credits'}
+                ? `每月 ${proCredits.toLocaleString()} 积分`
+                : '每月专业版积分'}
             </span>
           </li>
           <li className="flex items-center gap-2">
             <Check className="h-4 w-4 text-adam-neutral-100" />
-            <span className="text-adam-neutral-100">
-              Phone number of founders
-            </span>
+            <span className="text-adam-neutral-100">创始团队一对一支持</span>
           </li>
           <li className="flex items-center gap-2">
             <Check className="h-4 w-4 text-adam-neutral-100" />
-            <span className="text-adam-neutral-100">
-              Exclusive access to new features
-            </span>
+            <span className="text-adam-neutral-100">新功能抢先体验</span>
           </li>
           <li className="flex items-center gap-2">
             <Check className="h-4 w-4 text-adam-neutral-100" />
-            <span className="text-adam-neutral-100">Good vibes</span>
+            <span className="text-adam-neutral-100">优质使用体验</span>
           </li>
         </ul>
         <p className="mt-4 w-full text-center text-xs text-adam-neutral-200">
-          Cancel anytime
+          可随时取消
         </p>
       </DialogContent>
     </Dialog>
