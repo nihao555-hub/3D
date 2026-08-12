@@ -203,7 +203,7 @@ const QuadsButton = ({
             isQuadsEnabled && 'text-[#00A6FF]',
           )}
         >
-          Quads
+          四边面
         </span>
       )}
     </button>
@@ -218,7 +218,7 @@ const QuadsButton = ({
     <Tooltip>
       <TooltipTrigger asChild>{buttonContent}</TooltipTrigger>
       <TooltipContent>
-        {isQuadsEnabled ? 'Quad topology enabled' : 'Enable quad topology'}
+        {isQuadsEnabled ? '已启用四边面拓扑' : '启用四边面拓扑'}
       </TooltipContent>
     </Tooltip>
   );
@@ -320,13 +320,13 @@ const PolygonButton = ({
             isCustom ? 'text-[#00A6FF]' : 'text-adam-text-primary',
           )}
         >
-          {isCustom ? formatPolygonCount(polygonCount) : 'Polygons'}
+          {isCustom ? formatPolygonCount(polygonCount) : '面数'}
         </span>
       )}
       {isCustom && (
         <span
           className="ml-0.5 flex h-3.5 w-3.5 items-center justify-center"
-          title={`Reset to default (${formatPolygonCount(defaultPolygonCount)})`}
+          title={`恢复默认（${formatPolygonCount(defaultPolygonCount)}）`}
         >
           <X
             className="h-3.5 w-3.5 cursor-pointer text-[#00A6FF] transition-opacity hover:opacity-70"
@@ -424,7 +424,7 @@ const PolygonButton = ({
             </Popover>
           </div>
         </TooltipTrigger>
-        <TooltipContent>Adjust poly count</TooltipContent>
+        <TooltipContent>调整面数</TooltipContent>
       </Tooltip>
     </div>
   );
@@ -463,7 +463,7 @@ function TextAreaChat({
   onSubmit,
   onFocus,
   isLoading = false,
-  placeholder = 'What can Adam help you build today?',
+  placeholder = '今天想创建什么模型？',
   type,
   stopGenerating,
   disabled = false,
@@ -670,12 +670,12 @@ function TextAreaChat({
   // Helper to decide which placeholder we're targeting right now
   const computeTargetPlaceholder = useCallback(() => {
     if (type === 'creative') {
-      if (images.length > 0) return 'Edit uploaded image...';
+      if (images.length > 0) return '编辑已上传的图片…';
       // Model-specific placeholders
-      if (model === 'quality') return 'Make a rough 3D asset...';
-      if (model === 'fast') return 'Make a textureless 3D asset...';
-      if (model === 'ultra') return 'Make a production ready 3D asset...';
-      return 'Speak anything into existence...';
+      if (model === 'quality') return '生成一个粗略的 3D 资产…';
+      if (model === 'fast') return '生成一个无贴图的 3D 资产…';
+      if (model === 'ultra') return '生成一个可用于生产的 3D 资产…';
+      return '描述任何创意，让它成为现实…';
     }
     return placeholder;
   }, [type, images.length, placeholder, model]);
@@ -820,8 +820,8 @@ function TextAreaChat({
     },
     onError: () => {
       toast({
-        title: 'Error',
-        description: 'Failed to upload image',
+        title: '错误',
+        description: '上传图片失败',
         variant: 'destructive',
       });
     },
@@ -886,8 +886,8 @@ function TextAreaChat({
     },
     onError: () => {
       toast({
-        title: 'Error',
-        description: 'Failed to upload mesh',
+        title: '错误',
+        description: '上传模型失败',
         variant: 'destructive',
       });
     },
@@ -963,29 +963,26 @@ function TextAreaChat({
     // Show specific errors first, then generic error only if there are truly invalid file types
     if (hasSmallImages) {
       toast({
-        title: 'Image too small',
-        description:
-          'Some images were not added because they are smaller than 256x256 pixels.',
+        title: '图片过小',
+        description: '部分图片未添加：尺寸小于 256x256 像素。',
       });
     } else if (hasLargeImages) {
       toast({
-        title: 'Image too large',
-        description:
-          'Some images were not added because they are larger than 100MB.',
+        title: '图片过大',
+        description: '部分图片未添加：大小超过 100MB。',
       });
     } else if (hasInvalidImages) {
       toast({
-        title: 'Invalid image format',
-        description:
-          'Some images were not added because they are not valid image formats. Must be jpeg, png, or webp.',
+        title: '图片格式无效',
+        description: '部分图片未添加：仅支持 jpeg、png 或 webp 格式。',
       });
     } else if (hasInvalidItems) {
       toast({
-        title: 'Invalid file format',
+        title: '文件格式无效',
         description:
           type === 'creative'
-            ? 'Some files were not added because they are not valid file formats. Must be jpeg, png, webp, glb, stl, or obj.'
-            : 'Some files were not added because they are not valid file formats. Must be jpeg, png, webp, or stl.',
+            ? '部分文件未添加：仅支持 jpeg、png、webp、glb、stl 或 obj 格式。'
+            : '部分文件未添加：仅支持 jpeg、png、webp 或 stl 格式。',
       });
     }
 
@@ -1192,8 +1189,8 @@ function TextAreaChat({
     } catch (error) {
       console.error('Error generating prompt:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to generate prompt',
+        title: '错误',
+        description: '生成提示词失败',
         variant: 'destructive',
       });
     } finally {
@@ -1373,7 +1370,7 @@ function TextAreaChat({
                     color: isDragHover ? '#00A6FF' : 'rgba(0, 166, 255, 0.85)',
                   }}
                 >
-                  Add more images here
+                  拖放到此处添加更多图片
                 </p>
               </div>
             ) : /* Case 2: No items (images/mesh are zero) -> Show original "Drop images and 3D models here" logic */
@@ -1397,7 +1394,7 @@ function TextAreaChat({
                     color: isDragHover ? '#00A6FF' : 'rgba(0, 166, 255, 0.85)',
                   }}
                 >
-                  Drop images and 3D models here
+                  将图片和 3D 模型拖放到此处
                 </p>
               </div>
             ) : (
@@ -1429,7 +1426,7 @@ function TextAreaChat({
                         {mesh.url && (
                           <img
                             src={mesh.url}
-                            alt="Mesh"
+                            alt="模型"
                             className="h-12 w-12 rounded-md object-cover"
                           />
                         )}
@@ -1467,7 +1464,7 @@ function TextAreaChat({
                       >
                         <img
                           src={image.url}
-                          alt="Image"
+                          alt="图片"
                           className="h-12 w-12 rounded-md object-cover"
                         />
                         {image.isUploading && (
@@ -1527,11 +1524,9 @@ function TextAreaChat({
         <div className="flex select-none items-start justify-between p-2">
           <Avatar className="mt-1 h-8 w-8">
             <div className="h-full w-full p-1.5">
-              <img
-                src={`${import.meta.env.BASE_URL}/Adam-Logo.png`}
-                alt="Adam Logo"
-                className="h-full w-full object-contain"
-              />
+              <span className="flex h-full w-full items-center justify-center text-xs font-semibold tracking-tight text-adam-text-primary">
+                智
+              </span>
             </div>
           </Avatar>
           <div className="relative grid w-full">
@@ -1586,7 +1581,7 @@ function TextAreaChat({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {input.trim() ? 'Enhance Prompt' : 'Generate Prompt'}
+                {input.trim() ? '优化提示词' : '生成提示词'}
               </TooltipContent>
             </Tooltip>
           )}
@@ -1643,13 +1638,13 @@ function TextAreaChat({
                     }}
                   >
                     <Box className="h-4 w-4" />
-                    <span className="hidden text-xs lg:inline">Mesh</span>
+                    <span className="hidden text-xs lg:inline">网格</span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   {type === 'parametric'
-                    ? 'Switch to Creative mode'
-                    : 'Switch to Parametric mode'}
+                    ? '切换到创意模式'
+                    : '切换到参数化模式'}
                 </TooltipContent>
               </Tooltip>
             )}
@@ -1704,7 +1699,7 @@ function TextAreaChat({
                     <Square className="h-5 w-5 fill-white" />
                   </button>
                 </TooltipTrigger>
-                <TooltipContent>Stop generation</TooltipContent>
+                <TooltipContent>停止生成</TooltipContent>
               </Tooltip>
             ) : (
               <button

@@ -88,7 +88,7 @@ export default function ShareView() {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center bg-adam-bg-secondary-dark text-adam-text-primary">
         <span className="text-2xl font-medium">404</span>
-        <span className="text-sm">Conversation not found</span>
+        <span className="text-sm">未找到对话</span>
       </div>
     );
   }
@@ -274,7 +274,7 @@ function ConversationShare({ conversation, messages }: ConversationShareProps) {
             <MeshPreview meshId={activePreview.meshId} />
           ) : (
             <div className="text-sm text-adam-text-secondary">
-              Nothing to preview yet
+              暂无可预览内容
             </div>
           )}
         </div>
@@ -293,7 +293,7 @@ function ConversationShare({ conversation, messages }: ConversationShareProps) {
             <MeshPreview meshId={activePreview.meshId} />
           ) : (
             <div className="text-sm text-adam-text-secondary">
-              Nothing to preview yet
+              暂无可预览内容
             </div>
           )}
         </div>

@@ -30,7 +30,7 @@ export function OrthographicPerspectiveToggle({
             side="top"
             className="border-adam-neutral-700 bg-adam-background-2 text-adam-text-primary"
           >
-            <p>Orthographic View</p>
+            <p>正交视图</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -51,7 +51,7 @@ export function OrthographicPerspectiveToggle({
             side="top"
             className="border-adam-neutral-700 bg-adam-background-2 text-adam-text-primary"
           >
-            <p>Perspective View</p>
+            <p>透视视图</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -254,14 +254,12 @@ export function ConversationView({
               style={{ height: mobileSheetHeight }}
             >
               <SheetHeader className="hidden">
-                <SheetTitle>Model preview</SheetTitle>
-                <SheetDescription>
-                  Preview and parameters for the selected model.
-                </SheetDescription>
+                <SheetTitle>模型预览</SheetTitle>
+                <SheetDescription>所选模型的预览与参数。</SheetDescription>
               </SheetHeader>
               <button
                 type="button"
-                aria-label="Close preview"
+                aria-label="关闭预览"
                 onTouchStart={handleMobileSheetTouchStart}
                 onTouchMove={handleMobileSheetTouchMove}
                 onTouchEnd={handleMobileSheetTouchEnd}
@@ -355,14 +353,14 @@ export function ConversationView({
           {isChatCollapsed && (
             <div className="absolute left-0 top-1/2 z-50 -translate-y-1/2">
               <Button
-                aria-label="Expand chat panel"
+                aria-label="展开聊天面板"
                 onClick={handleChatExpand}
                 className="flex h-[100px] w-9 flex-col items-center rounded-l-none rounded-r-lg bg-adam-bg-secondary-dark px-1.5 py-2 text-adam-text-primary"
               >
                 <ChevronsRight className="h-5 w-5 text-white" />
                 <div className="flex flex-1 items-center justify-center">
                   <span className="rotate-90 transform text-center text-base font-semibold text-white">
-                    Chat
+                    聊天
                   </span>
                 </div>
               </Button>
@@ -409,14 +407,14 @@ export function ConversationView({
           {hasParameters && isParametersCollapsed && (
             <div className="absolute right-0 top-1/2 z-50 -translate-y-1/2">
               <Button
-                aria-label="Expand parameters panel"
+                aria-label="展开参数面板"
                 onClick={handleParametersExpand}
                 className="flex h-[140px] w-9 flex-col items-center rounded-l-lg rounded-r-none bg-adam-bg-secondary-dark p-2 px-1.5 py-2 text-adam-text-primary"
               >
                 <ChevronsRight className="mb-3 h-5 w-5 rotate-180 text-white" />
                 <div className="flex flex-1 items-center justify-center">
                   <span className="min-w-[100px] -rotate-90 transform text-center text-base font-semibold text-white">
-                    Parameters
+                    参数
                   </span>
                 </div>
               </Button>

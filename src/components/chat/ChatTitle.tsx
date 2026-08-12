@@ -156,7 +156,7 @@ export function ChatTitle({
                               isParametric && 'text-center',
                             )}
                           >
-                            {conversation.title || 'Chat'}
+                            {conversation.title || '对话'}
                           </span>
                           <ChevronDown className="h-4 w-4 min-w-4" />
                         </div>
@@ -170,22 +170,22 @@ export function ChatTitle({
                           onClick={() => setIsEditingTitle(true)}
                         >
                           <Pencil className="mr-2 h-4 w-4" />
-                          Rename
+                          重命名
                         </DropdownMenuItem>
                         <DialogTrigger asChild>
                           <DropdownMenuItem className="text-adam-neutral-200 hover:text-adam-neutral-100">
                             <ShareIcon className="mr-2 h-4 w-4" />
-                            Share
+                            分享
                           </DropdownMenuItem>
                         </DialogTrigger>
                       </DropdownMenuContent>
                     </DropdownMenu>
                     <DialogContent className="mx-auto flex max-h-dvh w-[calc(100%-2rem)] flex-col items-center gap-8 rounded-lg border border-adam-neutral-800 text-adam-text-primary">
                       <DialogTitle className="hidden">
-                        Share public link to chat
+                        分享对话公开链接
                       </DialogTitle>
                       <DialogDescription className="hidden">
-                        Share public link to chat
+                        分享对话公开链接
                       </DialogDescription>
                       <ShareContent
                         conversationId={conversation.id}
@@ -206,7 +206,7 @@ export function ChatTitle({
                       )}
                       onClick={() => setIsEditingTitle(true)}
                     >
-                      {conversation.title || 'Chat'}
+                      {conversation.title || '对话'}
                     </span>
                   </div>
                 )}
@@ -220,7 +220,7 @@ export function ChatTitle({
                     isParametric && 'text-center',
                   )}
                 >
-                  {conversation.title || 'Chat'}
+                  {conversation.title || '对话'}
                 </span>
               </div>
             )}

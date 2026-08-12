@@ -66,7 +66,7 @@ export function StreamingCodeBlock({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-adam-blue/70" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-adam-blue" />
             </span>
-            streaming
+            生成中
           </div>
         )}
       </div>

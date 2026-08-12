@@ -239,7 +239,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'google/gemini-3.1-pro-preview',
     name: 'Gemini 3.1 Pro',
-    description: 'Latest Google model with excellent multi-modal capabilities',
+    description: '谷歌最新模型，多模态能力出色',
     provider: 'Google',
     supportsTools: true,
     supportsThinking: true,
@@ -248,7 +248,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'google/gemini-3.6-flash',
     name: 'Gemini 3.6 Flash',
-    description: 'Fast, token-efficient Google model for everyday tasks',
+    description: '谷歌快速模型，高效省 token，适合日常任务',
     provider: 'Google',
     supportsTools: true,
     supportsThinking: true,
@@ -257,7 +257,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'anthropic/claude-fable-5',
     name: 'Claude Fable 5',
-    description: 'Most capable Anthropic model; best reasoning at highest cost',
+    description: 'Anthropic 最强模型，推理最佳，成本最高',
     provider: 'Anthropic',
     supportsTools: true,
     supportsThinking: true,
@@ -266,7 +266,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'anthropic/claude-opus-4.8',
     name: 'Claude Opus 4.8',
-    description: 'Powerful Anthropic model for complex reasoning',
+    description: 'Anthropic 强力模型，擅长复杂推理',
     provider: 'Anthropic',
     supportsTools: true,
     supportsThinking: true,
@@ -275,7 +275,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'anthropic/claude-sonnet-5',
     name: 'Claude Sonnet 5',
-    description: 'Frontier Anthropic model balancing speed and reasoning',
+    description: 'Anthropic 前沿模型，速度与推理兼顾',
     provider: 'Anthropic',
     supportsTools: true,
     supportsThinking: true,
@@ -284,7 +284,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'openai/gpt-5.6-sol',
     name: 'GPT-5.6 Sol',
-    description: 'Latest OpenAI model for reliable CAD generation',
+    description: 'OpenAI 最新模型，CAD 生成稳定可靠',
     provider: 'OpenAI',
     supportsTools: true,
     supportsThinking: true,
@@ -293,7 +293,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'x-ai/grok-4.5',
     name: 'Grok 4.5',
-    description: 'Latest xAI model with frontier coding and STEM performance',
+    description: 'xAI 最新模型，编码与理工能力前沿',
     provider: 'xAI',
     supportsTools: true,
     supportsThinking: true,
@@ -302,8 +302,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'moonshotai/kimi-k3',
     name: 'Kimi K3',
-    description:
-      'Moonshot AI reasoning model for complex coding and agentic work',
+    description: '月之暗面推理模型，擅长复杂编码与智能体任务',
     provider: 'Moonshot AI',
     supportsTools: true,
     supportsThinking: true,
@@ -312,7 +311,7 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   {
     id: 'z-ai/glm-5.2',
     name: 'GLM 5.2',
-    description: 'Z.AI model with strong agentic coding and reasoning',
+    description: 'Z.AI 模型，智能体编码与推理能力强',
     provider: 'Z.AI',
     supportsTools: true,
     supportsThinking: true,
@@ -354,20 +353,20 @@ export const DEFAULT_PARAMETRIC_MODEL: Model = (() => {
 export const CREATIVE_MODELS: ModelConfig[] = [
   {
     id: 'ultra',
-    name: 'Max Quality',
-    description: 'Highest quality mesh and clean topology',
+    name: '最高质量',
+    description: '最高质量网格与干净拓扑',
     timeEstimate: '5-6 minutes',
   },
   {
     id: 'quality',
-    name: 'Draft',
-    description: 'Rough quality for quick iterations',
+    name: '草稿',
+    description: '粗略质量，适合快速迭代',
     timeEstimate: '~45 seconds',
   },
   {
     id: 'fast',
-    name: 'Textureless',
-    description: 'Faster, with simpler, textureless output.',
+    name: '无贴图',
+    description: '速度更快，输出更简洁、无贴图。',
     timeEstimate: '60-90 seconds',
   },
 ];

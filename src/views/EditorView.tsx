@@ -141,7 +141,7 @@ export default function EditorView() {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center bg-adam-bg-secondary-dark text-adam-text-primary">
         <span className="text-2xl font-medium">404</span>
-        <span className="text-sm">Conversation not found</span>
+        <span className="text-sm">未找到对话</span>
       </div>
     );
   }
@@ -661,7 +661,7 @@ function ConversationEditor() {
                     className="flex h-8 items-center gap-2 rounded-full px-3 text-adam-text-primary hover:bg-adam-neutral-950 hover:text-adam-neutral-10 focus-visible:ring-0"
                   >
                     <Share className="h-[14px] w-[14px] min-w-[14px]" />
-                    <span>Share</span>
+                    <span>分享</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
@@ -694,7 +694,7 @@ function ConversationEditor() {
                 onClick={() => {
                   navigate({ to: '/' });
                 }}
-                aria-label="New Creation"
+                aria-label="新建模型"
               >
                 <CreateIcon className="h-5 w-5 text-adam-text-primary" />
               </Button>
@@ -737,7 +737,7 @@ function ConversationEditor() {
             <MeshPreview meshId={activePreview.meshId} />
           ) : (
             <div className="text-sm text-adam-text-secondary">
-              Send a message to start creating
+              发送一条消息开始创建
             </div>
           )}
         </div>
@@ -759,7 +759,7 @@ function ConversationEditor() {
             <MeshPreview meshId={activePreview.meshId} />
           ) : (
             <div className="text-sm text-adam-text-secondary">
-              Send a message to start creating
+              发送一条消息开始创建
             </div>
           )}
         </div>

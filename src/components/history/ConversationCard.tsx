@@ -76,7 +76,7 @@ export function ConversationCard({
                     <TooltipTrigger asChild>
                       <GoodEarth className="h-4 w-4 text-adam-neutral-50" />
                     </TooltipTrigger>
-                    <TooltipContent>Public</TooltipContent>
+                    <TooltipContent>公开</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               )}
@@ -86,7 +86,7 @@ export function ConversationCard({
                     <TooltipTrigger asChild>
                       <LockKeyhole className="h-4 w-4 text-adam-neutral-50" />
                     </TooltipTrigger>
-                    <TooltipContent>Private</TooltipContent>
+                    <TooltipContent>私密</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               )}
@@ -100,17 +100,17 @@ export function ConversationCard({
               </span>
               <span className="flex items-center">
                 <MessageSquare className="mr-1 h-3 w-3 text-xs text-adam-neutral-400" />
-                {conversation.message_count} messages
+                {conversation.message_count} 条消息
               </span>
             </div>
             <div className="flex items-center gap-2">
               {conversation.type === 'parametric' ? (
                 <div className="rounded-full bg-[#0061FF24] px-2 py-1 text-xs font-normal text-[#6183FF]">
-                  Parametric
+                  参数化
                 </div>
               ) : (
                 <div className="rounded-full bg-[#00A6FF29] px-2 py-1 text-xs font-normal text-[#38B6FF]">
-                  Creative
+                  创意
                 </div>
               )}
             </div>
@@ -135,7 +135,7 @@ export function ConversationCard({
                 >
                   <DropdownMenuItem className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 hover:text-red-500 focus:bg-adam-neutral-950 focus:text-red-500">
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
+                    删除
                   </DropdownMenuItem>
                 </AlertDialogTrigger>
                 {conversation.privacy === 'private' ? (
@@ -147,7 +147,7 @@ export function ConversationCard({
                     className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 hover:text-adam-neutral-50 focus:bg-adam-neutral-950 focus:text-adam-neutral-50"
                   >
                     <GoodEarth className="mr-2 h-4 w-4" />
-                    Make Public
+                    设为公开
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem
@@ -158,7 +158,7 @@ export function ConversationCard({
                     className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 hover:text-adam-neutral-50 focus:bg-adam-neutral-950 focus:text-adam-neutral-50"
                   >
                     <LockKeyhole className="mr-2 h-4 w-4" />
-                    Make Private
+                    设为私密
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem
@@ -169,23 +169,22 @@ export function ConversationCard({
                   className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 hover:text-adam-neutral-50 focus:bg-adam-neutral-950 focus:text-adam-neutral-50"
                 >
                   <Pencil className="mr-2 h-4 w-4" />
-                  Rename
+                  重命名
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <AlertDialogContent className="border-[2px] border-adam-neutral-700 bg-adam-background-1">
               <AlertDialogHeader>
                 <AlertDialogTitle className="text-adam-neutral-100">
-                  Delete Conversation
+                  删除对话
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete this conversation? This action
-                  cannot be undone.
+                  确定要删除此对话吗？此操作无法撤销。
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel onClick={(e) => e.stopPropagation()}>
-                  Cancel
+                  取消
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={(e) => {
@@ -194,7 +193,7 @@ export function ConversationCard({
                   }}
                   className="bg-red-600 hover:bg-red-700 dark:bg-red-900 dark:hover:bg-red-800"
                 >
-                  Delete
+                  删除
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

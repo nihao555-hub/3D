@@ -36,16 +36,15 @@ export function NotificationPrompt({
             {
               onSuccess: () => {
                 toast({
-                  title: 'Notifications enabled',
-                  description: "You'll be notified when your models are ready!",
+                  title: '通知已开启',
+                  description: '模型完成后将第一时间通知你！',
                 });
                 handleDismiss();
               },
               onError: () => {
                 toast({
-                  title: 'Error',
-                  description:
-                    'Failed to enable notifications. Please try again.',
+                  title: '错误',
+                  description: '开启通知失败，请重试。',
                   variant: 'destructive',
                 });
               },
@@ -53,17 +52,16 @@ export function NotificationPrompt({
           );
         } else {
           toast({
-            title: 'Permission denied',
-            description:
-              'You can enable notifications later in your browser settings.',
+            title: '权限被拒绝',
+            description: '你可以稍后在浏览器设置中开启通知。',
             variant: 'destructive',
           });
           handleDismiss();
         }
       } else {
         toast({
-          title: 'Not supported',
-          description: "Your browser doesn't support notifications.",
+          title: '暂不支持',
+          description: '当前浏览器不支持通知。',
           variant: 'destructive',
         });
         handleDismiss();
@@ -94,7 +92,7 @@ export function NotificationPrompt({
       <div className="flex items-center gap-3 rounded-full border border-adam-neutral-700/50 bg-adam-neutral-800/95 py-2 pl-4 pr-3 shadow-lg backdrop-blur-sm">
         <Bell className="h-4 w-4 text-adam-neutral-100" />
         <span className="text-sm text-adam-neutral-100">
-          Get notified when your model is ready?
+          模型完成后需要通知你吗？
         </span>
         <div className="flex gap-2">
           <Button
@@ -104,7 +102,7 @@ export function NotificationPrompt({
             onClick={handleDismiss}
             disabled={isEnablingNotifications}
           >
-            Not now
+            暂不
           </Button>
           <Button
             size="sm"
@@ -113,7 +111,7 @@ export function NotificationPrompt({
             onClick={handleEnableNotifications}
             disabled={isEnablingNotifications}
           >
-            {isEnablingNotifications ? 'Enabling...' : 'Enable'}
+            {isEnablingNotifications ? '开启中…' : '开启'}
           </Button>
         </div>
       </div>

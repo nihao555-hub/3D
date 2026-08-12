@@ -220,7 +220,7 @@ export function LightingControls({
             <Settings className="h-3.5 w-3.5 text-adam-blue" />
           </div>
           <div className="hidden text-sm font-medium text-adam-text-primary/90 lg:block">
-            controls
+            控制
           </div>
         </div>
         <div className="flex items-center gap-0 xl:gap-2">
@@ -233,7 +233,7 @@ export function LightingControls({
                 e.stopPropagation();
                 handleReset();
               }}
-              title="Reset to defaults"
+              title="恢复默认"
             >
               <RotateCcw className="h-3.5 w-3.5" />
             </Button>
@@ -306,7 +306,7 @@ export function LightingControls({
                 <div className="flex items-center gap-2">
                   <Sun className="h-3.5 w-3.5 text-adam-text-primary/70" />
                   <div className="text-xs lowercase text-adam-text-primary/80">
-                    brightness
+                    亮度
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
@@ -316,7 +316,7 @@ export function LightingControls({
                       size="icon"
                       className="h-6 w-6 rounded-md bg-adam-background-2/70 p-1 text-adam-text-primary/70 hover:bg-adam-blue/20 hover:text-adam-blue"
                       onClick={resetBrightness}
-                      title="Reset brightness"
+                      title="重置亮度"
                     >
                       <RotateCcw className="h-3.5 w-3.5" />
                     </Button>
@@ -341,7 +341,7 @@ export function LightingControls({
                   onValueChange={(values) => onBrightnessChange(values[0])}
                   hideDefaultMarker
                   className="py-1"
-                  aria-label="Brightness slider"
+                  aria-label="亮度滑块"
                 />
               </div>
             </div>
@@ -351,7 +351,7 @@ export function LightingControls({
                 <div className="flex items-center gap-2">
                   <Gem className="h-3.5 w-3.5 text-adam-text-primary/70" />
                   <div className="text-xs lowercase text-adam-text-primary/80">
-                    roughness
+                    粗糙度
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
@@ -361,7 +361,7 @@ export function LightingControls({
                       size="icon"
                       className="h-6 w-6 rounded-md bg-adam-background-2/70 p-1 text-adam-text-primary/70 hover:bg-adam-blue/20 hover:text-adam-blue"
                       onClick={resetRoughness}
-                      title="Reset roughness"
+                      title="重置粗糙度"
                     >
                       <RotateCcw className="h-3.5 w-3.5" />
                     </Button>
@@ -386,7 +386,7 @@ export function LightingControls({
                   onValueChange={(values) => onRoughnessChange(values[0])}
                   hideDefaultMarker
                   className="py-1"
-                  aria-label="Roughness slider"
+                  aria-label="粗糙度滑块"
                 />
               </div>
             </div>
@@ -397,7 +397,7 @@ export function LightingControls({
                   <div className="flex items-center gap-2">
                     <Waves className="h-3.5 w-3.5 text-adam-text-primary/70" />
                     <div className="text-xs lowercase text-adam-text-primary/80">
-                      normal intensity
+                      法线强度
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
@@ -407,7 +407,7 @@ export function LightingControls({
                         size="icon"
                         className="h-6 w-6 rounded-md bg-adam-background-2/70 p-1 text-adam-text-primary/70 hover:bg-adam-blue/20 hover:text-adam-blue"
                         onClick={resetNormalIntensity}
-                        title="Reset normal intensity"
+                        title="重置法线强度"
                       >
                         <RotateCcw className="h-3.5 w-3.5" />
                       </Button>
@@ -436,7 +436,7 @@ export function LightingControls({
                     }
                     hideDefaultMarker
                     className="py-1"
-                    aria-label="Normal Intensity slider"
+                    aria-label="法线强度滑块"
                   />
                 </div>
               </div>
@@ -448,7 +448,7 @@ export function LightingControls({
                   <div className="flex items-center gap-2">
                     <Hash className="h-3.5 w-3.5 text-adam-text-primary/70" />
                     <div className="text-xs lowercase text-adam-text-primary/80">
-                      polygons
+                      面数
                     </div>
                   </div>
                   <div className="font-mono text-xs text-adam-text-primary/90">

@@ -194,7 +194,7 @@ export function VisualCard({
                 className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 focus:bg-adam-neutral-950"
               >
                 <Pencil className="mr-2 h-4 w-4" />
-                Rename
+                重命名
               </DropdownMenuItem>
               {conversation.privacy === 'private' ? (
                 <DropdownMenuItem
@@ -205,7 +205,7 @@ export function VisualCard({
                   className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 focus:bg-adam-neutral-950"
                 >
                   <GoodEarth className="mr-2 h-4 w-4" />
-                  Make Public
+                  设为公开
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem
@@ -216,13 +216,13 @@ export function VisualCard({
                   className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 focus:bg-adam-neutral-950"
                 >
                   <LockKeyhole className="mr-2 h-4 w-4" />
-                  Make Private
+                  设为私密
                 </DropdownMenuItem>
               )}
               <AlertDialogTrigger asChild onClick={(e) => e.stopPropagation()}>
                 <DropdownMenuItem className="text-adam-neutral-50 hover:cursor-pointer hover:bg-adam-neutral-950 hover:text-red-500 focus:bg-adam-neutral-950 focus:text-red-500">
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  删除
                 </DropdownMenuItem>
               </AlertDialogTrigger>
             </DropdownMenuContent>
@@ -230,16 +230,15 @@ export function VisualCard({
           <AlertDialogContent className="border-[2px] border-adam-neutral-700 bg-adam-background-1">
             <AlertDialogHeader>
               <AlertDialogTitle className="text-adam-neutral-100">
-                Delete Creation
+                删除模型
               </AlertDialogTitle>
               <AlertDialogDescription>
-                Are you sure you want to delete this creation? This action
-                cannot be undone.
+                确定要删除此模型吗？此操作无法撤销。
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel onClick={(e) => e.stopPropagation()}>
-                Cancel
+                取消
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={(e) => {
@@ -248,7 +247,7 @@ export function VisualCard({
                 }}
                 className="bg-red-600 hover:bg-red-700"
               >
-                Delete
+                删除
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

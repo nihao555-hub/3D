@@ -120,11 +120,9 @@ export function ParameterSheetContent({
     } catch (error) {
       console.error('[OpenSCAD] Failed to export DXF:', error);
       toast({
-        title: 'DXF export failed',
+        title: 'DXF 导出失败',
         description:
-          error instanceof Error
-            ? error.message
-            : 'Adam could not export this model as DXF.',
+          error instanceof Error ? error.message : '无法将此模型导出为 DXF。',
         variant: 'destructive',
       });
     } finally {
@@ -167,7 +165,7 @@ export function ParameterSheetContent({
           <Button
             onClick={handleDownload}
             disabled={isDownloadDisabled}
-            aria-label={`download ${selectedFormat.toUpperCase()} file`}
+            aria-label={`下载 ${selectedFormat.toUpperCase()} 文件`}
             className="flex-1 rounded-r-none bg-adam-neutral-50 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
           >
             {isExporting ? (
@@ -181,7 +179,7 @@ export function ParameterSheetContent({
             <DropdownMenuTrigger asChild>
               <Button
                 disabled={!isAnyFormatAvailable}
-                aria-label="select download format"
+                aria-label="选择下载格式"
                 className="rounded-l-none border-l border-adam-neutral-300 bg-adam-neutral-50 px-2 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
               >
                 <ChevronUp className="h-4 w-4" />
@@ -195,7 +193,7 @@ export function ParameterSheetContent({
               >
                 <span className="text-sm">.STL</span>
                 <span className="col-span-2 text-xs text-adam-text-primary/60">
-                  3D Printing
+                  3D 打印
                 </span>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -205,7 +203,7 @@ export function ParameterSheetContent({
               >
                 <span className="text-sm">.SCAD</span>
                 <span className="col-span-2 text-xs text-adam-text-primary/60">
-                  OpenSCAD Code
+                  OpenSCAD 源码
                 </span>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -215,7 +213,7 @@ export function ParameterSheetContent({
               >
                 <span className="text-sm">.DXF</span>
                 <span className="col-span-2 text-xs text-adam-text-primary/60">
-                  2D Projection to the (x,y) plane
+                  XY 平面 2D 投影
                 </span>
               </DropdownMenuItem>
             </DropdownMenuContent>

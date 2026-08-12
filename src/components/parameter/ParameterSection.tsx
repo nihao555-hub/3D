@@ -156,11 +156,9 @@ export function ParameterSection({
       console.error('[OpenSCAD] Failed to export DXF:', error);
       // Optional user-facing feedback to surface the failure
       toast({
-        title: 'DXF export failed',
+        title: 'DXF 导出失败',
         description:
-          error instanceof Error
-            ? error.message
-            : 'Adam could not export this model as DXF.',
+          error instanceof Error ? error.message : '无法将此模型导出为 DXF。',
         variant: 'destructive',
       });
     } finally {
@@ -192,7 +190,7 @@ export function ParameterSection({
       <div className="flex h-14 items-center justify-between border-b border-adam-neutral-700 bg-gradient-to-r from-adam-bg-secondary-dark to-adam-bg-secondary-dark/95 px-6 py-6">
         <div className="flex items-center gap-2">
           <span className="text-lg font-semibold tracking-tight text-adam-text-primary">
-            Parameters
+            参数
           </span>
         </div>
         <TooltipProvider>
@@ -214,7 +212,7 @@ export function ParameterSection({
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Reset all parameters</p>
+              <p>重置所有参数</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -228,11 +226,11 @@ export function ParameterSection({
                 onOpenChange={setDimensionsOpen}
               >
                 <CollapsibleTrigger
-                  aria-label={`${dimensionsOpen ? 'Collapse' : 'Expand'} dimension parameters`}
+                  aria-label={`${dimensionsOpen ? '收起' : '展开'}尺寸参数`}
                   className="group flex w-full items-center justify-between gap-2 rounded-md py-1 text-xs font-semibold text-adam-text-primary transition-colors focus:outline-none"
                 >
                   <span className="flex items-center gap-2">
-                    Dimensions
+                    尺寸
                     <span className="text-[10px] text-adam-neutral-400">
                       {mainParameters.length}
                     </span>
@@ -263,11 +261,11 @@ export function ParameterSection({
                 className="mt-3 border-t border-adam-neutral-700/60 pt-3"
               >
                 <CollapsibleTrigger
-                  aria-label={`${colorsOpen ? 'Collapse' : 'Expand'} color parameters`}
+                  aria-label={`${colorsOpen ? '收起' : '展开'}颜色参数`}
                   className="group flex w-full items-center justify-between gap-2 rounded-md py-1 text-xs font-semibold text-adam-text-primary transition-colors focus:outline-none"
                 >
                   <span className="flex items-center gap-2">
-                    Colors
+                    颜色
                     <span className="text-[10px] text-adam-neutral-400">
                       {colorParameters.length}
                     </span>
@@ -298,7 +296,7 @@ export function ParameterSection({
             <Button
               onClick={handleDownload}
               disabled={isDownloadDisabled}
-              aria-label={`download ${selectedFormat.toUpperCase()} file`}
+              aria-label={`下载 ${selectedFormat.toUpperCase()} 文件`}
               className="h-12 flex-1 rounded-r-none bg-adam-neutral-50 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
             >
               {isExporting ? (
@@ -312,7 +310,7 @@ export function ParameterSection({
               <DropdownMenuTrigger asChild>
                 <Button
                   disabled={!isAnyFormatAvailable}
-                  aria-label="select download format"
+                  aria-label="选择下载格式"
                   className="h-12 w-12 rounded-l-none border-l border-adam-neutral-300 bg-adam-neutral-50 p-0 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
                 >
                   <ChevronUp className="h-4 w-4" />
@@ -329,7 +327,7 @@ export function ParameterSection({
                 >
                   <span className="text-sm">.STL</span>
                   <span className="ml-3 text-xs text-adam-text-primary/60">
-                    3D Printing
+                    3D 打印
                   </span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -339,7 +337,7 @@ export function ParameterSection({
                 >
                   <span className="text-sm">.SCAD</span>
                   <span className="ml-3 text-xs text-adam-text-primary/60">
-                    OpenSCAD Code
+                    OpenSCAD 源码
                   </span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -349,7 +347,7 @@ export function ParameterSection({
                 >
                   <span className="text-sm">.DXF</span>
                   <span className="ml-3 text-xs text-adam-text-primary/60">
-                    2D Projection to the (x,y) plane
+                    XY 平面 2D 投影
                   </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

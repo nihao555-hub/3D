@@ -63,11 +63,9 @@ export function RenameDialogDrawer({
         <DialogContent className="border-[2px] border-adam-neutral-700 bg-adam-background-1 sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-adam-neutral-100">
-              Rename Creation
+              重命名模型
             </DialogTitle>
-            <DialogDescription>
-              Enter a new name for this creation conversation.
-            </DialogDescription>
+            <DialogDescription>为该模型对话输入新名称。</DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <Input
@@ -76,7 +74,7 @@ export function RenameDialogDrawer({
               onChange={(e) => onNewTitleChange(e.target.value)}
               onKeyDown={handleKeyDown}
               className="border-2 border-adam-background-2 bg-adam-background-2 pl-6 text-base shadow-[0_0_0px_rgba(255,50,150,0)] ring-0 transition-[border-color,box-shadow] duration-300 ease-in-out hover:border-adam-background-2 hover:shadow-[0_0_4px_rgba(255,50,150,0.9),0_0_5px_rgba(255,50,150,0.7)] focus:border-adam-blue focus:outline-none"
-              placeholder="Conversation name"
+              placeholder="对话名称"
             />
           </div>
           <DialogFooter>
@@ -85,13 +83,13 @@ export function RenameDialogDrawer({
               onClick={() => onOpenChange(false)}
               className="border-adam-neutral-700 bg-adam-background-2 text-adam-neutral-50 [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-50"
             >
-              Cancel
+              取消
             </Button>
             <Button
               onClick={onRename}
               className="border bg-adam-neutral-50 text-black [@media(hover:hover)]:hover:border-adam-neutral-50 [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-50"
             >
-              Save
+              保存
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -104,11 +102,9 @@ export function RenameDialogDrawer({
       <DrawerContent className="mx-1 border border-adam-neutral-700 bg-adam-background-1">
         <DrawerHeader className="border-b border-adam-neutral-700 text-center">
           <DrawerTitle className="text-adam-neutral-100">
-            Rename Creation
+            重命名模型
           </DrawerTitle>
-          <DrawerDescription>
-            Enter a new name for this creation conversation.
-          </DrawerDescription>
+          <DrawerDescription>为该模型对话输入新名称。</DrawerDescription>
         </DrawerHeader>
         <div className="p-4">
           <Input
@@ -117,7 +113,7 @@ export function RenameDialogDrawer({
             onChange={(e) => onNewTitleChange(e.target.value)}
             onKeyDown={handleKeyDown}
             className="border-2 border-adam-background-2 bg-adam-background-2 pl-6 text-base shadow-[0_0_0px_rgba(255,50,150,0)] ring-0 transition-[border-color,box-shadow] duration-300 ease-in-out hover:border-adam-background-2 hover:shadow-[0_0_4px_rgba(255,50,150,0.9),0_0_5px_rgba(255,50,150,0.7)] focus:border-adam-blue focus:outline-none"
-            placeholder="Conversation name"
+            placeholder="对话名称"
           />
         </div>
         <DrawerFooter className="border-t border-adam-neutral-700">
@@ -125,14 +121,14 @@ export function RenameDialogDrawer({
             onClick={onRename}
             className="border bg-adam-neutral-50 text-black [@media(hover:hover)]:hover:border-adam-neutral-50 [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-50"
           >
-            Save
+            保存
           </Button>
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
             className="border-adam-neutral-700 bg-adam-background-2 text-adam-neutral-50 [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-50"
           >
-            Cancel
+            取消
           </Button>
         </DrawerFooter>
       </DrawerContent>

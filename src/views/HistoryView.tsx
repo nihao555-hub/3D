@@ -100,8 +100,8 @@ export function HistoryView() {
   useEffect(() => {
     if (conversationQuery.isError) {
       toast({
-        title: 'Error',
-        description: 'Failed to load conversations',
+        title: '错误',
+        description: '加载对话失败',
         variant: 'destructive',
       });
     }
@@ -141,8 +141,8 @@ export function HistoryView() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
       toast({
-        title: 'Success',
-        description: 'Conversation deleted successfully',
+        title: '成功',
+        description: '对话已删除',
       });
     },
     onError: (error: unknown, _conversationId: string, context) => {
@@ -152,8 +152,8 @@ export function HistoryView() {
         context?.previousConversations,
       );
       toast({
-        title: 'Error',
-        description: 'Failed to delete conversation',
+        title: '错误',
+        description: '删除对话失败',
         variant: 'destructive',
       });
     },
@@ -189,8 +189,8 @@ export function HistoryView() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
       toast({
-        title: 'Success',
-        description: 'Conversation renamed successfully',
+        title: '成功',
+        description: '对话已重命名',
       });
       setEditingConversation(null);
       setOpen(false);
@@ -202,8 +202,8 @@ export function HistoryView() {
         context?.previousConversations,
       );
       toast({
-        title: 'Error',
-        description: 'Failed to rename conversation',
+        title: '错误',
+        description: '重命名对话失败',
         variant: 'destructive',
       });
     },
@@ -241,8 +241,8 @@ export function HistoryView() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
       toast({
-        title: 'Success',
-        description: `Conversation is now ${variables.newPrivacy === 'public' ? 'public' : 'private'}`,
+        title: '成功',
+        description: `对话已设为${variables.newPrivacy === 'public' ? '公开' : '私密'}`,
       });
     },
     onError: (error: unknown, _variables, context) => {
@@ -252,8 +252,8 @@ export function HistoryView() {
         context?.previousConversations,
       );
       toast({
-        title: 'Error',
-        description: 'Failed to change conversation privacy',
+        title: '错误',
+        description: '修改对话可见性失败',
         variant: 'destructive',
       });
     },
@@ -263,7 +263,7 @@ export function HistoryView() {
     if (!editingConversation) return;
     if (!newTitle.trim()) {
       toast({
-        title: 'Title cannot be empty',
+        title: '标题不能为空',
         variant: 'default',
       });
       return;
@@ -313,13 +313,13 @@ export function HistoryView() {
         <div className="mx-auto w-full max-w-6xl px-6 pb-4 pt-10 md:px-20 md:py-4">
           <div className="flex items-center justify-between py-3">
             <h1 className="flex items-center gap-2 px-2 text-2xl font-medium text-adam-neutral-10">
-              Past Creations
+              我的模型
             </h1>
 
             {/* View Toggle */}
             <div
               role="group"
-              aria-label="View mode"
+              aria-label="视图模式"
               className="relative grid grid-cols-2 items-center rounded-lg border border-adam-neutral-700 bg-adam-background-2 p-1"
             >
               <span
@@ -333,7 +333,7 @@ export function HistoryView() {
                 variant="ghost"
                 size="sm"
                 aria-pressed={viewMode === 'list'}
-                aria-label="List view"
+                aria-label="列表视图"
                 onClick={() => setViewMode('list')}
                 className={`relative z-10 h-8 px-3 transition-colors duration-200 ${
                   viewMode === 'list'
@@ -342,13 +342,13 @@ export function HistoryView() {
                 }`}
               >
                 <List className="mr-2 h-4 w-4" />
-                List
+                列表
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 aria-pressed={viewMode === 'visual'}
-                aria-label="Visual view"
+                aria-label="网格视图"
                 onClick={() => setViewMode('visual')}
                 className={`relative z-10 h-8 px-3 transition-colors duration-200 ${
                   viewMode === 'visual'
@@ -357,14 +357,14 @@ export function HistoryView() {
                 }`}
               >
                 <LayoutGrid className="mr-2 h-4 w-4" />
-                Visual
+                网格
               </Button>
             </div>
           </div>
 
           <div className="relative mt-4">
             <Input
-              placeholder="Search generations..."
+              placeholder="搜索模型…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="border-0 bg-adam-background-2 pl-6 text-base shadow-[inset_0_0_10px_0_rgba(0,0,0,0.32),0_0_0_2px_rgba(0,0,0,0)] ring-0 transition-shadow duration-300 ease-in-out hover:shadow-[inset_0_0_4px_0_rgba(0,0,0,0.16),0_0_0_2px_rgba(60,60,60,1)] focus:shadow-[inset_0_0_4px_0_rgba(0,0,0,0.16),0_0_0_2px_#00A6FF] focus:outline-none sm:text-sm"
@@ -391,21 +391,17 @@ export function HistoryView() {
                 <MessageSquare className="mb-4 h-12 w-12 opacity-50" />
                 {searchQuery ? (
                   <>
-                    <p className="mb-2 text-lg font-medium">
-                      No matching conversations found
-                    </p>
-                    <p className="mb-4 text-sm">Try a different search term</p>
+                    <p className="mb-2 text-lg font-medium">未找到匹配的对话</p>
+                    <p className="mb-4 text-sm">换个关键词试试</p>
                   </>
                 ) : (
                   <>
-                    <p className="mb-2 text-lg font-medium">
-                      No conversations yet
-                    </p>
+                    <p className="mb-2 text-lg font-medium">暂无对话</p>
                     <p className="mb-4 text-sm">
-                      Start a new chat to begin building CAD
+                      开始新对话，创建你的第一个模型
                     </p>
                     <Button onClick={() => navigate({ to: '/' })}>
-                      Start New Chat
+                      开始新对话
                     </Button>
                   </>
                 )}
@@ -449,7 +445,7 @@ export function HistoryView() {
                         const [year, month, day] = date.split('-').map(Number);
                         dateString = format(
                           new Date(year, month - 1, day),
-                          'MMMM d, yyyy',
+                          'yyyy年M月d日',
                         );
                       } catch (error) {
                         Sentry.captureException(error, { extra: { date } });
@@ -504,7 +500,7 @@ export function HistoryView() {
 
       <button
         type="button"
-        aria-label="Create new item"
+        aria-label="新建模型"
         onClick={() => navigate({ to: '/' })}
         className="fixed bottom-8 right-8 flex h-14 w-14 items-center justify-center rounded-full bg-adam-neutral-100 text-adam-neutral-950 shadow-[0_4px_32px_rgba(0,0,0,0.48)] md:hidden"
       >

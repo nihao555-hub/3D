@@ -72,15 +72,15 @@ export default function SettingsView() {
           setEditingName(false);
           setNewName(profile?.full_name || '');
           toast({
-            title: 'Success',
-            description: 'Your name has been updated',
+            title: '成功',
+            description: '姓名已更新',
           });
         },
         onError: (e) => {
           Sentry.captureException(e);
           toast({
-            title: 'Error',
-            description: 'Failed to update name',
+            title: '错误',
+            description: '更新姓名失败',
             variant: 'destructive',
           });
         },
@@ -96,15 +96,15 @@ export default function SettingsView() {
       {
         onSuccess: () => {
           toast({
-            title: 'Success',
-            description: 'Your notifications have been updated',
+            title: '成功',
+            description: '通知设置已更新',
           });
         },
         onError: (e) => {
           Sentry.captureException(e);
           toast({
-            title: 'Error',
-            description: 'Failed to update notifications',
+            title: '错误',
+            description: '更新通知设置失败',
             variant: 'destructive',
           });
         },
@@ -120,15 +120,14 @@ export default function SettingsView() {
       },
       onSuccess: () => {
         toast({
-          title: 'Success',
-          description:
-            'Password reset instructions have been sent to your email',
+          title: '成功',
+          description: '密码重置邮件已发送至你的邮箱',
         });
       },
       onError: () => {
         toast({
-          title: 'Error',
-          description: 'Failed to reset password',
+          title: '错误',
+          description: '重置密码失败',
           variant: 'destructive',
         });
       },
@@ -140,7 +139,7 @@ export default function SettingsView() {
   // or no account URL) keeps the native controls. `ssoManaged` is imported from
   // @/lib/supabase so every SSO gate shares one definition.
 
-  const tierLabel = `Adam ${PLAN_DISPLAY_NAMES[level]}`;
+  const tierLabel = `智造3D ${PLAN_DISPLAY_NAMES[level]}`;
 
   const tierAccent =
     level === 'free'
@@ -154,10 +153,10 @@ export default function SettingsView() {
       <div className="w-full max-w-xl">
         <header className="mb-8">
           <h1 className="text-2xl font-medium tracking-tight text-adam-neutral-50">
-            Settings
+            设置
           </h1>
           <p className="mt-1 text-sm text-adam-neutral-200">
-            Manage your account, billing, and preferences.
+            管理你的账户、订阅与偏好设置。
           </p>
         </header>
 
@@ -165,7 +164,7 @@ export default function SettingsView() {
           {/* Account */}
           <section className="rounded-xl border border-adam-neutral-800 bg-adam-background-2 p-6">
             <h2 className="mb-5 text-sm font-medium text-adam-neutral-50">
-              Account
+              账户
             </h2>
 
             {ssoManaged ? (
@@ -183,12 +182,9 @@ export default function SettingsView() {
                 </div>
                 <div className="flex items-center justify-between gap-4 border-t border-adam-neutral-800 pt-5">
                   <div className="min-w-0">
-                    <div className="text-sm text-adam-neutral-50">
-                      Manage account
-                    </div>
+                    <div className="text-sm text-adam-neutral-50">管理账户</div>
                     <div className="mt-0.5 text-xs leading-relaxed text-adam-neutral-200">
-                      Update your name, email, password, and account details in
-                      your account.
+                      在账户中心更新姓名、邮箱、密码等账户信息。
                     </div>
                   </div>
                   <a
@@ -198,7 +194,7 @@ export default function SettingsView() {
                     className="flex-shrink-0"
                   >
                     <Button variant="dark" className="rounded-full font-light">
-                      Manage account
+                      管理账户
                     </Button>
                   </a>
                 </div>
@@ -238,7 +234,7 @@ export default function SettingsView() {
                         {isUpdateLoading ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
-                          'Save'
+                          '保存'
                         )}
                       </Button>
                       <Button
@@ -249,7 +245,7 @@ export default function SettingsView() {
                         variant="dark"
                         className="rounded-full font-light"
                       >
-                        Cancel
+                        取消
                       </Button>
                     </div>
                   ) : (
@@ -258,13 +254,13 @@ export default function SettingsView() {
                       variant="dark"
                       className="flex-shrink-0 rounded-full font-light"
                     >
-                      Edit
+                      编辑
                     </Button>
                   )}
                 </div>
 
                 <div className="py-5">
-                  <div className="text-sm text-adam-neutral-50">Email</div>
+                  <div className="text-sm text-adam-neutral-50">邮箱</div>
                   <div className="mt-0.5 truncate text-xs text-adam-neutral-200">
                     {user?.email}
                   </div>
@@ -272,9 +268,9 @@ export default function SettingsView() {
 
                 <div className="flex items-center justify-between gap-4 pt-5">
                   <div className="min-w-0">
-                    <div className="text-sm text-adam-neutral-50">Password</div>
+                    <div className="text-sm text-adam-neutral-50">密码</div>
                     <div className="mt-0.5 text-xs text-adam-neutral-200">
-                      Send a reset link to your email
+                      发送重置链接至你的邮箱
                     </div>
                   </div>
                   <Button
@@ -286,7 +282,7 @@ export default function SettingsView() {
                     {isResetLoading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      'Reset Password'
+                      '重置密码'
                     )}
                   </Button>
                 </div>
@@ -297,14 +293,14 @@ export default function SettingsView() {
           {/* Notifications */}
           <section className="rounded-xl border border-adam-neutral-800 bg-adam-background-2 p-6">
             <h2 className="mb-5 text-sm font-medium text-adam-neutral-50">
-              Notifications
+              通知
             </h2>
 
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
-                <div className="text-sm text-adam-neutral-50">Responses</div>
+                <div className="text-sm text-adam-neutral-50">回复通知</div>
                 <div className="mt-0.5 text-xs leading-relaxed text-adam-neutral-200">
-                  Get notified when Adam finishes a long-running request.
+                  长耗时任务完成后收到通知。
                 </div>
               </div>
               <Switch
@@ -318,7 +314,7 @@ export default function SettingsView() {
           {/* Billing */}
           <section className="rounded-xl border border-adam-neutral-800 bg-adam-background-2 p-6">
             <h2 className="mb-5 text-sm font-medium text-adam-neutral-50">
-              Billing
+              订阅与账单
             </h2>
 
             <div className="flex flex-col gap-5">
@@ -337,7 +333,7 @@ export default function SettingsView() {
                   </span>
                   {periodEnd && (
                     <span className="text-xs text-adam-neutral-300">
-                      Renews {periodEnd}
+                      {periodEnd} 续订
                     </span>
                   )}
                 </div>
@@ -353,7 +349,7 @@ export default function SettingsView() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {level !== 'free' ? 'Manage' : 'Manage billing'}
+                      {level !== 'free' ? '管理' : '管理账单'}
                     </a>
                   </Button>
                   {level === 'free' && (
@@ -367,7 +363,7 @@ export default function SettingsView() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Upgrade
+                        升级
                       </a>
                     </Button>
                   )}
@@ -378,7 +374,7 @@ export default function SettingsView() {
                 {level !== 'free' && (
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-adam-neutral-200">
-                      Subscription tokens
+                      订阅额度
                     </span>
                     <span className="text-xs tabular-nums text-adam-neutral-50">
                       {subscriptionTokens.toLocaleString()}
@@ -388,7 +384,7 @@ export default function SettingsView() {
                 {freeTokens > 0 && (
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-adam-neutral-200">
-                      Daily free tokens
+                      每日免费额度
                     </span>
                     <span className="text-xs tabular-nums text-adam-neutral-50">
                       {freeTokens.toLocaleString()}
@@ -398,7 +394,7 @@ export default function SettingsView() {
                 {purchasedTokens > 0 && (
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-adam-neutral-200">
-                      Purchased tokens
+                      已购额度
                     </span>
                     <span className="text-xs tabular-nums text-adam-neutral-50">
                       {purchasedTokens.toLocaleString()}
@@ -407,7 +403,7 @@ export default function SettingsView() {
                 )}
                 <div className="mt-1 flex items-center justify-between border-t border-adam-neutral-800 pt-3">
                   <span className="text-sm text-adam-neutral-50">
-                    Total available
+                    可用总额度
                   </span>
                   <span className="text-sm font-medium tabular-nums text-adam-neutral-50">
                     {totalTokens.toLocaleString()}
@@ -419,10 +415,10 @@ export default function SettingsView() {
                 <div className="flex flex-col gap-2 border-t border-adam-neutral-800 pt-5">
                   <div className="flex items-baseline justify-between">
                     <div className="text-sm text-adam-neutral-50">
-                      Buy more tokens
+                      购买更多额度
                     </div>
                     <div className="text-xs text-adam-neutral-200">
-                      Never expire
+                      永不过期
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -468,16 +464,14 @@ export default function SettingsView() {
           {!ssoManaged && (
             <section className="rounded-xl border border-adam-neutral-800 bg-adam-background-2 p-6">
               <h2 className="mb-5 text-sm font-medium text-adam-neutral-50">
-                Data and privacy
+                数据与隐私
               </h2>
 
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm text-adam-neutral-50">
-                    Delete account
-                  </div>
+                  <div className="text-sm text-adam-neutral-50">注销账户</div>
                   <div className="mt-0.5 text-xs leading-relaxed text-adam-neutral-200">
-                    Permanently delete your account and all associated data.
+                    永久删除你的账户及所有相关数据。
                   </div>
                 </div>
                 <DeleteAccountDialog>
@@ -485,7 +479,7 @@ export default function SettingsView() {
                     className="flex-shrink-0 rounded-full font-light"
                     variant="destructive"
                   >
-                    Delete
+                    删除
                   </Button>
                 </DeleteAccountDialog>
               </div>
@@ -497,7 +491,7 @@ export default function SettingsView() {
               to="/terms-of-service"
               className="transition-colors hover:text-adam-neutral-50"
             >
-              Terms of Service
+              服务条款
             </Link>
             <span aria-hidden className="text-adam-neutral-700">
               •
@@ -506,7 +500,7 @@ export default function SettingsView() {
               to="/privacy-policy"
               className="transition-colors hover:text-adam-neutral-50"
             >
-              Privacy Policy
+              隐私政策
             </Link>
           </div>
         </div>

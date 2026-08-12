@@ -190,9 +190,8 @@ export function ChatSession({
         billingErrorHandledRef.current = true;
         queryClient.invalidateQueries({ queryKey: ['billing', 'status'] });
         toast({
-          title: "You're out of tokens",
-          description:
-            'Upgrade your plan or buy a token pack to keep chatting.',
+          title: '额度已用完',
+          description: '升级套餐或购买额度包即可继续对话。',
           variant: 'destructive',
         });
       }
@@ -354,9 +353,8 @@ export function ChatSession({
               persistError,
             );
             toast({
-              title: "Couldn't save the reply",
-              description:
-                'Your message is shown but may not survive a refresh. Please retry if it disappears.',
+              title: '回复保存失败',
+              description: '消息已显示，但刷新后可能丢失。若消失请重试。',
               variant: 'destructive',
             });
           }
@@ -550,9 +548,9 @@ export function ChatSession({
             // let them retry.
             persistFailedRef.current = true;
             toast({
-              title: "Couldn't save this step",
+              title: '此步骤保存失败',
               description:
-                "The model is shown but the build wasn't saved, so Adam paused. Please retry.",
+                '模型已显示，但构建结果未能保存，生成已暂停。请重试。',
               variant: 'destructive',
             });
           }
@@ -661,8 +659,8 @@ export function ChatSession({
       }
       const message = error instanceof Error ? error.message : String(error);
       toast({
-        title: 'Adam ran into a problem',
-        description: message || 'The model call failed. Please try again.',
+        title: '出错了',
+        description: message || '模型调用失败，请重试。',
         variant: 'destructive',
       });
     },
@@ -981,7 +979,7 @@ export function ChatSession({
         <TextAreaChat
           type={conversation.type}
           onSubmit={(parts) => void handleSend(parts)}
-          placeholder="Keep iterating with Adam..."
+          placeholder="继续描述以迭代模型…"
           isLoading={isLoading}
           stopGenerating={stop}
           disabled={isDisabled}

@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { CREATIVE_MODELS, PARAMETRIC_MODELS } from '@/lib/utils';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
@@ -258,7 +258,7 @@ function UserBubble({
                   <img
                     key={`img-${index}`}
                     src={part.url}
-                    alt={part.filename ?? 'Uploaded image'}
+                    alt={part.filename ?? '已上传的图片'}
                     className="h-20 w-20 rounded-lg object-cover"
                   />
                 );
@@ -267,7 +267,7 @@ function UserBubble({
                 <UploadedImage
                   key={`img-${index}`}
                   id={id}
-                  alt={part.filename ?? 'Uploaded image'}
+                  alt={part.filename ?? '已上传的图片'}
                 />
               );
             })}
@@ -287,8 +287,7 @@ function UserBubble({
             key={`pref-${index}`}
             className="w-fit rounded-full bg-adam-neutral-800 px-2 py-1 text-xs text-adam-text-secondary"
           >
-            {part.data.topology} · {part.data.polygonCount.toLocaleString()}{' '}
-            polys
+            {part.data.topology} · {part.data.polygonCount.toLocaleString()} 面
           </span>
         ))}
 
@@ -344,7 +343,7 @@ function UserBubble({
                           <Pencil className="h-3 w-3 p-0 text-adam-neutral-100" />
                         </Button>
                       </TooltipTrigger>
-                      <TooltipContent>Edit</TooltipContent>
+                      <TooltipContent>编辑</TooltipContent>
                     </Tooltip>
                     <Separator
                       orientation="vertical"
@@ -368,7 +367,7 @@ function UserBubble({
                         )}
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>Copy Prompt</TooltipContent>
+                    <TooltipContent>复制提示词</TooltipContent>
                   </Tooltip>
                 )}
                 {onSelectLeaf && message.siblings.length > 1 && (
@@ -494,12 +493,9 @@ function AssistantBubble({
     <div className="flex min-w-0 max-w-full justify-start overflow-hidden">
       <div className="mr-2 mt-1 shrink-0">
         <Avatar className="h-9 w-9 border border-adam-neutral-700 bg-adam-neutral-950">
-          <div style={{ padding: '0.6rem 0.5rem 0.5rem 0.55rem' }}>
-            <AvatarImage
-              src={`${import.meta.env.BASE_URL}/adam-logo.svg`}
-              alt="Adam"
-            />
-          </div>
+          <span className="flex h-full w-full items-center justify-center text-sm font-semibold tracking-tight text-adam-text-primary">
+            智
+          </span>
         </Avatar>
       </div>
       <div className="flex min-w-0 max-w-[calc(100%-3rem)] flex-1 flex-col gap-2">
@@ -581,10 +577,10 @@ function AssistantBubble({
                 icon={<Box className="h-4 w-4" />}
                 title={
                   part.state === 'output-error'
-                    ? 'CAD generation failed'
+                    ? 'CAD 生成失败'
                     : artifact
                       ? artifact.title
-                      : 'Building CAD...'
+                      : '正在构建 CAD…'
                 }
                 loading={part.state === 'input-available'}
                 expanded={isOpen}
@@ -668,7 +664,7 @@ function AssistantBubble({
                   size="icon"
                   onClick={() => onChangeRating(message.rating === 1 ? 0 : 1)}
                   className="h-6 w-6 rounded-lg rounded-r-none border-r-0 p-0 pl-0.5"
-                  aria-label="Thumbs up"
+                  aria-label="赞"
                 >
                   <ThumbsUp
                     className={cn(
@@ -688,7 +684,7 @@ function AssistantBubble({
                   size="icon"
                   onClick={() => onChangeRating(message.rating === -1 ? 0 : -1)}
                   className="h-6 w-6 rounded-lg rounded-l-none border-l-0 p-0 pr-0.5"
-                  aria-label="Thumbs down"
+                  aria-label="踩"
                 >
                   <ThumbsDown
                     className={cn(
@@ -710,12 +706,12 @@ function AssistantBubble({
                     size="icon"
                     className="h-6 w-6 rounded-lg p-0"
                     onClick={() => navigator.clipboard.writeText(copyText)}
-                    aria-label="Copy"
+                    aria-label="复制"
                   >
                     <Copy className="h-3 w-3 text-adam-neutral-100" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Copy</TooltipContent>
+                <TooltipContent>复制</TooltipContent>
               </Tooltip>
             )}
 
@@ -728,12 +724,12 @@ function AssistantBubble({
                     onClick={onRestore}
                     disabled={isLoading}
                     className="h-6 w-6 rounded-lg p-0"
-                    aria-label="Restore this version"
+                    aria-label="恢复此版本"
                   >
                     <History className="h-3 w-3 text-adam-neutral-100" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Restore</TooltipContent>
+                <TooltipContent>恢复</TooltipContent>
               </Tooltip>
             )}
 
@@ -752,12 +748,12 @@ function AssistantBubble({
                         'h-6 w-6 rounded-lg p-0',
                         modelOptions.length > 1 && 'rounded-r-none border-r-0',
                       )}
-                      aria-label="Retry"
+                      aria-label="重试"
                     >
                       <RefreshCw className="h-3 w-3 text-adam-neutral-100" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Retry</TooltipContent>
+                  <TooltipContent>重试</TooltipContent>
                 </Tooltip>
                 {modelOptions.length > 1 && (
                   <RetryModelDropdown
@@ -822,7 +818,7 @@ function RetryModelDropdown({
             'h-6 w-fit gap-1 rounded-lg rounded-l-none px-2 text-xs text-adam-text-primary',
             isOpen && 'bg-adam-neutral-800',
           )}
-          aria-label="Retry with another model"
+          aria-label="使用其他模型重试"
         >
           <span>{selectedModel.name}</span>
           <ChevronDown
@@ -968,7 +964,7 @@ function ToolBlock({
           <button
             type="button"
             onClick={onToggle}
-            aria-label={expanded ? 'Hide code' : 'Show code'}
+            aria-label={expanded ? '收起代码' : '查看代码'}
             className={cn(
               'flex w-9 shrink-0 items-center justify-center transition-opacity focus-visible:opacity-100',
               expanded ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
@@ -1044,10 +1040,10 @@ function MeshToolBlock({
 
   const title =
     isError || meshStatus === 'failure'
-      ? 'Mesh generation failed'
+      ? '网格生成失败'
       : meshStatus === 'success'
-        ? '3D Object'
-        : 'Generating mesh...';
+        ? '3D 对象'
+        : '正在生成网格…';
 
   return (
     <ToolBlock
@@ -1140,7 +1136,7 @@ function MeshContextChip({
   filename?: string;
   fileType: string;
 }) {
-  const label = filename ?? `mesh ${meshId.slice(0, 6)}`;
+  const label = filename ?? `模型 ${meshId.slice(0, 6)}`;
   return (
     <div className="flex items-center gap-2 overflow-hidden rounded-lg border border-adam-neutral-700 bg-adam-neutral-900 p-1.5">
       <div className="h-12 w-12 shrink-0 overflow-hidden rounded-md">
