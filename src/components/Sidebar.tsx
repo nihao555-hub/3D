@@ -141,15 +141,24 @@ function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
             onClick={() => sidebarNavigate('/')}
           >
             {isSidebarOpen ? (
-              <div className="flex w-full">
-                <span className="mx-auto flex h-8 w-full items-center justify-center text-lg font-semibold tracking-tight text-adam-text-primary">
+              <div className="flex w-full items-center justify-center gap-2">
+                <img
+                  src={`${import.meta.env.BASE_URL}/zhizao-logo.png`}
+                  alt="智造3D"
+                  className="h-8 w-8 shrink-0"
+                  draggable={false}
+                />
+                <span className="flex h-8 items-center text-lg font-semibold tracking-tight text-adam-text-primary">
                   智造3D
                 </span>
               </div>
             ) : (
-              <span className="flex h-8 w-8 min-w-8 items-center justify-center text-lg font-semibold tracking-tight text-adam-text-primary">
-                智
-              </span>
+              <img
+                src={`${import.meta.env.BASE_URL}/zhizao-logo.png`}
+                alt="智造3D"
+                className="h-8 w-8 min-w-8 shrink-0"
+                draggable={false}
+              />
             )}
           </button>
         </ConditionalWrapper>
@@ -178,7 +187,7 @@ function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
                 variant="secondary"
                 className={` ${
                   isSidebarOpen
-                    ? 'flex w-[216px] items-center justify-start gap-2 rounded-[100px] border border-adam-blue bg-adam-background-1 px-4 py-3 text-[#D7D7D7] hover:bg-adam-blue/40 hover:text-adam-text-primary'
+                    ? 'flex w-[216px] items-center justify-start gap-2 rounded-[100px] border border-adam-blue bg-adam-background-1 px-4 py-3 text-adam-blue hover:bg-adam-blue/10 hover:text-adam-blue'
                     : 'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] border-2 border-adam-blue bg-adam-blue p-[2px] text-white shadow-[0px_4px_10px_0px_rgba(0,135,212,0.24)] hover:bg-adam-blue/80 hover:text-white'
                 } mb-4`}
                 onClick={() => sidebarNavigate('/')}
@@ -187,7 +196,7 @@ function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
                   className={`h-5 w-5 ${!isSidebarOpen ? 'text-adam-neutral-300 hover:text-adam-text-primary' : ''}`}
                 />
                 {isSidebarOpen && (
-                  <div className="text-sm font-semibold leading-[14px] tracking-[-0.14px] text-adam-neutral-200">
+                  <div className="text-sm font-semibold leading-[14px] tracking-[-0.14px] text-adam-blue">
                     新建模型
                   </div>
                 )}
