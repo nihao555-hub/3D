@@ -1,6 +1,5 @@
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { createOpenAI } from '@ai-sdk/openai';
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { chatTools, type AppUIMessage, type AppTools } from '@shared/chatAi';
 import { cleanAssistantText, getParametricText } from '@shared/parametricParts';
@@ -336,11 +335,10 @@ function providerFor(modelId: string): ChatProvider {
 }
 
 // "Relay mode": OPENROUTER_BASE_URL pointing at a generic OpenAI-compatible
-// relay routes EVERY catalog model through it, via the OpenAI *Responses*
-// API rather than chat/completions — tested relays (grsai) proxy Responses
-// upstreams and silently drop tool_calls on the chat endpoint, which breaks
-// the tool-driven parametric flow. Relays register bare model names
-// ("gpt-5.6-sol"), not vendor-prefixed ids ("openai/gpt-5.6-sol").
+// relay (one-api style) routes EVERY catalog model through it. Relays
+// register bare model names ("gpt-5.6-sol"), not OpenRouter's
+// vendor-prefixed ids ("openai/gpt-5.6-sol"), and may reject
+// OpenRouter-specific request fields, so both are dropped in this mode.
 function isCustomRelay(): boolean {
   return Boolean(env('OPENROUTER_BASE_URL').trim());
 }
@@ -370,22 +368,13 @@ type ChatProviders = {
   anthropic: () => AnthropicProvider;
   google: () => GoogleProvider;
   openrouter: () => ReturnType<typeof createOpenRouter>;
-  relay: () => ReturnType<typeof createOpenAI>;
 };
 
 function createChatProviders(): ChatProviders {
   let anthropic: AnthropicProvider | undefined;
   let google: GoogleProvider | undefined;
   let openrouter: ReturnType<typeof createOpenRouter> | undefined;
-  let relay: ReturnType<typeof createOpenAI> | undefined;
   return {
-    relay: () => {
-      relay ??= createOpenAI({
-        apiKey: requiredEnv('OPENROUTER_API_KEY'),
-        baseURL: requiredEnv('OPENROUTER_BASE_URL'),
-      });
-      return relay;
-    },
     anthropic: () => {
       if (!anthropic) {
         const baseURL = normalizedAnthropicBaseURL();
@@ -440,7 +429,7 @@ function buildChatModel(
     thinking && thinkingBudget !== THINKING_BUDGET_TOKENS;
 
   if (isCustomRelay()) {
-    return { model: providers.relay().responses(relayModelId(modelId)) };
+    return { model: providers.openrouter().chat(relayModelId(modelId)) };
   }
 
   if (providerFor(modelId) === 'openrouter') {
@@ -541,9 +530,6 @@ function rejectsForcedToolChoice(modelId: string): boolean {
 }
 
 // Whether a model accepts a forced `tool_choice` (type: "tool" / "any").
-// Relay mode goes through the OpenAI Responses API, which takes the flat
-// `tool_choice: { type: "function", name }` shape the AI SDK's OpenAI
-// provider emits natively — forcing works there, so no relay exception.
 function supportsForcedToolChoice(modelId: string): boolean {
   return !rejectsForcedToolChoice(modelId);
 }

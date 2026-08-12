@@ -72,18 +72,34 @@ WEBHOOK_BASE_URL="http://localhost:3000"
 
 #### 使用「中转/API 代理」接入（推荐路径）
 
-多数聚合中转（one-api/new-api 等）同时提供 Anthropic 兼容和 OpenAI 兼容两种端点，按支持情况选择：
-
 ```env
-# 方式A：Anthropic 兼容（推荐——CADAM 上游即针对 Claude 优化，官方基准全部用 Claude 生成）
+# 方式A：Anthropic 兼容中转（CADAM 上游即针对 Claude 优化）
 ANTHROPIC_API_KEY="sk-xxx（中转发的 key）"
 ANTHROPIC_BASE_URL="https://你的中转域名"          # 带不带 /v1 都可以
 VITE_DEFAULT_MODEL="anthropic/claude-fable-5"     # 新会话默认用最强模型
 
-# 方式B：OpenAI/OpenRouter 兼容（要求中转接受 openai/gpt-5.6-sol 这种带前缀模型名）
+# 方式B：OpenAI 兼容中转（「中转模式」，已实测 grsai.ai）
+# 设置 OPENROUTER_BASE_URL 后，所有模型统一经该中转的 OpenAI Responses API
+# （/v1/responses）调用，并自动去掉厂商前缀（openai/gpt-5.6-sol -> gpt-5.6-sol）
 OPENROUTER_API_KEY="sk-xxx"
 OPENROUTER_BASE_URL="https://你的中转域名/v1"      # 填到 /v1 完整路径
+VITE_ENABLED_MODELS="openai/gpt-5.6-sol"          # 只展示中转真正支持函数调用的模型
+VITE_DEFAULT_MODEL="openai/gpt-5.6-sol"
 ```
+
+> **为什么走 Responses API？** 实测部分中转（如 grsai.ai）的 `/v1/chat/completions`
+> 端点会丢失 `tool_calls`（请求里的 tools 不透传、响应里的函数调用被剥离），
+> 而 CADAM 的参数化建模流程完全依赖函数调用。这类中转的 `/v1/responses`
+> 端点则完整透传函数调用、流式与自定义系统提示词。
+>
+> **模型启用建议**：接入前先验证中转对目标模型的「函数调用」支持
+> （向 `/v1/responses` 发一个带 tools 的请求，确认响应包含 `function_call`），
+> 只把验证通过的模型加入 `VITE_ENABLED_MODELS`。例如 grsai 中转上
+> Gemini 系列未在 responses 端点注册、chat 端点又丢工具调用，故不启用。
+
+**grsai.ai 中转实测结论**（2026-08）：`gpt-5.6-sol`（应用默认 CAD 主力模型）经
+`/v1/responses` 全流程可用——流式 ✓、函数调用 ✓、系统提示词覆盖 ✓；
+端到端生成参数化法兰（9 个可调参数、STL/SCAD/DXF 导出）约 50 秒。
 
 ### 3. 可选功能密钥
 

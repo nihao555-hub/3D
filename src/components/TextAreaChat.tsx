@@ -20,7 +20,7 @@ import {
 import {
   cn,
   CREATIVE_MODELS,
-  PARAMETRIC_MODELS,
+  ENABLED_PARAMETRIC_MODELS,
   parametricModelSupportsVision,
 } from '@/lib/utils';
 import { CreativeModel, MeshFileType, Model } from '@shared/types';
@@ -656,7 +656,7 @@ function TextAreaChat({
     if (type === 'creative') {
       return CREATIVE_MODELS;
     }
-    return PARAMETRIC_MODELS;
+    return ENABLED_PARAMETRIC_MODELS;
   }, [type]);
 
   // ------------------------------------------------------------

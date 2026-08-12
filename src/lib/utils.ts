@@ -320,18 +320,35 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
   },
 ];
 
-// New-conversation default. Deployments can point it at any catalog entry via
-// VITE_DEFAULT_MODEL (e.g. 'anthropic/claude-fable-5' when Claude is served
-// through a relay); unknown ids keep the built-in default so a typo can't
-// break chat submission.
+// Optional picker allowlist. VITE_ENABLED_MODELS (comma-separated catalog
+// ids, e.g. "openai/gpt-5.6-sol,google/gemini-3.1-pro-preview") hides entries
+// the deployment's upstream/relay doesn't serve. Unset — or filtering
+// everything out — keeps the full catalog. Historical messages still resolve
+// display names from the full PARAMETRIC_MODELS list.
+export const ENABLED_PARAMETRIC_MODELS: ModelConfig[] = (() => {
+  const ids = (
+    (import.meta.env.VITE_ENABLED_MODELS as string | undefined) ?? ''
+  )
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (ids.length === 0) return PARAMETRIC_MODELS;
+  const filtered = PARAMETRIC_MODELS.filter((m) => ids.includes(m.id));
+  return filtered.length > 0 ? filtered : PARAMETRIC_MODELS;
+})();
+
+// New-conversation default. Deployments can point it at any enabled catalog
+// entry via VITE_DEFAULT_MODEL; unknown/disabled ids fall back to the first
+// enabled model so a typo can't break chat submission.
 const FALLBACK_PARAMETRIC_MODEL: Model = 'openai/gpt-5.6-sol';
 export const DEFAULT_PARAMETRIC_MODEL: Model = (() => {
   const configured = (
     (import.meta.env.VITE_DEFAULT_MODEL as string | undefined) ?? ''
   ).trim() as Model;
-  return PARAMETRIC_MODELS.some((m) => m.id === configured)
-    ? configured
-    : FALLBACK_PARAMETRIC_MODEL;
+  if (ENABLED_PARAMETRIC_MODELS.some((m) => m.id === configured)) {
+    return configured;
+  }
+  return ENABLED_PARAMETRIC_MODELS[0]?.id ?? FALLBACK_PARAMETRIC_MODEL;
 })();
 
 export const CREATIVE_MODELS: ModelConfig[] = [
