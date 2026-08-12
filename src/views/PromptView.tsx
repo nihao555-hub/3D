@@ -15,7 +15,7 @@ import { LowPromptsWarningMessage } from '@/components/LowPromptsWarningMessage'
 import { NewProductBanner } from '@/components/NewProductBanner';
 import { FreePlanTrialPill } from '@/components/FreePlanTrialPill';
 import { useIsMobile } from '@/hooks/useIsMobile';
-import { cn } from '@/lib/utils';
+import { cn, DEFAULT_PARAMETRIC_MODEL } from '@/lib/utils';
 import { SelectedItemsContext } from '@/contexts/SelectedItemsContext';
 import posthog from 'posthog-js';
 import * as Sentry from '@sentry/react';
@@ -51,7 +51,7 @@ export function PromptView() {
 
   const [type, setType] = useState<'parametric' | 'creative'>('parametric');
 
-  const [model, setModel] = useState<Model>('openai/gpt-5.6-sol');
+  const [model, setModel] = useState<Model>(DEFAULT_PARAMETRIC_MODEL);
 
   const handleTypeChange = (newType: 'parametric' | 'creative') => {
     setType(newType);
@@ -59,7 +59,7 @@ export function PromptView() {
     if (newType === 'creative') {
       setModel('quality');
     } else {
-      setModel('openai/gpt-5.6-sol');
+      setModel(DEFAULT_PARAMETRIC_MODEL);
     }
   };
 

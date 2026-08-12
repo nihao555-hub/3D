@@ -25,7 +25,7 @@ import {
 import parseParameters from '@shared/parseParameters';
 import { normalizeModelId } from '@shared/models';
 import { supabase } from '@/lib/supabase';
-import { updateParameter } from '@/lib/utils';
+import { updateParameter, DEFAULT_PARAMETRIC_MODEL } from '@/lib/utils';
 import {
   persistAssistantParts,
   persistUserMessage,
@@ -194,7 +194,7 @@ function ConversationEditor() {
       ? normalizeModelId(conversation.settings.model)
       : conversation.type === 'creative'
         ? 'quality'
-        : 'openai/gpt-5.6-sol',
+        : DEFAULT_PARAMETRIC_MODEL,
   );
   const [activePreview, setActivePreview] = useState<ActivePreview>(null);
   const [parameters, setParameters] = useState<Parameter[]>([]);

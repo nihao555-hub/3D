@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Parameter } from '@shared/types';
+import { Parameter, Model } from '@shared/types';
 import { ModelConfig } from '../types/misc.ts';
 
 export function cn(...inputs: ClassValue[]) {
@@ -319,6 +319,20 @@ export const PARAMETRIC_MODELS: ModelConfig[] = [
     supportsVision: false,
   },
 ];
+
+// New-conversation default. Deployments can point it at any catalog entry via
+// VITE_DEFAULT_MODEL (e.g. 'anthropic/claude-fable-5' when Claude is served
+// through a relay); unknown ids keep the built-in default so a typo can't
+// break chat submission.
+const FALLBACK_PARAMETRIC_MODEL: Model = 'openai/gpt-5.6-sol';
+export const DEFAULT_PARAMETRIC_MODEL: Model = (() => {
+  const configured = (
+    (import.meta.env.VITE_DEFAULT_MODEL as string | undefined) ?? ''
+  ).trim() as Model;
+  return PARAMETRIC_MODELS.some((m) => m.id === configured)
+    ? configured
+    : FALLBACK_PARAMETRIC_MODEL;
+})();
 
 export const CREATIVE_MODELS: ModelConfig[] = [
   {

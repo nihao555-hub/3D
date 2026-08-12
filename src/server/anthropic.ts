@@ -1,4 +1,13 @@
-import { requiredEnv } from './env';
+import { env, requiredEnv } from './env';
+
+// Honor ANTHROPIC_BASE_URL (relay / proxy deployments) for the raw messages
+// endpoint as well, accepting the base with or without a trailing "/v1".
+function anthropicMessagesUrl(): string {
+  const raw = env('ANTHROPIC_BASE_URL').trim();
+  if (!raw) return 'https://api.anthropic.com/v1/messages';
+  const base = raw.replace(/\/+$/, '').replace(/\/v1$/, '');
+  return `${base}/v1/messages`;
+}
 
 type AnthropicContent =
   | string
@@ -54,7 +63,7 @@ export async function createAnthropicText({
   content: AnthropicContent;
   maxTokens: number;
 }): Promise<string> {
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch(anthropicMessagesUrl(), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

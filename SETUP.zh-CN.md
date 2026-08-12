@@ -56,16 +56,34 @@ WEBHOOK_BASE_URL="http://localhost:3000"
 
 ### 2. AI 模型密钥（⚠️ 生成功能必需，至少配一个）
 
-模型路由规则（见 `src/server/aiChat.ts`）：
+模型路由规则（见 `src/server/aiChat.ts`），三条通道均支持自定义 base URL 接入中转：
 
-| 界面模型                                 | 走哪个密钥           | 说明                                                   |
-| ---------------------------------------- | -------------------- | ------------------------------------------------------ |
-| GPT‑5.6 Sol（**默认**）、Grok、Kimi、GLM | `OPENROUTER_API_KEY` | OpenAI 及其他厂商统一走 OpenRouter 中转                |
-| Claude 系列（Fable/Opus/Sonnet）         | `ANTHROPIC_API_KEY`  | 直连 Anthropic；支持 `ANTHROPIC_BASE_URL` 指向兼容代理 |
-| Gemini 系列                              | `GOOGLE_API_KEY`     | 直连 Google                                            |
+| 界面模型                                     | 密钥                 | Base URL 覆盖         | 说明                                                                                     |
+| -------------------------------------------- | -------------------- | --------------------- | ---------------------------------------------------------------------------------------- |
+| Claude 系列（Fable 5 / Opus 4.8 / Sonnet 5） | `ANTHROPIC_API_KEY`  | `ANTHROPIC_BASE_URL`  | Anthropic 兼容协议（`/v1/messages`），带不带 `/v1` 均可                                  |
+| GPT‑5.6 Sol（**出厂默认**）、Grok、Kimi、GLM | `OPENROUTER_API_KEY` | `OPENROUTER_BASE_URL` | OpenRouter/OpenAI 兼容协议，模型名带厂商前缀（如 `openai/gpt-5.6-sol`），base 填完整路径 |
+| Gemini 系列                                  | `GOOGLE_API_KEY`     | `GOOGLE_BASE_URL`     | Gemini 原生协议                                                                          |
 
-- 只配 `ANTHROPIC_API_KEY` 也可以：在界面右下角模型选择器中切换到 Claude 模型即可。
-- 未配置时提交生成请求会返回 500，服务端日志报 `OPENROUTER_API_KEY is not set`。
+- 新会话默认模型可用 `VITE_DEFAULT_MODEL` 指定（如 `anthropic/claude-fable-5`），非法值自动回退。
+- 辅助功能（自动会话标题、后续建议提示）固定调用 **Claude Haiku 4.5**
+  （`claude-haiku-4-5` / `claude-haiku-4-5-20251001`），仅在配置了 `ANTHROPIC_API_KEY` 时启用；
+  中转若不支持该模型，这两个辅助功能会失败但不影响核心生成。
+- 未配置任何密钥时提交生成请求会返回 500，服务端日志报 `OPENROUTER_API_KEY is not set`。
+
+#### 使用「中转/API 代理」接入（推荐路径）
+
+多数聚合中转（one-api/new-api 等）同时提供 Anthropic 兼容和 OpenAI 兼容两种端点，按支持情况选择：
+
+```env
+# 方式A：Anthropic 兼容（推荐——CADAM 上游即针对 Claude 优化，官方基准全部用 Claude 生成）
+ANTHROPIC_API_KEY="sk-xxx（中转发的 key）"
+ANTHROPIC_BASE_URL="https://你的中转域名"          # 带不带 /v1 都可以
+VITE_DEFAULT_MODEL="anthropic/claude-fable-5"     # 新会话默认用最强模型
+
+# 方式B：OpenAI/OpenRouter 兼容（要求中转接受 openai/gpt-5.6-sol 这种带前缀模型名）
+OPENROUTER_API_KEY="sk-xxx"
+OPENROUTER_BASE_URL="https://你的中转域名/v1"      # 填到 /v1 完整路径
+```
 
 ### 3. 可选功能密钥
 

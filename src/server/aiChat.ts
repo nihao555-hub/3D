@@ -373,15 +373,26 @@ function createChatProviders(): ChatProviders {
       return anthropic;
     },
     google: () => {
-      google ??= createGoogleGenerativeAI({
-        apiKey: requiredEnv('GOOGLE_API_KEY'),
-      });
+      if (!google) {
+        const baseURL = env('GOOGLE_BASE_URL').trim();
+        google = createGoogleGenerativeAI({
+          apiKey: requiredEnv('GOOGLE_API_KEY'),
+          ...(baseURL ? { baseURL } : {}),
+        });
+      }
       return google;
     },
     openrouter: () => {
-      openrouter ??= createOpenRouter({
-        apiKey: requiredEnv('OPENROUTER_API_KEY'),
-      });
+      if (!openrouter) {
+        // OPENROUTER_BASE_URL lets deployments swap in any OpenRouter- or
+        // OpenAI-compatible relay (expects the full base incl. path, e.g.
+        // "https://relay.example.com/api/v1").
+        const baseURL = env('OPENROUTER_BASE_URL').trim();
+        openrouter = createOpenRouter({
+          apiKey: requiredEnv('OPENROUTER_API_KEY'),
+          ...(baseURL ? { baseURL } : {}),
+        });
+      }
       return openrouter;
     },
   };
