@@ -6,7 +6,7 @@ import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig, type Plugin } from 'vite';
 
-const appBase = '/cadam';
+const appBase = '/studio';
 const normalizedAppBase = appBase.replace(/\/$/, '');
 
 function serveOpenScadWasmInDev(): Plugin {
@@ -72,7 +72,7 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1000,
 
-    outDir: 'dist/cadam',
+    outDir: 'dist/studio',
     emptyOutDir: true,
 
     sourcemap: true,
@@ -80,7 +80,7 @@ export default defineConfig({
   environments: {
     client: {
       build: {
-        outDir: 'dist/cadam',
+        outDir: 'dist/studio',
         rollupOptions: {
           output: {
             manualChunks(id) {
@@ -111,6 +111,10 @@ export default defineConfig({
   server: {
     port: 3000,
     open: false,
+    // Cloudflare quick tunnels (random *.trycloudflare.com subdomains) are
+    // used in local dev to make fal.ai webhooks reachable; allow them
+    // through Vite's host check.
+    allowedHosts: ['.trycloudflare.com'],
   },
   optimizeDeps: {
     exclude: ['@zip.js/zip.js', 'three', 'three-stdlib', '@sentry/vite-plugin'],

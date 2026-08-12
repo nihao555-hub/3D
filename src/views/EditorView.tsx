@@ -753,7 +753,7 @@ function ConversationEditor() {
               onOutputChange={setCurrentOutput}
               onDxfExportChange={handleDxfExporterChange}
               isMobile={true}
-              backgroundColor="#212121"
+              backgroundColor="#EDEDEC"
             />
           ) : activePreview?.type === 'mesh' ? (
             <MeshPreview meshId={activePreview.meshId} />

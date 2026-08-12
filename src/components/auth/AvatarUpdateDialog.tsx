@@ -160,9 +160,9 @@ export const AvatarUpdateDialog = () => {
           <UserAvatar className="h-9 w-9 border border-adam-neutral-700 bg-adam-neutral-950 p-0" />
           <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
             {isUploadingAvatar ? (
-              <Loader2 className="h-4 w-4 animate-spin text-white" />
+              <Loader2 className="h-4 w-4 animate-spin text-adam-text-primary" />
             ) : (
-              <Camera className="h-4 w-4 text-white" />
+              <Camera className="h-4 w-4 text-adam-text-primary" />
             )}
           </div>
         </div>

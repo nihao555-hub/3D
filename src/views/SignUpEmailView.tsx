@@ -119,10 +119,12 @@ export function SignUpEmailView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <span className="text-2xl font-semibold tracking-tight text-white">
+            <span className="text-2xl font-semibold tracking-tight text-adam-text-primary">
               智造3D
             </span>
-            <h1 className="text-2xl font-semibold text-white">创建账号</h1>
+            <h1 className="text-2xl font-semibold text-adam-text-primary">
+              创建账号
+            </h1>
           </div>
           <div className="w-full py-2">
             <Button
@@ -137,7 +139,7 @@ export function SignUpEmailView() {
 
           <form onSubmit={handleSignUp} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-white">
+              <Label htmlFor="name" className="text-adam-text-primary">
                 姓名
               </Label>
               <Input
@@ -147,12 +149,12 @@ export function SignUpEmailView() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">
+              <Label htmlFor="email" className="text-adam-text-primary">
                 邮箱
               </Label>
               <Input
@@ -162,12 +164,12 @@ export function SignUpEmailView() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">
+              <Label htmlFor="password" className="text-adam-text-primary">
                 密码
               </Label>
               <Input
@@ -178,12 +180,15 @@ export function SignUpEmailView() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-white">
+              <Label
+                htmlFor="confirmPassword"
+                className="text-adam-text-primary"
+              >
                 确认密码
               </Label>
               <Input
@@ -194,7 +199,7 @@ export function SignUpEmailView() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
               />
             </div>
 
@@ -209,7 +214,7 @@ export function SignUpEmailView() {
               )}
             </Button>
 
-            <div className="text-center text-sm text-white">
+            <div className="text-center text-sm text-adam-text-primary">
               已有账号？{' '}
               <Link
                 to="/signin"

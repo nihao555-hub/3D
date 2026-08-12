@@ -8,5 +8,5 @@ void main() {
         dist = 0.0;
     }
     float alpha = 1.0 - smoothstep(0.0, 1.0, dist);
-    outColor = vec4(0.0, 0.651, 1.0, alpha);
+    outColor = vec4(0.0, 0.529, 0.831, alpha);
 }

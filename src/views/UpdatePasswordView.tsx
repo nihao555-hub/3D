@@ -52,14 +52,16 @@ export function UpdatePasswordView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <span className="text-2xl font-semibold tracking-tight text-white">
+            <span className="text-2xl font-semibold tracking-tight text-adam-text-primary">
               智造3D
             </span>
-            <h1 className="text-2xl font-semibold text-white">更新密码</h1>
+            <h1 className="text-2xl font-semibold text-adam-text-primary">
+              更新密码
+            </h1>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">
+              <Label htmlFor="password" className="text-adam-text-primary">
                 新密码
               </Label>
               <Input
@@ -69,12 +71,15 @@ export function UpdatePasswordView() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="border-gray-700 bg-adam-bg-dark text-white placeholder:text-gray-400"
+                className="border-gray-300 bg-adam-bg-dark text-adam-text-primary placeholder:text-gray-500"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-white">
+              <Label
+                htmlFor="confirmPassword"
+                className="text-adam-text-primary"
+              >
                 确认密码
               </Label>
               <Input
@@ -84,7 +89,7 @@ export function UpdatePasswordView() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="border-gray-700 bg-adam-bg-dark text-white placeholder:text-gray-400"
+                className="border-gray-300 bg-adam-bg-dark text-adam-text-primary placeholder:text-gray-500"
               />
             </div>
 

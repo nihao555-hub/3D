@@ -58,7 +58,7 @@ export function ShareContent({
     <div className="flex w-full flex-col gap-6">
       <div className="flex flex-col gap-6">
         <div className="h-5 font-medium text-adam-neutral-100">
-          Share public link to chat
+          分享此创作的公开链接
         </div>
         <div className="flex items-center gap-3 text-xs text-adam-text-secondary">
           {isPublic ? (
@@ -66,7 +66,7 @@ export function ShareContent({
           ) : (
             <div className="h-3 w-3 rounded-full bg-[#FF392F] outline outline-2 outline-[#FF0000]/30" />
           )}
-          {isPublic ? 'Anyone with the link can view' : 'Only you can view'}
+          {isPublic ? '任何拥有链接的人都可查看' : '仅自己可见'}
         </div>
 
         {/* Local Suspense boundary — anything inside the preview (the
@@ -130,7 +130,7 @@ export function ShareContent({
               ) : (
                 <CopyIcon className="h-4 w-4" />
               )}
-              {justCopied ? 'Copied!' : 'Copy'}
+              {justCopied ? '已复制！' : '复制'}
             </button>
           </div>
           <div className="grid w-full grid-cols-3 justify-between text-adam-neutral-300">
@@ -169,11 +169,11 @@ export function ShareContent({
         >
           {isGenerating ? (
             <div className="flex items-center gap-2">
-              Generating...
+              生成中…
               <Loader2 className="h-4 w-4 animate-spin" />
             </div>
           ) : (
-            'Download GIF'
+            '下载 GIF'
           )}
         </Button>
       ) : null}
@@ -183,11 +183,11 @@ export function ShareContent({
           variant="destructive"
           onClick={() => onPrivacyChange('private')}
         >
-          Make Private
+          设为私密
         </Button>
       ) : (
         <Button variant="light" onClick={handlePublicClick}>
-          Share
+          分享
         </Button>
       )}
     </div>

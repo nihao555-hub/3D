@@ -176,7 +176,7 @@ export function SignInView() {
                 setError(null);
                 setMode('password');
               }}
-              className="flex items-center gap-1 text-sm text-gray-400 transition-colors hover:text-white"
+              className="flex items-center gap-1 text-sm text-gray-400 transition-colors hover:text-adam-text-primary"
             >
               <ArrowLeft className="h-4 w-4" />
               返回
@@ -186,10 +186,14 @@ export function SignInView() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-adam-blue/20">
                 <Mail className="h-6 w-6 text-adam-blue" />
               </div>
-              <h3 className="text-lg font-semibold text-white">请查收邮件</h3>
+              <h3 className="text-lg font-semibold text-adam-text-primary">
+                请查收邮件
+              </h3>
               <p className="text-center text-sm text-gray-400">
                 我们已将登录链接发送至{' '}
-                <span className="font-medium text-white">{email}</span>
+                <span className="font-medium text-adam-text-primary">
+                  {email}
+                </span>
               </p>
             </div>
 
@@ -220,33 +224,33 @@ export function SignInView() {
                   onComplete={handleVerifyOtp}
                   className="gap-2"
                 >
-                  <InputOTPGroup className="text-white">
+                  <InputOTPGroup className="text-adam-text-primary">
                     <InputOTPSlot
                       index={0}
-                      className="h-11 w-11 border-gray-700 bg-adam-bg-dark"
+                      className="h-11 w-11 border-gray-300 bg-adam-bg-dark"
                     />
                     <InputOTPSlot
                       index={1}
-                      className="h-11 w-11 border-gray-700 bg-adam-bg-dark"
+                      className="h-11 w-11 border-gray-300 bg-adam-bg-dark"
                     />
                     <InputOTPSlot
                       index={2}
-                      className="h-11 w-11 border-gray-700 bg-adam-bg-dark"
+                      className="h-11 w-11 border-gray-300 bg-adam-bg-dark"
                     />
                   </InputOTPGroup>
                   <InputOTPSeparator className="text-gray-500" />
-                  <InputOTPGroup className="text-white">
+                  <InputOTPGroup className="text-adam-text-primary">
                     <InputOTPSlot
                       index={3}
-                      className="h-11 w-11 border-gray-700 bg-adam-bg-dark"
+                      className="h-11 w-11 border-gray-300 bg-adam-bg-dark"
                     />
                     <InputOTPSlot
                       index={4}
-                      className="h-11 w-11 border-gray-700 bg-adam-bg-dark"
+                      className="h-11 w-11 border-gray-300 bg-adam-bg-dark"
                     />
                     <InputOTPSlot
                       index={5}
-                      className="h-11 w-11 border-gray-700 bg-adam-bg-dark"
+                      className="h-11 w-11 border-gray-300 bg-adam-bg-dark"
                     />
                   </InputOTPGroup>
                 </InputOTP>
@@ -280,7 +284,7 @@ export function SignInView() {
         <div className="flex flex-col gap-4 rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center">
             <div>
-              <span className="text-2xl font-semibold tracking-tight text-white">
+              <span className="text-2xl font-semibold tracking-tight text-adam-text-primary">
                 智造3D
               </span>
             </div>
@@ -307,7 +311,7 @@ export function SignInView() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">
+              <Label htmlFor="email" className="text-adam-text-primary">
                 邮箱
               </Label>
               <Input
@@ -317,14 +321,14 @@ export function SignInView() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
               />
             </div>
 
             {mode === 'password' && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-white">
+                  <Label htmlFor="password" className="text-adam-text-primary">
                     密码
                   </Label>
                   <Link
@@ -341,7 +345,7 @@ export function SignInView() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                  className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
                 />
               </div>
             )}
@@ -372,7 +376,7 @@ export function SignInView() {
               )}
             </Button>
 
-            <div className="text-center text-sm text-white">
+            <div className="text-center text-sm text-adam-text-primary">
               还没有账号？{' '}
               <Link
                 to="/signup"

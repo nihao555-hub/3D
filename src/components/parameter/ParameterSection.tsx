@@ -297,7 +297,7 @@ export function ParameterSection({
               onClick={handleDownload}
               disabled={isDownloadDisabled}
               aria-label={`下载 ${selectedFormat.toUpperCase()} 文件`}
-              className="h-12 flex-1 rounded-r-none bg-adam-neutral-50 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
+              className="h-12 flex-1 rounded-r-none bg-adam-blue text-white hover:bg-adam-blue/90 hover:text-white"
             >
               {isExporting ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -311,7 +311,7 @@ export function ParameterSection({
                 <Button
                   disabled={!isAnyFormatAvailable}
                   aria-label="选择下载格式"
-                  className="h-12 w-12 rounded-l-none border-l border-adam-neutral-300 bg-adam-neutral-50 p-0 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
+                  className="h-12 w-12 rounded-l-none border-l border-white/30 bg-adam-blue p-0 text-white hover:bg-adam-blue/90 hover:text-white"
                 >
                   <ChevronUp className="h-4 w-4" />
                 </Button>

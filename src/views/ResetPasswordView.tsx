@@ -42,15 +42,17 @@ export function ResetPasswordView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <span className="text-2xl font-semibold tracking-tight text-white">
+            <span className="text-2xl font-semibold tracking-tight text-adam-text-primary">
               智造3D
             </span>
-            <h1 className="text-2xl font-semibold text-white">重置密码</h1>
+            <h1 className="text-2xl font-semibold text-adam-text-primary">
+              重置密码
+            </h1>
           </div>
           {!isSuccess ? (
             <form onSubmit={handleResetPassword} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white">
+                <Label htmlFor="email" className="text-adam-text-primary">
                   邮箱
                 </Label>
                 <Input
@@ -60,7 +62,7 @@ export function ResetPasswordView() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="border-gray-700 bg-adam-bg-dark text-white placeholder:text-gray-400"
+                  className="border-gray-300 bg-adam-bg-dark text-adam-text-primary placeholder:text-gray-500"
                 />
               </div>
 

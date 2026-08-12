@@ -765,7 +765,7 @@ export function MeshPreview({ meshId }: { meshId: string }) {
       <div
         className={cn(
           'h-full w-full',
-          isMobile && 'aspect-square overflow-hidden rounded-lg bg-[#3B3B3B]',
+          isMobile && 'aspect-square overflow-hidden rounded-lg bg-[#EDEDEC]',
         )}
       >
         {/* Local Suspense boundary — r3f's <Canvas> rethrows suspension
@@ -773,7 +773,7 @@ export function MeshPreview({ meshId }: { meshId: string }) {
             loader is in flight. Without this boundary the suspension
             unwinds to <Await> in TanStack's StartClient and tears down
             the entire app. */}
-        <Suspense fallback={<div className="h-full w-full bg-[#3B3B3B]" />}>
+        <Suspense fallback={<div className="h-full w-full bg-[#EDEDEC]" />}>
           <Canvas
             gl={{ toneMapping: THREE.NoToneMapping }}
             style={{
@@ -782,7 +782,7 @@ export function MeshPreview({ meshId }: { meshId: string }) {
               touchAction: 'none',
             }}
           >
-            <color attach="background" args={['#3B3B3B']} />
+            <color attach="background" args={['#EDEDEC']} />
             <PerspectiveCamera
               makeDefault
               position={[-1, 1, 1]}
@@ -925,7 +925,7 @@ export function MeshPreview({ meshId }: { meshId: string }) {
 function MeshPreviewPending({ meshId }: { meshId: string }) {
   const { data: previewBlob } = useGlbPreview({ id: meshId });
   return (
-    <div className="flex h-full w-full items-center justify-center bg-[#3B3B3B]">
+    <div className="flex h-full w-full items-center justify-center bg-[#EDEDEC]">
       <div className="h-full w-full">
         <GlbPreview glbBlob={previewBlob ?? undefined} />
       </div>

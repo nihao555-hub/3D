@@ -24,7 +24,7 @@ export function ThreeScene({
   geometry,
   color,
   isMobile = false,
-  backgroundColor = '#3B3B3B',
+  backgroundColor = '#EDEDEC',
   coloredGroup,
 }: ThreeSceneProps) {
   const [isOrthographic, setIsOrthographic] = useState(true);

@@ -54,8 +54,8 @@
      * into `@theme` blocks, Tailwind v4 will emit these variables
      * automatically. At that point this whole block can be removed.
      */
-    --color-background: #d7d7d7;
-    --color-muted-foreground: #949494;
+    --color-background: #e2e2e2;
+    --color-muted-foreground: #5a5a5a;
   }
 
   .dark {
@@ -140,8 +140,8 @@ input::placeholder {
   backdrop-filter: blur(12px);
   background: linear-gradient(
     135deg,
-    rgba(26, 26, 26, 0.9) 0%,
-    rgba(26, 26, 26, 0.8) 100%
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.85) 100%
   );
 }
 
@@ -197,8 +197,8 @@ input::placeholder {
     overflow-wrap: anywhere;
     word-break: break-word;
     border-radius: 0.35rem;
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: #e8e8e8 !important;
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #1f1f1f !important;
     padding: 0.1rem 0.3rem;
   }
 
@@ -208,9 +208,9 @@ input::placeholder {
     overflow-x: auto;
     overflow-y: hidden;
     border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(18, 18, 18, 0.92) !important;
-    color: #e8e8e8 !important;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(246, 246, 245, 0.95) !important;
+    color: #1f1f1f !important;
     padding: 0.75rem;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
@@ -729,13 +729,13 @@ input::placeholder {
   scale: 1 !important;
   opacity: 0.7;
   cursor: not-allowed;
-  background: hsl(0, 0%, 13%) !important;
+  background: hsl(0, 0%, 90%) !important;
   box-shadow: none !important;
 }
 
 .sparkle-button button:disabled .text {
   background: transparent !important;
-  color: hsl(0, 0%, 80%);
+  color: hsl(0, 0%, 45%);
 }
 
 /* Ensure loading state has proper styling */
@@ -790,7 +790,7 @@ input::placeholder {
 
 .resize-handle {
   width: 4px;
-  background-color: #3b3b3b;
+  background-color: #e3e3e2;
   transition: background-color 150ms ease;
   position: relative;
 }
@@ -808,11 +808,11 @@ input::placeholder {
 
 .resize-handle:hover,
 .resize-handle[data-resize-handle-state='hover'] {
-  background-color: #5a5a5a;
+  background-color: #c9c9c8;
 }
 
 .resize-handle[data-resize-handle-state='drag'] {
-  background-color: #676767;
+  background-color: #ababab;
 }
 .glow-layer-1 {
   background: conic-gradient(
@@ -931,7 +931,7 @@ input::placeholder {
   font-size: 32px;
   font-weight: 300;
   font-family: 'Kumbh Sans', sans-serif;
-  color: #e5e5e5;
+  color: #1c1c1c;
   text-align: center;
   white-space: nowrap;
 }
@@ -940,7 +940,7 @@ input::placeholder {
   display: inline-block;
   width: 2px;
   height: 32px;
-  background-color: #e5e5e5;
+  background-color: #1c1c1c;
   margin-left: 2px;
   animation: blink 1s infinite;
 }

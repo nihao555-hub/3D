@@ -357,9 +357,9 @@ export function ConversationView({
                 onClick={handleChatExpand}
                 className="flex h-[100px] w-9 flex-col items-center rounded-l-none rounded-r-lg bg-adam-bg-secondary-dark px-1.5 py-2 text-adam-text-primary"
               >
-                <ChevronsRight className="h-5 w-5 text-white" />
+                <ChevronsRight className="h-5 w-5 text-adam-text-primary" />
                 <div className="flex flex-1 items-center justify-center">
-                  <span className="rotate-90 transform text-center text-base font-semibold text-white">
+                  <span className="rotate-90 transform text-center text-base font-semibold text-adam-text-primary">
                     聊天
                   </span>
                 </div>
@@ -411,9 +411,9 @@ export function ConversationView({
                 onClick={handleParametersExpand}
                 className="flex h-[140px] w-9 flex-col items-center rounded-l-lg rounded-r-none bg-adam-bg-secondary-dark p-2 px-1.5 py-2 text-adam-text-primary"
               >
-                <ChevronsRight className="mb-3 h-5 w-5 rotate-180 text-white" />
+                <ChevronsRight className="mb-3 h-5 w-5 rotate-180 text-adam-text-primary" />
                 <div className="flex flex-1 items-center justify-center">
-                  <span className="min-w-[100px] -rotate-90 transform text-center text-base font-semibold text-white">
+                  <span className="min-w-[100px] -rotate-90 transform text-center text-base font-semibold text-adam-text-primary">
                     参数
                   </span>
                 </div>

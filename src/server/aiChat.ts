@@ -782,7 +782,7 @@ async function generateConversationTitle({
     const result = await generateText({
       model: anthropic('claude-haiku-4-5'),
       system:
-        'Generate a short title for a 3D creation conversation. Return only the title.',
+        'Generate a short title for a 3D creation conversation, in Simplified Chinese. Return only the title.',
       prompt: text,
       output: Output.object({
         schema: z.object({ title: z.string().min(1) }),
@@ -864,7 +864,7 @@ function creativeTools({
       ...chatTools.create_mesh,
       execute: async (input: AppTools['create_mesh']['input']) => {
         const response = await handleMeshRequest(
-          new Request(new URL('/cadam/api/mesh', req.url), {
+          new Request(new URL('/studio/api/mesh', req.url), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

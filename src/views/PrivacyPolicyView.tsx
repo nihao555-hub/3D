@@ -6,10 +6,10 @@ export function PrivacyPolicyView() {
       <div className="w-full max-w-4xl">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-8 flex flex-col items-center justify-center">
-            <span className="mb-4 text-2xl font-semibold tracking-tight text-white">
+            <span className="mb-4 text-2xl font-semibold tracking-tight text-adam-text-primary">
               智造3D
             </span>
-            <h1 className="text-center text-3xl font-semibold text-white">
+            <h1 className="text-center text-3xl font-semibold text-adam-text-primary">
               隐私政策
             </h1>
             <p className="mt-2 text-gray-400">生效日期：2025 年 2 月 7 日</p>
@@ -18,7 +18,9 @@ export function PrivacyPolicyView() {
           <ScrollArea className="h-[70vh]">
             <div className="space-y-6 pr-6">
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">概述</h2>
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
+                  概述
+                </h2>
                 <p className="text-gray-400">
                   本隐私政策说明智造3D
                   平台（以下简称"本平台"或"我们"）在你使用我们的网站与服务时，如何收集、使用和共享你的信息。使用本平台即表示你同意我们按照本政策处理相关信息。
@@ -26,12 +28,12 @@ export function PrivacyPolicyView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   我们收集的信息
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="mb-2 text-lg font-medium text-white">
+                    <h3 className="mb-2 text-lg font-medium text-adam-text-primary">
                       你主动提供的信息
                     </h3>
                     <p className="mb-2 text-gray-400">
@@ -46,7 +48,7 @@ export function PrivacyPolicyView() {
                   </div>
 
                   <div>
-                    <h3 className="mb-2 text-lg font-medium text-white">
+                    <h3 className="mb-2 text-lg font-medium text-adam-text-primary">
                       自动收集的信息
                     </h3>
                     <p className="mb-2 text-gray-400">
@@ -63,7 +65,7 @@ export function PrivacyPolicyView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   信息的使用
                 </h2>
                 <p className="text-gray-400">
@@ -72,7 +74,7 @@ export function PrivacyPolicyView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   信息的共享
                 </h2>
                 <p className="text-gray-400">
@@ -81,7 +83,7 @@ export function PrivacyPolicyView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   信息的存储与安全
                 </h2>
                 <p className="text-gray-400">
@@ -90,7 +92,7 @@ export function PrivacyPolicyView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   你的权利
                 </h2>
                 <p className="text-gray-400">
@@ -99,7 +101,7 @@ export function PrivacyPolicyView() {
               </section>
 
               <section className="mb-8">
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   政策的更新
                 </h2>
                 <p className="text-gray-400">

@@ -9,7 +9,7 @@ import {
 } from '@/utils/coloredOffMesh';
 import { MeshGifPreview } from './MeshGifPreview';
 
-const FALLBACK_COLOR_HEX = 0x00a6ff;
+const FALLBACK_COLOR_HEX = 0x0087d4;
 
 // `buildColoredGroupFromOff` expects a packed RGB int as fallback —
 // keep this in sync with the editor's brand fallback (see OpenSCADViewer).

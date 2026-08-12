@@ -166,7 +166,7 @@ export function ParameterSheetContent({
             onClick={handleDownload}
             disabled={isDownloadDisabled}
             aria-label={`下载 ${selectedFormat.toUpperCase()} 文件`}
-            className="flex-1 rounded-r-none bg-adam-neutral-50 text-adam-neutral-800 hover:bg-adam-neutral-100 hover:text-adam-neutral-900"
+            className="flex-1 rounded-r-none bg-adam-blue text-white hover:bg-adam-blue/90 hover:text-white"
           >
             {isExporting ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

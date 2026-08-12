@@ -7,7 +7,14 @@ const assetUrl = (path: string) =>
 
 export const Route = createRootRoute({
   head: () => ({
-    meta: [{ title: 'CADAM' }],
+    meta: [
+      { title: '智造3D — AI 工业级三维建模平台' },
+      {
+        name: 'description',
+        content:
+          '用自然语言描述，一键生成可制造的参数化 3D 模型，支持 STL / SCAD / DXF 导出。',
+      },
+    ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
   component: RootComponent,
@@ -28,7 +35,7 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="zh-CN">
       <head>
         <meta charSet="UTF-8" />
         <meta
@@ -38,12 +45,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <link
           rel="icon"
           type="image/svg+xml"
-          href={assetUrl('cadam-icon.svg')}
-        />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          href={assetUrl('cadam-icon.ico')}
+          href={assetUrl('zhizao-icon.svg')}
         />
         <HeadContent />
       </head>

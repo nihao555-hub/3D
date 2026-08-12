@@ -6,10 +6,10 @@ export function TermsOfServiceView() {
       <div className="w-full max-w-4xl">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-8 flex flex-col items-center justify-center">
-            <span className="mb-4 text-2xl font-semibold tracking-tight text-white">
+            <span className="mb-4 text-2xl font-semibold tracking-tight text-adam-text-primary">
               智造3D
             </span>
-            <h1 className="text-center text-3xl font-semibold text-white">
+            <h1 className="text-center text-3xl font-semibold text-adam-text-primary">
               服务条款
             </h1>
             <p className="mt-2 text-gray-400">生效日期：2025 年 2 月 7 日</p>
@@ -18,7 +18,7 @@ export function TermsOfServiceView() {
           <ScrollArea className="h-[70vh]">
             <div className="space-y-6 pr-6">
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   1. 条款的接受
                 </h2>
                 <p className="text-gray-400">
@@ -28,7 +28,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   2. 服务说明
                 </h2>
                 <p className="text-gray-400">
@@ -39,7 +39,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   3. 账号与使用规范
                 </h2>
                 <div className="space-y-3 text-gray-400">
@@ -56,7 +56,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   4. 用户内容与知识产权
                 </h2>
                 <div className="space-y-3 text-gray-400">
@@ -70,7 +70,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   5. 订阅与付费
                 </h2>
                 <div className="space-y-3 text-gray-400">
@@ -83,7 +83,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   6. 服务变更与终止
                 </h2>
                 <div className="space-y-3 text-gray-400">
@@ -95,7 +95,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   7. 免责声明与责任限制
                 </h2>
                 <p className="text-gray-400">
@@ -104,7 +104,7 @@ export function TermsOfServiceView() {
               </section>
 
               <section>
-                <h2 className="mb-3 text-xl font-semibold text-white">
+                <h2 className="mb-3 text-xl font-semibold text-adam-text-primary">
                   8. 条款的变更
                 </h2>
                 <p className="text-gray-400">

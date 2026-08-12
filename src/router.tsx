@@ -9,7 +9,7 @@ let clientRouter: AppRouter | undefined;
 function createAppRouter() {
   return createTanStackRouter({
     routeTree,
-    basepath: '/cadam',
+    basepath: '/studio',
     defaultPreload: 'intent',
     scrollRestoration: true,
   });

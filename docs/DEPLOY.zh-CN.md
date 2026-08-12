@@ -1,14 +1,7 @@
-# CADAM 本地启动指南（中文）
+# 智造3D 部署与排障指南
 
-本仓库基于开源项目 [Adam-CAD/CADAM](https://github.com/Adam-CAD/CADAM)（GPL-3.0，约 5000 star）搭建，
-是一个「自然语言 → 参数化工业级 3D 模型」的全栈 Web 应用：
-
-- AI 将自然语言/图片转换为 **OpenSCAD 参数化代码**
-- 浏览器内通过 **OpenSCAD WebAssembly** 实时编译渲染（Three.js 预览）
-- 支持参数滑块微调尺寸，导出 **.STL / .SCAD / .DXF**
-- 内置 BOSL / BOSL2 / MCAD 机械零件库（齿轮、螺纹、轴承座等）
-
-> 引入自上游 commit `d75f68ca22efc26882ea41137c7fad0240213ed8`。
+本项目基于开源项目 [Adam-CAD/CADAM](https://github.com/Adam-CAD/CADAM)（GPL-3.0，
+上游 commit `d75f68ca`）二次开发。以下为本地/云端环境的完整部署记录与排障方案。
 
 ---
 
@@ -35,7 +28,7 @@ cp .env.local.template .env.local  # 然后按下文填写
 
 # 4. 启动开发服务器
 npm run dev
-# 访问 http://localhost:3000/cadam
+# 访问 http://localhost:3000/studio
 ```
 
 ## 三、必需配置清单
@@ -73,7 +66,7 @@ WEBHOOK_BASE_URL="http://localhost:3000"
 #### 使用「中转/API 代理」接入（推荐路径）
 
 ```env
-# 方式A：Anthropic 兼容中转（CADAM 上游即针对 Claude 优化）
+# 方式A：Anthropic 兼容中转（上游项目即针对 Claude 优化）
 ANTHROPIC_API_KEY="sk-xxx（中转发的 key）"
 ANTHROPIC_BASE_URL="https://你的中转域名"          # 带不带 /v1 都可以
 VITE_DEFAULT_MODEL="anthropic/claude-fable-5"     # 新会话默认用最强模型
@@ -89,7 +82,7 @@ VITE_DEFAULT_MODEL="openai/gpt-5.6-sol"
 
 > **为什么走 Responses API？** 实测部分中转（如 grsai.ai）的 `/v1/chat/completions`
 > 端点会丢失 `tool_calls`（请求里的 tools 不透传、响应里的函数调用被剥离），
-> 而 CADAM 的参数化建模流程完全依赖函数调用。这类中转的 `/v1/responses`
+> 而 智造3D 的参数化建模流程完全依赖函数调用。这类中转的 `/v1/responses`
 > 端点则完整透传函数调用、流式与自定义系统提示词。
 >
 > **模型启用建议**：接入前先验证中转对目标模型的「函数调用」支持

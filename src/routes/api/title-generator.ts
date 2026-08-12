@@ -10,7 +10,7 @@ import {
 } from '@/server/api';
 
 const TITLE_SYSTEM_PROMPT =
-  'Generate a concise, descriptive title under 80 characters for this CAD conversation. Return only the title. If unclear, return "New Conversation".';
+  'Generate a concise, descriptive title under 80 characters for this CAD conversation, in Simplified Chinese. Return only the title. If unclear, return "新对话".';
 
 function textFromParts(parts: unknown): string {
   if (!Array.isArray(parts)) return '';
@@ -42,12 +42,12 @@ export const Route = createFileRoute('/api/title-generator')({
         try {
           const body: unknown = await request.json();
           if (!isRecord(body)) {
-            return json({ title: 'New Conversation' });
+            return json({ title: '新对话' });
           }
           const trimmedText =
             typeof body.text === 'string' ? body.text.trim() : '';
           const text = trimmedText || textFromParts(body.parts);
-          if (!text) return json({ title: 'New Conversation' });
+          if (!text) return json({ title: '新对话' });
 
           const title = await createAnthropicText({
             model: 'claude-haiku-4-5-20251001',
@@ -55,9 +55,9 @@ export const Route = createFileRoute('/api/title-generator')({
             system: TITLE_SYSTEM_PROMPT,
             content: text,
           });
-          return json({ title: title || 'New Conversation' });
+          return json({ title: title || '新对话' });
         } catch {
-          return json({ title: 'New Conversation' });
+          return json({ title: '新对话' });
         }
       },
     },

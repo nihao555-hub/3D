@@ -348,7 +348,7 @@ function MobileSidebar({
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="bg-adam-bg-dark p-0 [&>button]:text-white"
+        className="bg-adam-bg-dark p-0 [&>button]:text-adam-text-primary"
       >
         {/* For aria stuff */}
         <SheetHeader className="hidden">

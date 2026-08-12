@@ -65,7 +65,7 @@ export function SignUpView() {
       <div className="w-full max-w-md">
         <div className="rounded-lg bg-adam-bg-secondary-dark p-8 shadow-md">
           <div className="mb-4 flex flex-col items-center justify-center gap-2">
-            <span className="text-2xl font-semibold tracking-tight text-white">
+            <span className="text-2xl font-semibold tracking-tight text-adam-text-primary">
               智造3D
             </span>
           </div>

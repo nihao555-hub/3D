@@ -32,7 +32,7 @@ function extractImportFilenames(code: string): string[] {
 function parseHexColor(hex: string): number {
   const trimmed = hex.startsWith('#') ? hex.slice(1) : hex;
   const parsed = parseInt(trimmed, 16);
-  return Number.isFinite(parsed) ? parsed : 0x00a6ff;
+  return Number.isFinite(parsed) ? parsed : 0x0087d4;
 }
 
 interface OpenSCADPreviewProps {

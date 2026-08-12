@@ -1436,7 +1436,7 @@ function TextAreaChat({
                           </div>
                         )}
                         {!mesh.isUploading && (
-                          <div className="absolute bottom-[-0.50rem] right-[-0.50rem] rounded-full border border-adam-neutral-500 bg-adam-neutral-500 text-white transition-colors duration-200 hover:border-adam-neutral-700 hover:bg-adam-neutral-700">
+                          <div className="absolute bottom-[-0.50rem] right-[-0.50rem] rounded-full border border-adam-neutral-200 bg-adam-neutral-200 text-white transition-colors duration-200 hover:border-adam-neutral-100 hover:bg-adam-neutral-100">
                             <Box className="h-4 w-4 text-white" />
                           </div>
                         )}
@@ -1444,7 +1444,7 @@ function TextAreaChat({
                           onClick={handleMeshRemoved}
                           disabled={mesh.isUploading}
                           className={cn(
-                            'absolute right-[-0.50rem] top-[-0.50rem] rounded-full border border-adam-neutral-500 bg-adam-neutral-500 text-white transition-colors duration-200 hover:border-adam-neutral-700 hover:bg-adam-neutral-700',
+                            'absolute right-[-0.50rem] top-[-0.50rem] rounded-full border border-adam-neutral-200 bg-adam-neutral-200 text-white transition-colors duration-200 hover:border-adam-neutral-100 hover:bg-adam-neutral-100',
                             mesh.isUploading && 'opacity-50',
                           )}
                         >
@@ -1476,7 +1476,7 @@ function TextAreaChat({
                           onClick={() => handleImageRemoved(image)}
                           disabled={image.isUploading}
                           className={cn(
-                            'absolute right-[-0.50rem] top-[-0.50rem] rounded-full border border-adam-neutral-500 bg-adam-neutral-500 text-white transition-colors duration-200 hover:border-adam-neutral-700 hover:bg-adam-neutral-700',
+                            'absolute right-[-0.50rem] top-[-0.50rem] rounded-full border border-adam-neutral-200 bg-adam-neutral-200 text-white transition-colors duration-200 hover:border-adam-neutral-100 hover:bg-adam-neutral-100',
                             image.isUploading && 'opacity-50',
                           )}
                         >
@@ -1576,7 +1576,7 @@ function TextAreaChat({
                   {isGeneratingPrompt ? (
                     <Loader2 className="h-4 w-4 animate-spin text-adam-blue" />
                   ) : (
-                    <Wand2 className="h-4 w-4 text-gray-400 transition-colors duration-200 hover:text-white" />
+                    <Wand2 className="h-4 w-4 text-gray-400 transition-colors duration-200 hover:text-adam-text-primary" />
                   )}
                 </Button>
               </TooltipTrigger>
@@ -1694,7 +1694,7 @@ function TextAreaChat({
                 <TooltipTrigger asChild>
                   <button
                     onClick={stopGenerating}
-                    className="flex h-8 w-8 transform items-center justify-center rounded-lg bg-adam-neutral-700 p-1 text-white transition-all duration-300 hover:scale-105 hover:bg-adam-blue/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-adam-blue"
+                    className="flex h-8 w-8 transform items-center justify-center rounded-lg bg-adam-neutral-700 p-1 text-adam-text-primary transition-all duration-300 hover:scale-105 hover:bg-adam-blue/90 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-adam-blue"
                   >
                     <Square className="h-5 w-5 fill-white" />
                   </button>
@@ -1707,7 +1707,7 @@ function TextAreaChat({
                   handleSubmit();
                 }}
                 className={cn(
-                  'flex h-8 w-8 transform items-center justify-center rounded-lg bg-adam-neutral-700 p-1 text-white transition-all duration-300 hover:scale-105 hover:bg-adam-blue/90 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-adam-blue',
+                  'flex h-8 w-8 transform items-center justify-center rounded-lg bg-adam-neutral-700 p-1 text-adam-text-primary transition-all duration-300 hover:scale-105 hover:bg-adam-blue/90 hover:text-white disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-adam-blue',
                   images.some((img) => img.isUploading) && 'opacity-50',
                 )}
                 disabled={

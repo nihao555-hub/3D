@@ -294,7 +294,7 @@ function UserBubble({
         {hasBubble && (
           <div
             className={cn(
-              'relative grid w-fit rounded-lg text-white',
+              'relative grid w-fit rounded-lg text-adam-text-primary',
               (hovering || hasAttachments) && 'bg-adam-neutral-800',
             )}
           >

@@ -287,7 +287,7 @@ function ConversationShare({ conversation, messages }: ConversationShareProps) {
               color="#00A6FF"
               onOutputChange={setCurrentOutput}
               isMobile={true}
-              backgroundColor="#212121"
+              backgroundColor="#EDEDEC"
             />
           ) : activePreview?.type === 'mesh' ? (
             <MeshPreview meshId={activePreview.meshId} />

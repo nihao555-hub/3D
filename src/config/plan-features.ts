@@ -16,17 +16,14 @@ export const PLAN_FEATURES: Record<PlanLevel, PlanCopy> = {
   },
   standard: {
     description: 'For regular use',
-    features: [
-      'All AI features',
-      'Tokens shared across CADAM, Onshape, and Fusion',
-    ],
+    features: ['All AI features', '智造3D 平台通用算力配额'],
   },
   pro: {
     description: 'For power users',
     features: [
       'All AI features',
       'Priority support',
-      'Tokens shared across CADAM, Onshape, and Fusion',
+      '智造3D 平台通用算力配额',
     ],
   },
   max: {
@@ -34,7 +31,7 @@ export const PLAN_FEATURES: Record<PlanLevel, PlanCopy> = {
     features: [
       'All AI features',
       'Priority support',
-      'Tokens shared across CADAM, Onshape, and Fusion',
+      '智造3D 平台通用算力配额',
     ],
   },
 };

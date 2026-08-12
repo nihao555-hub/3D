@@ -413,7 +413,7 @@ export function MeshGifPreview({
     const renderScene = new THREE.Scene();
     sceneRef.current = renderScene;
 
-    renderScene.background = new THREE.Color(0x3b3b3b);
+    renderScene.background = new THREE.Color(0xededec);
     renderScene.environment = pmremGenerator.fromScene(
       new RoomEnvironment(),
       0.04,

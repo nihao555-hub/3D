@@ -70,14 +70,16 @@ function EmailConfirmation() {
           {/* Icon and Header */}
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-adam-neutral-800">
-              <Mail className="h-6 w-6 text-white" />
+              <Mail className="h-6 w-6 text-adam-text-primary" />
             </div>
-            <h1 className="mb-4 text-2xl font-semibold text-white">
+            <h1 className="mb-4 text-2xl font-semibold text-adam-text-primary">
               请查收邮件
             </h1>
             <p className="text-gray-400">
               我们已将验证链接发送至{' '}
-              <span className="text-white">{email || '你的邮箱'}</span>
+              <span className="text-adam-text-primary">
+                {email || '你的邮箱'}
+              </span>
               ，点击链接即可完成账号验证。
             </p>
             <p className="mt-2 text-center text-gray-400">
@@ -89,7 +91,10 @@ function EmailConfirmation() {
           <div className="space-y-6">
             {showEmailInput && (
               <div className="space-y-2">
-                <Label htmlFor="resend-email" className="text-white">
+                <Label
+                  htmlFor="resend-email"
+                  className="text-adam-text-primary"
+                >
                   邮箱
                 </Label>
                 <Input
@@ -98,7 +103,7 @@ function EmailConfirmation() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="请输入邮箱"
-                  className="border-gray-700 bg-adam-bg-dark px-4 text-white placeholder:text-gray-400 max-[430px]:text-base"
+                  className="border-gray-300 bg-adam-bg-dark px-4 text-adam-text-primary placeholder:text-gray-500 max-[430px]:text-base"
                 />
               </div>
             )}
