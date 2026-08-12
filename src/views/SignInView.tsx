@@ -258,7 +258,7 @@ export function SignInView() {
 
               <Button
                 type="submit"
-                variant="outline"
+                variant="light"
                 className="w-full"
                 disabled={otp.length !== 6 || isVerifying}
               >
@@ -363,7 +363,12 @@ export function SignInView() {
               </button>
             </div>
 
-            <Button type="submit" className="w-full p-6" disabled={isLoading}>
+            <Button
+              type="submit"
+              variant="light"
+              className="w-full p-6"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -146,8 +146,8 @@ export function ChatTitle({
                           className={cn(
                             'flex h-8 w-fit cursor-pointer items-center justify-center gap-1 overflow-hidden rounded p-0 px-2 text-[17px] font-medium tracking-tight text-adam-neutral-10 transition-colors duration-200',
                             isMenuOpen
-                              ? 'bg-black text-adam-neutral-0'
-                              : 'hover:bg-black hover:text-adam-neutral-0',
+                              ? 'bg-adam-neutral-800 text-adam-text-primary'
+                              : 'hover:bg-adam-neutral-800 hover:text-adam-text-primary',
                           )}
                         >
                           <span
@@ -198,7 +198,7 @@ export function ChatTitle({
                   </Dialog>
                 ) : (
                   // Desktop view: Click to edit
-                  <div className="flex h-8 w-fit items-center rounded font-medium tracking-tight text-adam-neutral-10 transition-colors duration-200 hover:bg-black hover:text-adam-neutral-0">
+                  <div className="flex h-8 w-fit items-center rounded font-medium tracking-tight text-adam-text-primary transition-colors duration-200 hover:bg-adam-neutral-800 hover:text-adam-text-primary">
                     <span
                       className={cn(
                         'line-clamp-1 cursor-pointer px-2 text-left text-[17px]',

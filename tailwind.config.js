@@ -30,7 +30,7 @@ export default {
         // 命名沿用旧版设计稿，"dark" 后缀类现在承载浅色值。
         'adam-bg-dark': '#FFFFFF',
         'adam-background-light': '#1F1F1F',
-        'adam-bg-secondary-dark': '#F5F5F4',
+        'adam-bg-secondary-dark': '#FFFFFF',
         'adam-bg-light': '#2A2A2A',
         'adam-bg-secondary-light': '#333332',
         'adam-blue': '#0087D4',

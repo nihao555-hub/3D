@@ -120,7 +120,7 @@ function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
 
   return (
     <div
-      className={`${isSidebarOpen ? 'w-64' : 'w-16'} flex h-full flex-shrink-0 flex-col bg-adam-bg-dark pb-2 transition-all duration-300 ease-in-out dark:bg-gray-950`}
+      className={`${isSidebarOpen ? 'w-64' : 'w-16'} flex h-full flex-shrink-0 flex-col border-r border-adam-neutral-800 bg-sidebar-color pb-2 transition-all duration-300 ease-in-out`}
     >
       <div className="p-4 dark:border-gray-800">
         <ConditionalWrapper
@@ -179,7 +179,7 @@ function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
                 className={` ${
                   isSidebarOpen
                     ? 'flex w-[216px] items-center justify-start gap-2 rounded-[100px] border border-adam-blue bg-adam-background-1 px-4 py-3 text-[#D7D7D7] hover:bg-adam-blue/40 hover:text-adam-text-primary'
-                    : 'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] border-2 border-adam-blue bg-[#191A1A] p-[2px] text-[#D7D7D7] shadow-[0px_4px_10px_0px_rgba(0,166,255,0.24)] hover:bg-adam-blue/40 hover:text-adam-text-primary'
+                    : 'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] border-2 border-adam-blue bg-adam-blue p-[2px] text-white shadow-[0px_4px_10px_0px_rgba(0,135,212,0.24)] hover:bg-adam-blue/80 hover:text-white'
                 } mb-4`}
                 onClick={() => sidebarNavigate('/')}
               >
@@ -253,7 +253,7 @@ function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
                             }}
                           >
                             <li key={conversation.id}>
-                              <span className="line-clamp-1 text-ellipsis text-nowrap rounded-md p-1 text-xs font-medium text-adam-neutral-400 transition-colors duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-10">
+                              <span className="line-clamp-1 text-ellipsis text-nowrap rounded-md p-1 text-xs font-medium text-adam-neutral-300 transition-colors duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-800 [@media(hover:hover)]:hover:text-adam-text-primary">
                                 {conversation.title}
                               </span>
                             </li>

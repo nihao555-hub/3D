@@ -95,6 +95,7 @@ export function UpdatePasswordView() {
 
             <Button
               type="submit"
+              variant="light"
               className="w-full"
               disabled={isUpdatingPassword}
             >

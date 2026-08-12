@@ -28,6 +28,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { formatDistanceToNow } from 'date-fns';
+import { zhCN } from 'date-fns/locale';
 import { HistoryConversation } from '../../types/misc.ts';
 import { GoodEarth } from '../icons/ui/GoodEarth';
 import { supabase } from '@/lib/supabase';
@@ -163,6 +164,7 @@ export function VisualCard({
               <Clock className="mr-1 h-3 w-3" />
               {formatDistanceToNow(new Date(conversation.updated_at), {
                 addSuffix: true,
+                locale: zhCN,
               })}
             </span>
             <span className="flex items-center">

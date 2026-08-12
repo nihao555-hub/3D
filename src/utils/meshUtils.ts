@@ -74,7 +74,7 @@ export async function renderMultipleAngles(
   const geometryClone = geometry.clone();
 
   const material = new THREE.MeshStandardMaterial({
-    color: 0x00a6ff,
+    color: 0x0087d4,
     metalness: 0.3,
     roughness: 0.5,
   });
@@ -213,7 +213,7 @@ function createPreviewCamera(halfExtent: number, diagonal: number) {
 function createPreviewScene(renderer: THREE.WebGLRenderer, scene: THREE.Scene) {
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
   const renderScene = new THREE.Scene();
-  renderScene.background = new THREE.Color(0x3b3b3b);
+  renderScene.background = new THREE.Color(0xf0f0ef);
   renderScene.environment = pmremGenerator.fromScene(
     new RoomEnvironment(),
     0.04,
@@ -291,7 +291,7 @@ function renderInspectionSceneToDataUrl(scene: THREE.Scene): string {
   const { renderScene, pmremGenerator } = createPreviewScene(renderer, scene);
 
   try {
-    context.fillStyle = '#2b2b2b';
+    context.fillStyle = '#f0f0ef';
     context.fillRect(0, 0, sheet.width, sheet.height);
     context.font =
       '600 28px system-ui, -apple-system, BlinkMacSystemFont, sans-serif';
@@ -345,7 +345,7 @@ export const generatePreview = async (
     geometry.computeVertexNormals();
 
     const material = new THREE.MeshStandardMaterial({
-      color: 0x00a6ff,
+      color: 0x0087d4,
       metalness: 0.6,
       roughness: 0.3,
       envMapIntensity: 0.3,
@@ -385,7 +385,7 @@ export const generatePreview = async (
 // back to the STL render path.
 export const generateColoredPreview = async (
   off: Blob,
-  fallbackColor: number = 0x00a6ff,
+  fallbackColor: number = 0x0087d4,
 ): Promise<string | null> => {
   const text = await off.text();
   const group = buildColoredGroupFromOff(text, fallbackColor);
@@ -414,7 +414,7 @@ export const generateColoredPreview = async (
 export const generateInspectionPreview = async ({
   stl,
   off,
-  fallbackColor = 0x00a6ff,
+  fallbackColor = 0x0087d4,
 }: {
   stl: Blob;
   off?: Blob | null;

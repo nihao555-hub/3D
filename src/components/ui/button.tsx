@@ -10,10 +10,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         black:
-          'bg-adam-neutral-950 text-adam-neutral-10 hover:bg-adam-neutral-900 duration-150 ease-out',
+          'bg-adam-neutral-100 text-adam-neutral-950 hover:bg-adam-neutral-50 duration-150 ease-out',
         dark: 'bg-adam-neutral-700 text-adam-text-primary hover:bg-adam-neutral-800 duration-150 ease-out',
         light:
-          'bg-adam-neutral-10 text-adam-neutral-950 hover:bg-adam-neutral-100 duration-150 ease-out',
+          'bg-adam-blue text-white hover:bg-adam-blue/90 duration-150 ease-out',
         default:
           'bg-adam-background-2 text-adam-text-primary shadow hover:bg-adam-neutral-800 hover:text-adam-neutral-100',
         destructive:
@@ -25,11 +25,11 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         adam_dark:
-          'text-adam-text-tertiary border-2 border-transparent transition-all duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-10',
+          'text-adam-text-tertiary border-2 border-transparent transition-all duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-800 [@media(hover:hover)]:hover:text-adam-text-primary',
         adam_dark_collapsed:
-          'text-adam-text-tertiary border-2 border-transparent transition-all duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-950 [@media(hover:hover)]:hover:text-adam-neutral-10',
+          'text-adam-text-tertiary border-2 border-transparent transition-all duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-800 [@media(hover:hover)]:hover:text-adam-text-primary',
         adam_dark_collapsed_avatar:
-          'text-adam-text-tertiary border-2 border-transparent transition-all duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-950',
+          'text-adam-text-tertiary border-2 border-transparent transition-all duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-800',
       },
       size: {
         default: 'h-9 px-4 py-2',
