@@ -164,7 +164,12 @@ export default function parseParameters(script: string): Parameter[] {
         .filter(Boolean)
         .map((word) => word[0].toUpperCase() + word.slice(1))
         .join(' ');
-      if (name === '$fn') displayName = 'Resolution';
+      if (name === '$fn') displayName = '分辨率';
+      // 生成提示词要求模型在参数上方写简短中文标签注释；注释含中文时
+      // 直接用作显示名（变量名保持英文以确保编译安全）。
+      if (description && /[\u4e00-\u9fff]/.test(description)) {
+        displayName = description.trim();
+      }
 
       // Flatten `name = [a, b, c]` (number[]) into N scalar sliders
       // `name[0]`, `name[1]`, ... — far easier to manipulate via the
