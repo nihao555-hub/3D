@@ -2,6 +2,7 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { fetch as undiciFetch, Agent as UndiciAgent } from 'undici';
 import { chatTools, type AppUIMessage, type AppTools } from '@shared/chatAi';
 import { cleanAssistantText, getParametricText } from '@shared/parametricParts';
 import { imageIdFromFilename, imageStoragePath } from '@shared/imageRefs';
@@ -387,6 +388,22 @@ type ChatProviders = {
   relay: () => ReturnType<typeof createOpenAI>;
 };
 
+// 中转网关处理带多视图截图的大体量请求时，首字节可能远超 undici 默认的
+// 5 分钟头部超时（实测 grsai 偶发 >5min），导致自检回路中途断流。
+// 为中转通道单独放宽到 15 分钟。
+const relayDispatcher = new UndiciAgent({
+  headersTimeout: 900_000,
+  bodyTimeout: 900_000,
+});
+const relayFetch = ((
+  input: Parameters<typeof undiciFetch>[0],
+  init?: Parameters<typeof undiciFetch>[1],
+) =>
+  undiciFetch(input, {
+    ...init,
+    dispatcher: relayDispatcher,
+  })) as unknown as typeof globalThis.fetch;
+
 function createChatProviders(): ChatProviders {
   let anthropic: AnthropicProvider | undefined;
   let google: GoogleProvider | undefined;
@@ -397,6 +414,7 @@ function createChatProviders(): ChatProviders {
       relay ??= createOpenAI({
         apiKey: requiredEnv('OPENROUTER_API_KEY'),
         baseURL: requiredEnv('OPENROUTER_BASE_URL'),
+        fetch: relayFetch,
       });
       return relay;
     },
