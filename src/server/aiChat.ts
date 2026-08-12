@@ -1038,7 +1038,11 @@ function parametricTools({
 
 function chatModel(conversation: ConversationAccess, model: Model) {
   if (conversation.type === 'creative') {
-    return 'anthropic/claude-sonnet-4.5';
+    // 创意（网格）流的对话模型原为固定 Sonnet；中转模式下中转未必
+    // 注册 Claude，改用中转已验证的默认模型。
+    return isCustomRelay()
+      ? 'openai/gpt-5.6-sol'
+      : 'anthropic/claude-sonnet-4.5';
   }
   return normalizeModelId(model);
 }
