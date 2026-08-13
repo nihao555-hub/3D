@@ -52,7 +52,7 @@ export const Route = createFileRoute('/api/title-generator')({
 
           const result = await generateText({
             model: auxModel(),
-            maxOutputTokens: 120,
+            maxOutputTokens: 2000,
             system: TITLE_SYSTEM_PROMPT,
             prompt: text,
           });

@@ -43,7 +43,7 @@ export const Route = createFileRoute('/api/prompt-generator')({
             : base;
           const result = await generateText({
             model: auxModel(),
-            maxOutputTokens: 300,
+            maxOutputTokens: 2000,
             system:
               'You write concise 3D generation prompts in Simplified Chinese. Return only the prompt text, no quotes or explanation.',
             prompt: content,
