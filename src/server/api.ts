@@ -38,6 +38,7 @@ export async function requireUser(request: Request): Promise<User> {
     },
   });
   const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user?.email) throw new Error('Unauthorized');
+  // 匿名（访客）用户没有邮箱，仅要求存在有效用户
+  if (error || !data.user) throw new Error('Unauthorized');
   return data.user;
 }

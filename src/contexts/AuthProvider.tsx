@@ -82,9 +82,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        const {
+        let {
           data: { session },
         } = await supabase.auth.refreshSession();
+        // 访客免登录：无会话时自动创建匿名会话（数据仍按 uid 隔离，
+        // 注册/登录入口保留，后续可随时升级为正式账号）
+        if (!session) {
+          const { data: anonData, error: anonError } =
+            await supabase.auth.signInAnonymously();
+          if (!anonError) {
+            session = anonData.session;
+          }
+        }
         setSession(session);
         localStorage.setItem('session', JSON.stringify(session));
         setUser(session?.user ?? null);
