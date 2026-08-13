@@ -1071,7 +1071,8 @@ export async function handleAiChatRequest(req: Request) {
     data: { user },
   } = await supabaseClient.auth.getUser();
 
-  if (!user?.id || !user.email) {
+  // 匿名（访客）用户没有邮箱，仅要求有效 uid
+  if (!user?.id) {
     return jsonResponse({ error: 'Unauthorized' }, 401);
   }
 
@@ -1105,7 +1106,7 @@ export async function handleAiChatRequest(req: Request) {
   // service drains the remainder to zero if the actual usage exceeds
   // what's left (see onFinish below).
   try {
-    const status = await billing.getStatus(user.email);
+    const status = await billing.getStatus(user.email ?? user.id);
     if (status.tokens.total <= 0) {
       return jsonResponse(
         {
@@ -1591,7 +1592,7 @@ export async function handleAiChatRequest(req: Request) {
               // will block the next request. Not an error path —
               // intentional terminal state. Runs after the persist above so
               // its latency never delays the row the client is waiting on.
-              await billing.consume(user.email!, {
+              await billing.consume(user.email ?? user.id, {
                 tokens: billingTokens,
                 operation:
                   conversation.type === 'creative' ? 'chat' : 'parametric',

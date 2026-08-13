@@ -425,21 +425,14 @@ export async function handleMeshRequest(req: Request) {
     }
 
     // Deduct tokens for mesh operation via adam-billing
-    if (!userData.user.email) {
-      return new Response(
-        JSON.stringify({ error: { message: 'User email missing' } }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        },
-      );
-    }
+    // 匿名（访客）用户没有邮箱，计费标识退化为 uid（自部署下计费已旁路）
+    const billingIdentity = userData.user.email ?? userData.user.id;
 
     ensureFalConfig();
     const appBaseUrl = webhookBaseUrl(req.url);
     const meshReferenceId = crypto.randomUUID();
     try {
-      const result = await billing.consume(userData.user.email, {
+      const result = await billing.consume(billingIdentity, {
         tokens: MESH_TOKEN_COST,
         operation: 'mesh',
         referenceId: meshReferenceId,
