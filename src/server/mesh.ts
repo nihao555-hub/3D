@@ -19,6 +19,7 @@ import { billing, BillingClientError } from './billingClient';
 import { logApiError, logError } from './serverLog';
 import { Buffer } from 'node:buffer';
 import { env, requiredEnv, webhookBaseUrl } from './env';
+import { tencent3dEnabled, submitTencent3dMeshJob } from './tencent3d';
 
 const MESH_TOKEN_COST = 30;
 
@@ -550,7 +551,10 @@ export async function handleMeshRequest(req: Request) {
 
     // Determine file type based on model, topology, and user preference
     let fileType: MeshFileType;
-    if (
+    if (tencent3dEnabled()) {
+      // 腾讯通道统一输出 GLB
+      fileType = 'glb';
+    } else if (
       (model === 'quality' || model === 'ultra') &&
       meshTopology === 'quads'
     ) {
@@ -600,7 +604,8 @@ export async function handleMeshRequest(req: Request) {
     }
 
     // Skip Flux-based preview for quality model - use Gemini image instead (via createHunyuanPreview)
-    if (model !== 'quality') {
+    // 腾讯通道下预览任务（fal 驱动）整体跳过
+    if (model !== 'quality' && !tencent3dEnabled()) {
       runBackgroundTask(
         submitPreviewJob(
           supabaseClient,
@@ -681,6 +686,20 @@ async function submitMeshJob(
   polygonCount: number | undefined,
   appBaseUrl: string,
 ) {
+  // 腾讯混元生3D 通道：文生3D 直出（跳过图像生成）/ 图生3D 走 Base64，
+  // 轮询获取结果，完全不依赖 fal 与公网回调。
+  if (tencent3dEnabled()) {
+    await submitTencent3dMeshJob({
+      supabaseClient,
+      text,
+      images,
+      userId,
+      conversationId,
+      meshId,
+      model,
+    });
+    return;
+  }
   ensureFalConfig();
   debugLog('=== SUBMIT MESH JOB FUNCTION CALLED ===');
   debugLog('submitMeshJob received model:', model);
