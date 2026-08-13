@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="40" viewBox="0 0 160 40">
+  <rect x="2" y="4" width="32" height="32" rx="8" fill="#0087D4"/>
+  <path d="M18 9.5 L28.5 15.25 L28.5 24.75 L18 30.5 L7.5 24.75 L7.5 15.25 Z" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M7.5 15.25 L18 21 L28.5 15.25" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M18 21 L18 30.5" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+  <text x="42" y="28" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="600" fill="#0087D4">智造3D</text>
+</svg>

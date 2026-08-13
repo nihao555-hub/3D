@@ -1,0 +1,67 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { generateText } from 'ai';
+import { auxModel, auxProviderOptions } from '@/server/auxLlm';
+import {
+  isRecord,
+  isUnauthorizedError,
+  json,
+  methodNotAllowed,
+  preflight,
+  requireUser,
+} from '@/server/api';
+
+const TITLE_SYSTEM_PROMPT =
+  'Generate a concise, descriptive title under 80 characters for this CAD conversation, in Simplified Chinese. Return only the title. If unclear, return "新对话".';
+
+function textFromParts(parts: unknown): string {
+  if (!Array.isArray(parts)) return '';
+
+  return parts
+    .flatMap((part) =>
+      isRecord(part) && part.type === 'text' && typeof part.text === 'string'
+        ? [part.text]
+        : [],
+    )
+    .join('\n')
+    .trim();
+}
+
+export const Route = createFileRoute('/api/title-generator')({
+  server: {
+    handlers: {
+      GET: methodNotAllowed,
+      OPTIONS: preflight,
+      POST: async ({ request }) => {
+        try {
+          await requireUser(request);
+        } catch (err) {
+          if (isUnauthorizedError(err)) {
+            return json({ error: 'Unauthorized' }, 401);
+          }
+          throw err;
+        }
+        try {
+          const body: unknown = await request.json();
+          if (!isRecord(body)) {
+            return json({ title: '新对话' });
+          }
+          const trimmedText =
+            typeof body.text === 'string' ? body.text.trim() : '';
+          const text = trimmedText || textFromParts(body.parts);
+          if (!text) return json({ title: '新对话' });
+
+          const result = await generateText({
+            model: auxModel(),
+            providerOptions: auxProviderOptions(),
+            maxOutputTokens: 2000,
+            system: TITLE_SYSTEM_PROMPT,
+            prompt: text,
+          });
+          return json({ title: result.text.trim() || '新对话' });
+        } catch {
+          return json({ title: '新对话' });
+        }
+      },
+    },
+  },
+});

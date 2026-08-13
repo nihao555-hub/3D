@@ -1,0 +1,127 @@
+import { sentryVitePlugin } from '@sentry/vite-plugin';
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
+import { nitro } from 'nitro/vite';
+import fs from 'node:fs';
+import path from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig, type Plugin } from 'vite';
+
+const appBase = '/studio';
+const normalizedAppBase = appBase.replace(/\/$/, '');
+
+function serveOpenScadWasmInDev(): Plugin {
+  return {
+    name: 'serve-openscad-wasm-in-dev',
+    configureServer(server) {
+      const wasmPath = path.resolve(
+        __dirname,
+        'src/vendor/openscad-wasm/openscad.wasm',
+      );
+
+      server.middlewares.use((req, res, next) => {
+        if (!req.url) return next();
+
+        const url = new URL(req.url, 'http://localhost');
+        if (
+          url.pathname !==
+          `${normalizedAppBase}/src/vendor/openscad-wasm/openscad.wasm`
+        ) {
+          return next();
+        }
+
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/wasm');
+        res.setHeader('Cache-Control', 'no-cache');
+        fs.createReadStream(wasmPath)
+          .on('error', (error) => next(error))
+          .pipe(res);
+      });
+    },
+  };
+}
+
+export default defineConfig({
+  base: appBase,
+  plugins: [
+    serveOpenScadWasmInDev(),
+    tanstackStart({
+      router: {
+        basepath: normalizedAppBase,
+      },
+      spa: {
+        enabled: true,
+        maskPath: normalizedAppBase,
+      },
+    }),
+    nitro({
+      baseURL: normalizedAppBase,
+      inlineDynamicImports: true,
+      // Vercel Hobby 档函数时长上限 300s：AI 生成为长流式响应，
+      // 默认时长会截断多轮自检的建模过程
+      vercel: {
+        functions: { maxDuration: 300 },
+      },
+    } as Parameters<typeof nitro>[0]),
+    react(),
+    sentryVitePlugin({
+      org: 'adamcad',
+      project: 'adamcad',
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@shared': path.resolve(__dirname, './shared'),
+    },
+  },
+  build: {
+    chunkSizeWarningLimit: 1000,
+
+    outDir: 'dist/studio',
+    emptyOutDir: true,
+
+    sourcemap: true,
+  },
+  environments: {
+    client: {
+      build: {
+        outDir: 'dist/studio',
+        rollupOptions: {
+          output: {
+            manualChunks(id) {
+              if (
+                id.includes('/node_modules/react/') ||
+                id.includes('/node_modules/react-dom/') ||
+                id.includes('/node_modules/@tanstack/react-router/') ||
+                id.includes('/node_modules/@tanstack/react-start/') ||
+                id.includes('/node_modules/lucide-react/')
+              ) {
+                return 'vendor';
+              }
+            },
+          },
+        },
+      },
+    },
+    server: {
+      build: {
+        outDir: 'dist/server',
+      },
+    },
+  },
+  preview: {
+    port: 4173,
+    host: true,
+  },
+  server: {
+    port: 3000,
+    open: false,
+    // Cloudflare quick tunnels (random *.trycloudflare.com subdomains) are
+    // used in local dev to make fal.ai webhooks reachable; allow them
+    // through Vite's host check.
+    allowedHosts: ['.trycloudflare.com'],
+  },
+  optimizeDeps: {
+    exclude: ['@zip.js/zip.js', 'three', 'three-stdlib', '@sentry/vite-plugin'],
+  },
+});

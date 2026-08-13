@@ -1,0 +1,393 @@
+import { useState } from 'react';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { Menu, Plus, LogOut, Crown, Settings, LayoutGrid } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase, ssoProvider } from '@/lib/supabase';
+import { BILLING_URL } from '@/config/billing';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { useQuery } from '@tanstack/react-query';
+import { ConditionalWrapper } from './ConditionalWrapper';
+import { cn } from '@/lib/utils';
+import { Conversation, ConversationSettings } from '@shared/types';
+import { UserAvatar } from '@/components/chat/UserAvatar';
+import { useProfile } from '@/services/profileService';
+
+interface SidebarProps {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (open: boolean) => void;
+}
+
+type SidebarPath = '/' | '/history';
+
+function DesktopSidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+  const isMobile = useIsMobile();
+  const { data: profile } = useProfile();
+
+  // Get 10 most recent conversations
+  const { data: recentConversations } = useQuery<Conversation[]>({
+    queryKey: ['conversations', 'recent'],
+    initialData: [],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('conversations')
+        .select('*')
+        .order('updated_at', { ascending: false })
+        .eq('user_id', user?.id ?? '')
+        .limit(10)
+        .overrideTypes<Array<{ settings: ConversationSettings }>>();
+
+      if (error) throw error;
+
+      return data;
+    },
+  });
+
+  const handleSignOut = async () => {
+    try {
+      if (ssoProvider) {
+        // In SSO mode root is the app's only auth surface, so sign-out lands
+        // there. Navigate BEFORE the session dies: on a guarded route the
+        // AuthGuard would otherwise fire the provider redirect the moment the
+        // session goes away and sign the user straight back in.
+        await navigate({ to: '/' });
+        await signOut();
+        return;
+      }
+      await signOut();
+      navigate({ to: '/signin' });
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const sidebarNavigate = (path: SidebarPath) => {
+    if (isMobile) {
+      setIsSidebarOpen(false); // setIsSidebarOpen is actually setOpen from Sheet component
+    }
+    navigate({ to: path });
+  };
+
+  const renderUserSectionTrigger = () => {
+    if (isSidebarOpen) {
+      return (
+        <div className="flex cursor-pointer items-center space-x-3 rounded-md px-2 py-1.5 transition-colors hover:bg-accent-foreground">
+          <UserAvatar />
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-adam-text-primary">
+              {profile?.full_name || user?.email?.split('@')[0] || '用户'}
+            </span>
+            <span className="text-xs text-adam-text-tertiary dark:text-gray-400">
+              {user?.email}
+            </span>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <Button
+        variant="adam_dark_collapsed_avatar"
+        className="group ml-[1px] h-[46px] w-[46px] px-0 py-6"
+      >
+        <UserAvatar className="h-[30px] w-[30px] transition-all duration-200 ease-in-out group-hover:h-[26px] group-hover:w-[26px] group-hover:ring-2 group-hover:ring-adam-neutral-500" />
+      </Button>
+    );
+  };
+
+  return (
+    <div
+      className={`${isSidebarOpen ? 'w-64' : 'w-16'} flex h-full flex-shrink-0 flex-col border-r border-adam-neutral-800 bg-sidebar-color pb-2 transition-all duration-300 ease-in-out`}
+    >
+      <div className="p-4 dark:border-gray-800">
+        <ConditionalWrapper
+          condition={!isSidebarOpen}
+          wrapper={(children) => (
+            <Tooltip>
+              <TooltipTrigger asChild>{children}</TooltipTrigger>
+              <TooltipContent side="right" className="flex flex-col">
+                <span className="font-semibold">首页</span>
+                <span className="text-xs text-muted-foreground">返回首页</span>
+              </TooltipContent>
+            </Tooltip>
+          )}
+        >
+          <button
+            type="button"
+            className="flex w-full cursor-pointer items-center space-x-2"
+            onClick={() => sidebarNavigate('/')}
+          >
+            {isSidebarOpen ? (
+              <div className="flex w-full items-center justify-center gap-2">
+                <img
+                  src={`${import.meta.env.BASE_URL}/zhizao-logo.png`}
+                  alt="智造3D"
+                  className="h-8 w-8 shrink-0"
+                  draggable={false}
+                />
+                <span className="flex h-8 items-center text-lg font-semibold tracking-tight text-adam-text-primary">
+                  智造3D
+                </span>
+              </div>
+            ) : (
+              <img
+                src={`${import.meta.env.BASE_URL}/zhizao-logo.png`}
+                alt="智造3D"
+                className="h-8 w-8 min-w-8 shrink-0"
+                draggable={false}
+              />
+            )}
+          </button>
+        </ConditionalWrapper>
+      </div>
+
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div
+          className={`${isSidebarOpen ? 'px-4' : 'px-2'} flex-1 py-2 transition-all duration-300 ease-in-out`}
+        >
+          <ConditionalWrapper
+            condition={!isSidebarOpen}
+            wrapper={(children) => (
+              <Tooltip>
+                <TooltipTrigger asChild>{children}</TooltipTrigger>
+                <TooltipContent side="right" className="flex flex-col">
+                  <span className="font-semibold">新建模型</span>
+                  <span className="text-xs text-muted-foreground">
+                    开始新的对话
+                  </span>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          >
+            <div className="ml-[9px]">
+              <Button
+                variant="secondary"
+                className={` ${
+                  isSidebarOpen
+                    ? 'flex w-[216px] items-center justify-start gap-2 rounded-[100px] border border-adam-blue bg-adam-background-1 px-4 py-3 text-adam-blue hover:bg-adam-blue/10 hover:text-adam-blue'
+                    : 'flex h-[30px] w-[30px] items-center justify-center rounded-[8px] border-2 border-adam-blue bg-adam-blue p-[2px] text-white shadow-[0px_4px_10px_0px_rgba(0,135,212,0.24)] hover:bg-adam-blue/80 hover:text-white'
+                } mb-4`}
+                onClick={() => sidebarNavigate('/')}
+              >
+                <Plus
+                  className={`h-5 w-5 ${!isSidebarOpen ? 'text-adam-neutral-300 hover:text-adam-text-primary' : ''}`}
+                />
+                {isSidebarOpen && (
+                  <div className="text-sm font-semibold leading-[14px] tracking-[-0.14px] text-adam-blue">
+                    新建模型
+                  </div>
+                )}
+              </Button>
+            </div>
+          </ConditionalWrapper>
+          <nav className="space-y-1">
+            {[
+              {
+                icon: LayoutGrid,
+                label: '我的模型',
+                href: '/history' as const,
+                description: '查看历史模型',
+                submenu: recentConversations,
+              },
+            ].map(({ icon: Icon, label, href, description, submenu }) => (
+              <div key={label} className="space-y-1">
+                <ConditionalWrapper
+                  condition={!isSidebarOpen}
+                  wrapper={(children) => (
+                    <Tooltip>
+                      <TooltipTrigger asChild>{children}</TooltipTrigger>
+                      <TooltipContent side="right" className="flex flex-col">
+                        <span className="font-semibold">{label}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {description}
+                        </span>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                >
+                  <Button
+                    variant={
+                      isSidebarOpen ? 'adam_dark' : 'adam_dark_collapsed'
+                    }
+                    onClick={() => sidebarNavigate(href)}
+                    className={`${isSidebarOpen ? 'w-full justify-start' : 'ml-[1px] h-[46px] w-[46px] p-0'}`}
+                  >
+                    <Icon
+                      className={`${isSidebarOpen ? 'mr-2' : ''} h-[22px] w-[22px] min-w-[22px]`}
+                    />
+                    {isSidebarOpen && label}
+                  </Button>
+                </ConditionalWrapper>
+                {isSidebarOpen && submenu && (
+                  <ul className="ml-7 flex list-none flex-col gap-1 border-l border-adam-neutral-500 px-2">
+                    {submenu.map(
+                      (
+                        conversation: Omit<
+                          Conversation,
+                          'message_count' | 'last_message_at'
+                        >,
+                      ) => {
+                        return (
+                          <Link
+                            to="/editor/$id"
+                            params={{ id: conversation.id }}
+                            key={conversation.id}
+                            onClick={() => {
+                              if (isMobile) {
+                                setIsSidebarOpen(false);
+                              }
+                            }}
+                          >
+                            <li key={conversation.id}>
+                              <span className="line-clamp-1 text-ellipsis text-nowrap rounded-md p-1 text-xs font-medium text-adam-neutral-300 transition-colors duration-200 ease-in-out [@media(hover:hover)]:hover:bg-adam-neutral-800 [@media(hover:hover)]:hover:text-adam-text-primary">
+                                {conversation.title}
+                              </span>
+                            </li>
+                          </Link>
+                        );
+                      },
+                    )}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </nav>
+        </div>
+
+        <div
+          className={`${isSidebarOpen ? 'px-4' : 'px-2'} py-4 transition-all duration-300 ease-in-out dark:border-gray-800`}
+        >
+          <div className={cn('flex flex-col gap-2', isSidebarOpen && 'gap-3')}>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                {renderUserSectionTrigger()}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-56"
+                align="end"
+                side={isMobile ? 'top' : 'right'}
+              >
+                <div className="flex items-center space-x-2 p-2">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium text-adam-text-primary">
+                      {profile?.full_name ||
+                        user?.email?.split('@')[0] ||
+                        '用户'}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {user?.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup className="text-adam-text-primary">
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>设置</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a
+                      href={BILLING_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center"
+                    >
+                      <Crown className="mr-2 h-4 w-4" />
+                      <span>订阅</span>
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut}>
+                  <LogOut className="mr-2 h-4 w-4 text-adam-text-primary" />
+                  <span className="text-adam-text-primary">退出登录</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileSidebar({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  isSidebarOpen,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setIsSidebarOpen,
+}: SidebarProps) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="fixed left-2 top-2.5 z-50 hover:bg-adam-neutral-700 md:hidden"
+        >
+          <Menu className="h-5 w-5 text-adam-text-primary" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side="left"
+        className="bg-adam-bg-dark p-0 [&>button]:text-adam-text-primary"
+      >
+        {/* For aria stuff */}
+        <SheetHeader className="hidden">
+          <SheetTitle className="text-adam-text-primary">智造3D</SheetTitle>
+          <SheetDescription>AI 工业级三维建模平台</SheetDescription>
+        </SheetHeader>
+        <DesktopSidebar isSidebarOpen={true} setIsSidebarOpen={setOpen} />
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+export function Sidebar({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
+  const isMobile = useIsMobile();
+  const { user } = useAuth();
+
+  // Don't display the sidebar if the user isn't logged in
+  if (user == null) {
+    return <></>;
+  }
+
+  return isMobile ? (
+    <MobileSidebar
+      isSidebarOpen={isSidebarOpen}
+      setIsSidebarOpen={setIsSidebarOpen}
+    />
+  ) : (
+    <DesktopSidebar
+      isSidebarOpen={isSidebarOpen}
+      setIsSidebarOpen={setIsSidebarOpen}
+    />
+  );
+}
