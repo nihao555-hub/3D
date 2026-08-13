@@ -56,7 +56,12 @@ export default defineConfig({
     nitro({
       baseURL: normalizedAppBase,
       inlineDynamicImports: true,
-    }),
+      // Vercel Hobby 档函数时长上限 300s：AI 生成为长流式响应，
+      // 默认时长会截断多轮自检的建模过程
+      vercel: {
+        functions: { maxDuration: 300 },
+      },
+    } as Parameters<typeof nitro>[0]),
     react(),
     sentryVitePlugin({
       org: 'adamcad',

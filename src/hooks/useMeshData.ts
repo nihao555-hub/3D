@@ -1,5 +1,6 @@
 import { useConversation } from '@/contexts/ConversationContext';
 import { supabase } from '@/lib/supabase';
+import { apiJson } from '@/services/api';
 import { MeshData } from '@shared/types';
 import { useQuery } from '@tanstack/react-query';
 
@@ -10,6 +11,17 @@ export const useMeshData = ({ id }: { id: string }) => {
     queryKey: ['meshData', id],
     enabled: !!id,
     queryFn: async () => {
+      // Serverless 部署下没有常驻后台轮询，先让服务端驱动一次
+      // 任务收尾（腾讯通道查询→完成则入库）；失败静默，下方照常读表。
+      try {
+        await apiJson('mesh-check', {
+          method: 'POST',
+          body: JSON.stringify({ meshId: id }),
+        });
+      } catch {
+        // 忽略：老任务/fal 通道/网络抖动均直接落到读表
+      }
+
       const { data, error } = await supabase
         .from('meshes')
         .select('*')
