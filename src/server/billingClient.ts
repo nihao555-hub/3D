@@ -78,7 +78,9 @@ const DEV_TOKENS = {
   total: 3_000_000,
 };
 
-const isBypassed = () => env('ENVIRONMENT') === 'local';
+// 本地开发或自部署（未配置外部计费服务）时旁路计费，直接返回充足额度
+const isBypassed = () =>
+  env('ENVIRONMENT') === 'local' || !env('BILLING_SERVICE_URL').trim();
 
 const devStatus = (): BillingStatus => ({
   user: { hasTrialed: false },
