@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { createAnthropicText } from '@/server/anthropic';
+import { generateText } from 'ai';
+import { auxModel } from '@/server/auxLlm';
 import {
   isRecord,
   isUnauthorizedError,
@@ -49,13 +50,13 @@ export const Route = createFileRoute('/api/title-generator')({
           const text = trimmedText || textFromParts(body.parts);
           if (!text) return json({ title: '新对话' });
 
-          const title = await createAnthropicText({
-            model: 'claude-haiku-4-5-20251001',
-            maxTokens: 100,
+          const result = await generateText({
+            model: auxModel(),
+            maxOutputTokens: 120,
             system: TITLE_SYSTEM_PROMPT,
-            content: text,
+            prompt: text,
           });
-          return json({ title: title || '新对话' });
+          return json({ title: result.text.trim() || '新对话' });
         } catch {
           return json({ title: '新对话' });
         }

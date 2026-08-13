@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { createAnthropicText } from '@/server/anthropic';
+import { generateText } from 'ai';
+import { auxModel } from '@/server/auxLlm';
 import {
   isRecord,
   isUnauthorizedError,
@@ -40,14 +41,14 @@ export const Route = createFileRoute('/api/prompt-generator')({
           const content = existingText
             ? `${base}\n\nImprove this existing prompt while preserving its intent:\n${existingText}`
             : base;
-          const prompt = await createAnthropicText({
-            model: 'claude-haiku-4-5-20251001',
-            maxTokens: 200,
+          const result = await generateText({
+            model: auxModel(),
+            maxOutputTokens: 300,
             system:
-              'You write concise 3D generation prompts. Return only the prompt text, no quotes or explanation.',
-            content,
+              'You write concise 3D generation prompts in Simplified Chinese. Return only the prompt text, no quotes or explanation.',
+            prompt: content,
           });
-          return json({ prompt });
+          return json({ prompt: result.text.trim() });
         } catch (err) {
           return json(
             {

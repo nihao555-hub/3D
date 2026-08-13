@@ -29,6 +29,7 @@ import { z } from 'zod';
 import { billing, BillingClientError } from './billingClient';
 import { corsHeaders, isRecord } from './api';
 import { env, requiredEnv } from './env';
+import { auxLlmEnabled, auxModel } from './auxLlm';
 import { logError } from './serverLog';
 import {
   decidePersistAction,
@@ -803,16 +804,14 @@ async function loadBranchFromDb({
 }
 
 async function generateConversationTitle({
-  anthropic,
   firstMessage,
 }: {
-  anthropic: AnthropicProvider;
   firstMessage: AppUIMessage;
 }) {
   const text = getParametricText(firstMessage.parts) || 'New conversation';
   try {
     const result = await generateText({
-      model: anthropic('claude-haiku-4-5'),
+      model: auxModel(),
       system:
         'Generate a short title for a 3D creation conversation, in Simplified Chinese. Return only the title.',
       prompt: text,
@@ -835,11 +834,9 @@ async function generateConversationTitle({
  * specific assistant turn.
  */
 async function generateConversationSuggestions({
-  anthropic,
   branch,
   conversationType,
 }: {
-  anthropic: AnthropicProvider;
   branch: AppUIMessage[];
   conversationType: 'parametric' | 'creative';
 }): Promise<string[]> {
@@ -857,7 +854,7 @@ async function generateConversationSuggestions({
   const summary = `User request: ${firstUserText.slice(0, 400)}\n\nMost recent assistant reply: ${lastAssistantText.slice(0, 400)}`;
   try {
     const result = await generateText({
-      model: anthropic('claude-haiku-4-5'),
+      model: auxModel(),
       system:
         conversationType === 'creative'
           ? 'Given a 3D mesh design conversation, return an array of exactly 2 follow-up prompts the user might want to send next. Each prompt is a concise instruction of 3 words or fewer, not a question. Return exactly 2 items — no more, no fewer.'
@@ -1469,10 +1466,9 @@ export async function handleAiChatRequest(req: Request) {
     execute: async ({ writer }) => {
       // Title (first user turn only) runs in parallel with the model
       // stream — fire-and-forget; the assistant doesn't wait on it.
-      if (isFirstUserTurn && env('ANTHROPIC_API_KEY')) {
+      if (isFirstUserTurn && auxLlmEnabled()) {
         void emitConversationTitle({
           writer,
-          anthropic: providers.anthropic(),
           supabaseClient,
           conversation,
           firstMessage: branchMessages[0],
@@ -1615,7 +1611,7 @@ export async function handleAiChatRequest(req: Request) {
             // continuation `onFinish` will fire suggestions for the real
             // final state. Avoids a wasted Haiku call AND prevents
             // mid-turn placeholder pills.
-            if (!hasPendingToolCall && env('ANTHROPIC_API_KEY')) {
+            if (!hasPendingToolCall && auxLlmEnabled()) {
               // MUST be awaited (not `void`). `createUIMessageStream`
               // closes the SSE controller as soon as the merged stream
               // drains — and the merged stream resolves once this
@@ -1629,7 +1625,6 @@ export async function handleAiChatRequest(req: Request) {
               // tradeoff for getting pills delivered.
               await emitConversationSuggestions({
                 writer,
-                anthropic: providers.anthropic(),
                 supabaseClient,
                 conversation,
                 branch: [
@@ -1661,19 +1656,17 @@ export async function handleAiChatRequest(req: Request) {
  */
 async function emitConversationTitle({
   writer,
-  anthropic,
   supabaseClient,
   conversation,
   firstMessage,
 }: {
   writer: UIMessageStreamWriter<AppUIMessage>;
-  anthropic: AnthropicProvider;
   supabaseClient: SupabaseAnon;
   conversation: ConversationAccess;
   firstMessage: AppUIMessage;
 }) {
   try {
-    const title = await generateConversationTitle({ anthropic, firstMessage });
+    const title = await generateConversationTitle({ firstMessage });
     await supabaseClient
       .from('conversations')
       .update({ title })
@@ -1703,20 +1696,17 @@ async function emitConversationTitle({
  */
 async function emitConversationSuggestions({
   writer,
-  anthropic,
   supabaseClient,
   conversation,
   branch,
 }: {
   writer: UIMessageStreamWriter<AppUIMessage>;
-  anthropic: AnthropicProvider;
   supabaseClient: SupabaseAnon;
   conversation: ConversationAccess;
   branch: AppUIMessage[];
 }) {
   try {
     const suggestions = await generateConversationSuggestions({
-      anthropic,
       branch,
       conversationType: conversation.type,
     });
