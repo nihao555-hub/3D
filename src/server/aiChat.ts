@@ -29,7 +29,7 @@ import { z } from 'zod';
 import { billing, BillingClientError } from './billingClient';
 import { corsHeaders, isRecord } from './api';
 import { env, requiredEnv } from './env';
-import { auxLlmEnabled, auxModel } from './auxLlm';
+import { auxLlmEnabled, auxModel, auxProviderOptions } from './auxLlm';
 import { logError } from './serverLog';
 import {
   decidePersistAction,
@@ -473,7 +473,19 @@ function buildChatModel(
     thinking && thinkingBudget !== THINKING_BUDGET_TOKENS;
 
   if (isCustomRelay()) {
-    return { model: providers.relay().responses(relayModelId(modelId)) };
+    // RELAY_REASONING_EFFORT（low/medium/high）可调主生成的思考深度：
+    // 降低可显著缩短生成耗时，代价是复杂模型的自检修正质量
+    const effort = env('RELAY_REASONING_EFFORT').trim();
+    return {
+      model: providers.relay().responses(relayModelId(modelId)),
+      ...(effort
+        ? {
+            providerOptions: {
+              openai: { reasoningEffort: effort },
+            } as ProviderOptions,
+          }
+        : {}),
+    };
   }
 
   if (providerFor(modelId) === 'openrouter') {
@@ -812,6 +824,7 @@ async function generateConversationTitle({
   try {
     const result = await generateText({
       model: auxModel(),
+      providerOptions: auxProviderOptions(),
       system:
         'Generate a short title for a 3D creation conversation, in Simplified Chinese. Return only the title.',
       prompt: text,
@@ -855,6 +868,7 @@ async function generateConversationSuggestions({
   try {
     const result = await generateText({
       model: auxModel(),
+      providerOptions: auxProviderOptions(),
       system:
         conversationType === 'creative'
           ? 'Given a 3D mesh design conversation, return an array of exactly 2 follow-up prompts the user might want to send next. Each prompt is a concise instruction of 3 words or fewer, not a question. Return exactly 2 items — no more, no fewer.'

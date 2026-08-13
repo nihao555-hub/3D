@@ -1,6 +1,7 @@
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
 import type { LanguageModel } from 'ai';
+import type { ProviderOptions } from '@ai-sdk/provider-utils';
 import { env, requiredEnv } from './env';
 
 // 辅助 AI 能力（提示词优化、自动会话标题、后续建议）的统一模型选择。
@@ -17,6 +18,15 @@ function normalizedAnthropicBaseURL(): string | undefined {
   if (!raw) return undefined;
   const base = raw.replace(/\/+$/, '');
   return base.endsWith('/v1') ? base : `${base}/v1`;
+}
+
+// 辅助任务（标题/建议/提示词）是轻任务：推理模型走中转时压到最低
+// 思考深度，延迟从 10-30s 降到 2-5s（实测推理 token 归零）。
+export function auxProviderOptions(): ProviderOptions | undefined {
+  if (env('OPENROUTER_BASE_URL').trim()) {
+    return { openai: { reasoningEffort: 'low' } };
+  }
+  return undefined;
 }
 
 export function auxModel(): LanguageModel {

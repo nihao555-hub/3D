@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { generateText } from 'ai';
-import { auxModel } from '@/server/auxLlm';
+import { auxModel, auxProviderOptions } from '@/server/auxLlm';
 import {
   isRecord,
   isUnauthorizedError,
@@ -43,6 +43,7 @@ export const Route = createFileRoute('/api/prompt-generator')({
             : base;
           const result = await generateText({
             model: auxModel(),
+            providerOptions: auxProviderOptions(),
             maxOutputTokens: 2000,
             system:
               'You write concise 3D generation prompts in Simplified Chinese. Return only the prompt text, no quotes or explanation.',
