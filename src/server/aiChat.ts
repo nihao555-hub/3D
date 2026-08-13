@@ -156,6 +156,11 @@ Multi-feature checklist before stopping:
 - Mug → body, hollow interior, rim, base, handle, printable wall thickness.
 - Vehicle / character / prop → recognizable silhouette, main appendages or
   components, surface details, colors, no disconnected floating parts.
+- Handheld tool / tattoo pen / power tool → commercial product silhouette
+  (not stacked cylinders), split housing with screws and locators, grip
+  texture, motor and drive internals as separate modules, connector or
+  battery cap, bit/cartridge interface, printable wall thickness, optional
+  cutaway and explode.
 
 answer_user.message must be only the short user-facing message. Do not include
 analysis, draft notes, screenshot observations, storage URLs, filenames,
