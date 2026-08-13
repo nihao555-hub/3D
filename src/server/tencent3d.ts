@@ -3,11 +3,11 @@ import type { Model } from '@shared/types';
 import { env } from './env';
 import { logError } from './serverLog';
 
-// 腾讯云 TokenHub 混元生3D 适配器。
-// 提交/轮询模式（无需 webhook 公网回调），图片走 Base64（无需公网取图），
-// 因此本地开发不依赖任何隧道。文档：
-// https://cloud.tencent.com/document/product/1823/130082
-const DEFAULT_BASE_URL = 'https://tokenhub.tencentmaas.com';
+// 腾讯混元生3D「OpenAI 兼容接口」适配器（专业版）。
+// 提交/轮询模式（无需 webhook 公网回调），图片走 Base64 Data URI
+// （无需公网取图），本地开发不依赖任何隧道。文档：
+// https://cloud.tencent.com/document/product/1804/126189
+const DEFAULT_BASE_URL = 'https://api.ai3d.cloud.tencent.com';
 
 const POLL_INTERVAL_MS = 10_000;
 const POLL_TIMEOUT_MS = 15 * 60_000;
@@ -23,36 +23,24 @@ function baseUrl(): string {
   );
 }
 
-// UI 档位 → TokenHub 模型与附加参数。
-// ultra=专业版3.1+PBR（约30积分），quality=专业版3.0（20积分），
-// fast=极速版（15积分）。
-function tencentModelFor(model: Model): {
-  hyModel: string;
-  extra: Record<string, unknown>;
-} {
+// UI 档位 → 混元生3D 专业版参数。
+// ultra=3.1+PBR（约30积分+格式5），quality=3.0 带纹理（20+5积分），
+// fast=3.0 白模（15+5积分）。
+function tencentParamsFor(model: Model): Record<string, unknown> {
   if (model === 'ultra') {
-    return { hyModel: 'HY-3D-3.1', extra: { enable_pbr: true } };
+    return { Model: '3.1', EnablePBR: true };
   }
   if (model === 'fast') {
-    return { hyModel: 'HY-3D-Express', extra: {} };
+    return { Model: '3.0', GenerateType: 'Geometry' };
   }
-  return { hyModel: 'HY-3D-3.0', extra: {} };
+  return { Model: '3.0' };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
-function pick(obj: Record<string, unknown>, ...keys: string[]): unknown {
-  for (const key of keys) {
-    if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
-      return obj[key];
-    }
-  }
-  return undefined;
-}
-
-async function tokenhubPost(
+async function ai3dPost(
   path: string,
   body: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
@@ -60,7 +48,7 @@ async function tokenhubPost(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${env('TENCENT3D_API_KEY').trim()}`,
+      Authorization: env('TENCENT3D_API_KEY').trim(),
     },
     body: JSON.stringify(body),
   });
@@ -69,21 +57,22 @@ async function tokenhubPost(
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error(`TokenHub ${path} 非 JSON 响应: ${text.slice(0, 200)}`);
+    throw new Error(`混元生3D ${path} 非 JSON 响应: ${text.slice(0, 200)}`);
   }
-  if (!isRecord(data)) {
-    throw new Error(`TokenHub ${path} 响应格式异常: ${text.slice(0, 200)}`);
+  const wrapped = isRecord(data) ? (data.Response ?? data) : undefined;
+  if (!isRecord(wrapped)) {
+    throw new Error(`混元生3D ${path} 响应格式异常: ${text.slice(0, 200)}`);
   }
-  const error = data.error ?? data.Error;
-  if (!response.ok || error) {
-    const message = isRecord(error)
-      ? (error.message_zh ?? error.message ?? JSON.stringify(error))
-      : text.slice(0, 300);
-    throw new Error(`TokenHub ${path} 失败(${response.status}): ${message}`);
+  const error = wrapped.Error;
+  if (isRecord(error)) {
+    throw new Error(
+      `混元生3D ${path} 失败: ${String(error.Code ?? '')} ${String(error.Message ?? '')}`,
+    );
   }
-  // 部分接口把有效负载包在 Response/response 字段里
-  const inner = data.Response ?? data.response;
-  return isRecord(inner) ? inner : data;
+  if (!response.ok) {
+    throw new Error(`混元生3D ${path} HTTP ${response.status}`);
+  }
+  return wrapped;
 }
 
 async function broadcastMeshUpdate(
@@ -110,8 +99,15 @@ async function broadcastMeshUpdate(
   }
 }
 
-function arrayBufferToBase64(buffer: ArrayBuffer): string {
-  return Buffer.from(buffer).toString('base64');
+// 依据图片魔数推断 Data URI 的 mime（混元要求 data:image/xxx;base64, 前缀）
+function imageDataUri(bytes: Buffer): string {
+  const mime =
+    bytes[0] === 0xff && bytes[1] === 0xd8
+      ? 'image/jpeg'
+      : bytes[0] === 0x52 && bytes[1] === 0x49
+        ? 'image/webp'
+        : 'image/png';
+  return `data:${mime};base64,${bytes.toString('base64')}`;
 }
 
 /**
@@ -130,11 +126,10 @@ export async function submitTencent3dMeshJob(options: {
 }): Promise<void> {
   const { supabaseClient, text, images, userId, conversationId, meshId } =
     options;
-  const { hyModel, extra } = tencentModelFor(options.model);
 
   try {
-    // 图生3D 优先：下载用户/前序图片转 Base64；否则文生3D 直出
-    let imageBase64: string | undefined;
+    // 图生3D 优先：下载用户/前序图片转 Data URI；否则文生3D 直出
+    let imageUri: string | undefined;
     if (images && images.length > 0) {
       const { data: blob, error } = await supabaseClient.storage
         .from('images')
@@ -142,54 +137,45 @@ export async function submitTencent3dMeshJob(options: {
       if (error || !blob) {
         throw new Error(`下载输入图片失败: ${error?.message ?? 'empty'}`);
       }
-      imageBase64 = arrayBufferToBase64(await blob.arrayBuffer());
+      imageUri = imageDataUri(Buffer.from(await blob.arrayBuffer()));
     }
-    if (!imageBase64 && !text) {
+    if (!imageUri && !text) {
       throw new Error('缺少生成输入（文本或图片）');
     }
 
-    const submitted = await tokenhubPost('/v1/api/3d/submit', {
-      model: hyModel,
-      result_format: 'GLB',
-      ...extra,
-      ...(imageBase64 ? { image_base64: imageBase64 } : { prompt: text }),
+    const submitted = await ai3dPost('/v1/ai3d/submit', {
+      ...tencentParamsFor(options.model),
+      ResultFormat: 'GLB',
+      ...(imageUri ? { ImageUrl: { Url: imageUri } } : { Prompt: text }),
     });
-    const jobId = pick(submitted, 'id', 'job_id', 'JobId');
+    const jobId = submitted.JobId;
     if (typeof jobId !== 'string' || !jobId) {
       throw new Error(
-        `TokenHub 未返回任务ID: ${JSON.stringify(submitted).slice(0, 200)}`,
+        `混元生3D 未返回任务ID: ${JSON.stringify(submitted).slice(0, 200)}`,
       );
     }
 
-    // 轮询任务状态
+    // 轮询任务状态：WAIT / RUN → 继续；DONE → 取件；FAIL → 失败
     const deadline = Date.now() + POLL_TIMEOUT_MS;
     let fileUrl: string | undefined;
     while (Date.now() < deadline) {
       await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-      const result = await tokenhubPost('/v1/api/3d/query', {
-        model: hyModel,
-        id: jobId,
-      });
-      const status = String(
-        pick(result, 'status', 'Status') ?? '',
-      ).toUpperCase();
-      const errorCode = pick(result, 'error_code', 'ErrorCode');
-      if (errorCode) {
+      const result = await ai3dPost('/v1/ai3d/query', { JobId: jobId });
+      const status = String(result.Status ?? '').toUpperCase();
+      if (result.ErrorCode) {
         throw new Error(
-          `生成失败: ${String(pick(result, 'error_message', 'ErrorMessage') ?? errorCode)}`,
+          `生成失败: ${String(result.ErrorMessage ?? result.ErrorCode)}`,
         );
       }
       if (status === 'DONE') {
-        const rawFiles = pick(result, 'result_file_3ds', 'ResultFile3Ds');
-        const files = Array.isArray(rawFiles) ? rawFiles.filter(isRecord) : [];
+        const files = Array.isArray(result.ResultFile3Ds)
+          ? result.ResultFile3Ds.filter(isRecord)
+          : [];
         const glb =
-          files.find(
-            (f) =>
-              String(pick(f, 'type', 'Type') ?? '').toUpperCase() === 'GLB',
-          ) ?? files[0];
-        fileUrl = glb
-          ? (pick(glb, 'url', 'Url') as string | undefined)
-          : undefined;
+          files.find((f) => String(f.Type ?? '').toUpperCase() === 'GLB') ??
+          files[0];
+        fileUrl =
+          glb && typeof glb.Url === 'string' && glb.Url ? glb.Url : undefined;
         if (!fileUrl) {
           throw new Error(
             `任务完成但未返回模型文件: ${JSON.stringify(result).slice(0, 300)}`,
@@ -198,14 +184,11 @@ export async function submitTencent3dMeshJob(options: {
         break;
       }
       if (status === 'FAIL' || status === 'FAILED') {
-        throw new Error(
-          `生成失败: ${String(pick(result, 'error_message', 'ErrorMessage') ?? status)}`,
-        );
+        throw new Error(`生成失败: ${String(result.ErrorMessage ?? status)}`);
       }
-      // WAIT / RUN / 空状态 → 继续轮询
     }
     if (!fileUrl) {
-      throw new Error('TokenHub 任务超时（15 分钟）');
+      throw new Error('混元生3D 任务超时（15 分钟）');
     }
 
     // 下载 GLB 并入库
@@ -242,7 +225,7 @@ export async function submitTencent3dMeshJob(options: {
       statusCode: 500,
       userId,
       conversationId,
-      additionalContext: { meshId, hyModel },
+      additionalContext: { meshId, model: options.model },
     });
     await supabaseClient
       .from('meshes')
